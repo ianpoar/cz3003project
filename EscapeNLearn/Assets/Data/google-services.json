@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "900118418800",
+    "firebase_url": "https://escapenlearn.firebaseio.com",
+    "project_id": "escapenlearn",
+    "storage_bucket": "escapenlearn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900118418800:android:d88e8b18f32dcb7f50abb5",
+        "android_client_info": {
+          "package_name": "com.Brooklyn9.EscapeNLearn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "900118418800-fgvm0jbjv3c04idsmpv06gbouvsnsu6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz0ZwFfU9WnKXD81p3fQ_DGAbFl_ZuyxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "900118418800-fgvm0jbjv3c04idsmpv06gbouvsnsu6t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "900118418800-rm56javgu1bnga11bcbubp5kbbrrah86.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Brooklyn9.EscapeNLearn"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
