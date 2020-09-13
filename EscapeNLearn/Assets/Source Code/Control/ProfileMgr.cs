@@ -5,7 +5,11 @@ using Firebase.Auth;
 
 public class Profile
 {
-    public int number = 0;
+    public string name = "Unknown";
+    public string accountType = "Student";
+    public int accountExp = 0;
+    public int currency_normal = 0;
+    public int currency_premium = 0;
 }
 
 public class ProfileMgr : MonoBehaviour // Singleton class

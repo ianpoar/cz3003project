@@ -3,6 +3,7 @@ using Firebase.Database;
 using UnityEngine;
 using Firebase.Auth;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum DBQueryType
 {
@@ -24,38 +25,64 @@ public class DatabaseMgr : MonoBehaviour
 
     private void Start()
     {
+        // init firebase sdk
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(continuationAction: task =>
         {
             _database = FirebaseDatabase.DefaultInstance;
             Debug.Log("DatabaseMgr: Firebase init success");
         });
+
+        // init LoginAPIs
+        _facebookapi.Initialise();
     }
     // Private variables
     private FirebaseDatabase _database;
-    private const string PATH_PROFILE = "profiles/";
-    private const string PATH_SESSION = "sessions/";
+    private LoginAPI _currentapi;
+    private FacebookLoginAPI _facebookapi = new FacebookLoginAPI();
+    private bool lastDBFetchSuccess = false;
 
     // Public variables
-    public string Email { get { return ((FirebaseAuth.DefaultInstance.CurrentUser != null) && FirebaseAuth.DefaultInstance.CurrentUser.IsEmailVerified) ? FirebaseAuth.DefaultInstance.CurrentUser.Email : "None"; } private set { } }
-    public string Id { get { return FirebaseAuth.DefaultInstance.CurrentUser != null ? FirebaseAuth.DefaultInstance.CurrentUser.UserId : "None"; } private set { } }
-    public bool IsEmailVerified { get { return (FirebaseAuth.DefaultInstance.CurrentUser != null && FirebaseAuth.DefaultInstance.CurrentUser.IsEmailVerified); } private set { } }
-    public bool IsSignedIn      { get { return (FirebaseAuth.DefaultInstance.CurrentUser != null); } private set{}}
+    public string Id { get { return FirebaseAuth.DefaultInstance.CurrentUser.UserId; } private set { } }
+    public bool IsEmailVerified { get { return FirebaseAuth.DefaultInstance.CurrentUser.IsEmailVerified; } private set { } }
+    public string Email { get { return FirebaseAuth.DefaultInstance.CurrentUser.Email; } private set { } }
+    public bool IsLoggedIn { get { return (FirebaseAuth.DefaultInstance.CurrentUser != null); } private set { } }
+
+    public List <string> LoginTypes {
+        get
+        {
+                List<string> list = new List<string>();
+                foreach (IUserInfo info in FirebaseAuth.DefaultInstance.CurrentUser.ProviderData)
+                {
+                    list.Add(info.ProviderId);
+                }
+                return list;
+        }
+        private set { } }
+
+    public bool LastFBFetchSuccess { get { return lastDBFetchSuccess; } private set { } }
+
 
     private string SetPath(DBQueryType type)
     {
         switch (type)
         {
             case DBQueryType.Profile:
-                return PATH_PROFILE;
+                return DBConstants.PATH_PROFILE;
             case DBQueryType.Session:
-                return PATH_SESSION;
+                return DBConstants.PATH_SESSION;
             default:
                 return "unknown/";
         }
     }
-    public void SignOut()
+    public void Logout()
     {
         FirebaseAuth.DefaultInstance.SignOut();
+    }
+
+    public void FacebookLogin(SimpleCallback successCallback, MessageCallback failCallback)
+    {
+        _currentapi = _facebookapi;
+        _currentapi.Authenticate(successCallback, failCallback);
     }
 
     public void EmailRegister(string email, string pw, SimpleCallback passcb, MessageCallback failcb)
@@ -96,7 +123,6 @@ public class DatabaseMgr : MonoBehaviour
 
         if (task.Exception == null)
         {
-            // success
             successCallback?.Invoke();
         }
         else
@@ -105,20 +131,20 @@ public class DatabaseMgr : MonoBehaviour
         }
     }
 
-    public void DBFetch(DBQueryType type, string id, MessageCallback successCallback = null, MessageCallback failCallback = null)
+    public void DBFetch(DBQueryType type, string query, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
-        StartCoroutine(Sequence_DBFetch(type, id, successCallback, failCallback));
+        StartCoroutine(Sequence_DBFetch(type, query, successCallback, failCallback));
     }
 
-    public void DBUpdate(DBQueryType type, string id, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
+    public void DBUpdate(DBQueryType type, string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
-        StartCoroutine(Sequence_DBUpdate(type, id, data, successCallback, failCallback));
+        StartCoroutine(Sequence_DBUpdate(type, query, data, successCallback, failCallback));
     }
 
-    private IEnumerator Sequence_DBFetch(DBQueryType type, string id, MessageCallback successCallback = null, MessageCallback failCallback = null)
+    private IEnumerator Sequence_DBFetch(DBQueryType type, string query, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
         string path = SetPath(type);
-        var task = _database.GetReference(path + id).GetValueAsync();
+        var task = _database.GetReference(path + query).GetValueAsync();
         yield return new WaitUntil(predicate: () => task.IsCompleted);
         if (task.Exception == null)
         {
@@ -126,10 +152,16 @@ public class DatabaseMgr : MonoBehaviour
             string result = task.Result.GetRawJsonValue();
             if (result != null)
             {
+                if (!lastDBFetchSuccess)
+                    lastDBFetchSuccess = true;
+
                 successCallback?.Invoke(result);
             }
             else
             {
+                if (lastDBFetchSuccess)
+                    lastDBFetchSuccess = false;
+
                 failCallback?.Invoke("Failed to fetch data.");
             }
         }
@@ -140,11 +172,11 @@ public class DatabaseMgr : MonoBehaviour
         }
     }
 
-    private IEnumerator Sequence_DBUpdate(DBQueryType type, string id, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
+    private IEnumerator Sequence_DBUpdate(DBQueryType type, string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         string path = SetPath(type);
 
-        var task = _database.GetReference(path + id).SetRawJsonValueAsync(JsonUtility.ToJson(data));
+        var task = _database.GetReference(path + query).SetRawJsonValueAsync(JsonUtility.ToJson(data));
         yield return new WaitUntil(predicate: () => task.IsCompleted);
 
         if (task.Exception == null)
@@ -172,7 +204,7 @@ public class DatabaseMgr : MonoBehaviour
         {
             NotificationMgr.Instance.Notify(failmsg);
         });
-                            
+
     }
 
     public void LoadPlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
@@ -187,5 +219,27 @@ public class DatabaseMgr : MonoBehaviour
         {
             failCallback?.Invoke(failmsg);
         });
+    }
+
+    public void SNSAuth(Credential credential, SimpleCallback successCallback, MessageCallback failCallback, string snsName)
+    {
+        StartCoroutine(Sequence_SNSLogin(credential, successCallback, failCallback, snsName));
+    }
+
+    private IEnumerator Sequence_SNSLogin(Credential credential, SimpleCallback successCallback, MessageCallback failCallback, string snsName)
+    {
+        var auth = FirebaseAuth.DefaultInstance;
+        var task = auth.SignInWithCredentialAsync(credential);
+        yield return new WaitUntil(predicate: () => task.IsCompleted);
+
+        if (task.Exception == null)
+        {
+            // success
+            successCallback?.Invoke();
+        }
+        else
+        {
+            failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+        }
     }
 }

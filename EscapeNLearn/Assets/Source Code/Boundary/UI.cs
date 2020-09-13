@@ -14,4 +14,28 @@ public abstract class UI : MonoBehaviour
             GameObject.DontDestroyOnLoad(obj);
         }
     }
+
+    protected virtual void Start()
+    {
+        StartCoroutine(AutoFetchData());
+    }
+
+    IEnumerator AutoFetchData()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (DatabaseMgr.Instance.IsLoggedIn && !DatabaseMgr.Instance.LastFBFetchSuccess)
+        {
+            NotificationMgr.Instance.NotifyLoad("Fetching data");
+            DatabaseMgr.Instance.LoadPlayerProfile(
+                delegate () // success
+                {
+                    NotificationMgr.Instance.StopLoad();
+                },
+                delegate (string failmsg)
+                {
+                    NotificationMgr.Instance.StopLoad();
+                    NotificationMgr.Instance.Notify(failmsg);
+                });
+        }
+    }
 }

@@ -6,22 +6,25 @@ using UnityEngine.UI;
 public enum NotifyType
 {
     Load,
-    Notice
+    Notice,
+    RequestTextInput
 }
 
 public class Notification
 {
     public SimpleCallback okCallback { get; private set; }
+    public MessageCallback textInputCallback { get; private set; }
     public SimpleCallback cancelCallback { get; private set; }
     public NotifyType type { get; private set; }
     public string text { get; private set; }
 
-    public Notification(NotifyType t, string tex, SimpleCallback ok, SimpleCallback cancel)
+    public Notification(NotifyType t, string tex, SimpleCallback ok, SimpleCallback cancel, MessageCallback input)
     {
         type = t;
         text = tex;
         okCallback = ok;
         cancelCallback = cancel;
+        textInputCallback = input;
     }
 }
 
@@ -54,48 +57,49 @@ public class NotificationMgr : MonoBehaviour // Singleton class
     private Button okButton = null;
     [SerializeField]
     private Button cancelButton = null;
+    [SerializeField]
+    private InputField input_text = null;
 
     public void Notify(string content = null, SimpleCallback okCallback = null, SimpleCallback cancelCallback = null)
     {
-        notificationList.Add(new Notification(NotifyType.Notice, content, okCallback, cancelCallback));
+        notificationList.Add(new Notification(NotifyType.Notice, content, okCallback, cancelCallback, null));
+        if (!notificationShowing)
+            ProcessNextNotification();
+    }
+
+    public void RequestTextInput(string content = null, MessageCallback inputTextCallback = null, SimpleCallback cancelCallback = null)
+    {
+        notificationList.Add(new Notification(NotifyType.RequestTextInput, content, null, cancelCallback, inputTextCallback));
         if (!notificationShowing)
             ProcessNextNotification();
     }
 
     public void NotifyLoad(string content = null, SimpleCallback okCallback = null)
     {
-        notificationList.Add(new Notification(NotifyType.Load, content, okCallback, null));
+        notificationList.Add(new Notification(NotifyType.Load, content, okCallback, null, null));
         if (!notificationShowing)
             ProcessNextNotification();
     }
 
     public void Btn_OK()
     {
-        if (cancelButton.gameObject.activeSelf)
-            cancelButton.gameObject.SetActive(false);
-        if (okButton.gameObject.activeSelf)
-            okButton.gameObject.SetActive(false);
-        notificationObjects.SetActive(false);
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        HideAll();
 
-        notificationShowing = false;
-
-        currentNotification.okCallback?.Invoke();
+        if (currentNotification.type == NotifyType.Notice)
+            currentNotification.okCallback?.Invoke();
+        else
+            currentNotification.textInputCallback?.Invoke(input_text.text);
 
         ProcessNextNotification();
     }
 
     public void Btn_Cancel()
     {
-        if (cancelButton.gameObject.activeSelf)
-            cancelButton.gameObject.SetActive(false);
-        if (okButton.gameObject.activeSelf)
-            okButton.gameObject.SetActive(false);
-        notificationObjects.SetActive(false);
-
-        notificationShowing = false;
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        HideAll();
 
         currentNotification.cancelCallback?.Invoke();
-
         ProcessNextNotification();
     }
 
@@ -106,40 +110,36 @@ public class NotificationMgr : MonoBehaviour // Singleton class
 
     private IEnumerator Sequence_Loading(string loadingText = "Loading")
     {
-        notificationShowing = true;
+        bool animate = true;
         int i = 0;
         string[] texts = new string[4];
         texts[0] = loadingText + ".";
         texts[1] = loadingText + "..";
         texts[2] = loadingText + "...";
         texts[3] = loadingText + "....";
-        float stopLoadDelay = 0.5f;
+        int stopLoadDelay = 3;
 
-        while (notificationShowing)
+        while (animate)
         {
             txt_content.text = texts[i];
             i++;
             if (i >= texts.Length)
                 i = 0;
 
-            if (stopLoadIterator != 0)
+            if (stopLoadIterator > 0)
             {
-                stopLoadDelay -= textDelay * 500 * Time.deltaTime;
+                stopLoadDelay--;
                 if (stopLoadDelay <= 0)
                 {
-                    notificationShowing = false;
+                    animate = false;
                 }
             }
 
             yield return new WaitForSeconds(textDelay);
         }
 
-        if (cancelButton.gameObject.activeSelf)
-            cancelButton.gameObject.SetActive(false);
-        if (okButton.gameObject.activeSelf)
-            okButton.gameObject.SetActive(false);
-        notificationObjects.SetActive(false);
-        notificationShowing = false;
+
+        HideAll();
         stopLoadIterator--;
         currentNotification.okCallback?.Invoke();
         ProcessNextNotification();
@@ -165,16 +165,38 @@ public class NotificationMgr : MonoBehaviour // Singleton class
                     break;
                 case NotifyType.Notice:
                     txt_content.text = currentNotification.text;
-                        okButton.gameObject.SetActive(true);
+                    okButton.gameObject.SetActive(true);
                     if (currentNotification.cancelCallback != null)
                         cancelButton.gameObject.SetActive(true);
+                    break;
+                case NotifyType.RequestTextInput:
+                    txt_content.text = currentNotification.text;
+                    okButton.gameObject.SetActive(true);
+                    if (currentNotification.cancelCallback != null)
+                        cancelButton.gameObject.SetActive(true);
+
+                    input_text.text = "";
+                    input_text.gameObject.SetActive(true);
                     break;
             }
             notificationId++;
             notificationObjects.SetActive(true);
             notificationShowing = true;
         }
+        else
+        {
+            notificationShowing = false;
+        }
     }
 
-    
+    void HideAll()
+    {
+        if (cancelButton.gameObject.activeSelf)
+            cancelButton.gameObject.SetActive(false);
+        if (okButton.gameObject.activeSelf)
+            okButton.gameObject.SetActive(false);
+        if (input_text.gameObject.activeSelf)
+            input_text.gameObject.SetActive(false);
+        notificationObjects.SetActive(false);
+    }
 }

@@ -20,7 +20,7 @@ public class LoginScreen : UI
     private InputField input_loginPassword;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         StartCoroutine(Autologin());
     }
@@ -29,20 +29,32 @@ public class LoginScreen : UI
     {
         yield return new WaitForSeconds(0.5f);
         // Check if user is already logged in
-        if (DatabaseMgr.Instance.IsSignedIn)
+        if (DatabaseMgr.Instance.IsLoggedIn)
         {
-            VerifyAndTransitToMenu();
+            bool verify = true;
+            foreach (string str in DatabaseMgr.Instance.LoginTypes)
+            {
+                if (str != "password")
+                    verify = false;
+
+                Debug.Log("Providerid: " + str);
+            }
+
+            VerifyAndTransitToMenu(verify);
         }
     }
 
     public void Btn_ShowSignUp(bool flag)
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         panel_signup.SetActive(flag);
         input_signUpEmail.text = input_password1.text = input_password2.text = "";
     }
 
     public void Btn_Login()
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+
         if (string.IsNullOrEmpty(input_loginEmail.text)) // empty email
         {
             NotificationMgr.Instance.Notify("Email cannot be empty.");
@@ -72,6 +84,8 @@ public class LoginScreen : UI
 
     public void Btn_SignUp()
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+
         if (string.IsNullOrEmpty(input_signUpEmail.text)) // empty email
         {
             NotificationMgr.Instance.Notify("Email cannot be empty.");
@@ -109,58 +123,91 @@ public class LoginScreen : UI
         });
     }
 
-    private void VerifyAndTransitToMenu()
+    public void Btn_FBLogin()
     {
-        if (DatabaseMgr.Instance.IsEmailVerified) // check for verified email
+        NotificationMgr.Instance.NotifyLoad("Logging in via Facebook...");
+        DatabaseMgr.Instance.FacebookLogin(
+        delegate () // success
         {
-                NotificationMgr.Instance.NotifyLoad("Fetching profile");
-                DatabaseMgr.Instance.LoadPlayerProfile(
-                delegate () // success
+            NotificationMgr.Instance.StopLoad();
+            VerifyAndTransitToMenu(false); // don't verify email
+        },
+        delegate (string failmsg) // failed
+        {
+            NotificationMgr.Instance.StopLoad();
+            NotificationMgr.Instance.Notify(failmsg);
+        });
+    }
+
+    private void VerifyAndTransitToMenu(bool checkEmailVerified = true)
+    {
+        if (checkEmailVerified)
+        {
+            if (!DatabaseMgr.Instance.IsEmailVerified) // check for verified email
+            {
+                if (DatabaseMgr.Instance.IsLoggedIn)
+                    DatabaseMgr.Instance.Logout();
+
+                NotificationMgr.Instance.Notify("Before you can login, you must verify your email first by clicking on the link sent! Remember to check your junk folder.");
+                return;
+            }
+        }
+
+        NotificationMgr.Instance.NotifyLoad("Fetching profile");
+        DatabaseMgr.Instance.LoadPlayerProfile(
+        delegate () // success
+        {
+            NotificationMgr.Instance.StopLoad();
+            // transit to menu screen
+            TransitMgr.Instance.Fade(delegate ()
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+                TransitMgr.Instance.Emerge();
+            });
+        },
+        delegate (string failmsg) // failed
+        {
+            NotificationMgr.Instance.StopLoad();
+            NotificationMgr.Instance.Notify(failmsg + "\n\nCreate new profile?",
+            delegate () // ok pressed
+            {
+                NotificationMgr.Instance.RequestTextInput("Enter a name/nickname.",
+                delegate (string input) // ok pressed
                 {
-                    NotificationMgr.Instance.StopLoad();
-                    // transit to menu screen
-                    TransitMgr.Instance.Fade(delegate ()
+                    // create profile
+                    ProfileMgr.Instance.localProfile.name = input; // set name
+
+                    NotificationMgr.Instance.NotifyLoad("Creating profile");
+                    DatabaseMgr.Instance.SavePlayerProfile(
+                    delegate () // success
                     {
-                        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
-                        TransitMgr.Instance.Emerge();
+
+                        NotificationMgr.Instance.StopLoad();
+
+                        // transit to menu screen
+                        TransitMgr.Instance.Fade(delegate ()
+                        {
+                            UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+                            TransitMgr.Instance.Emerge();
+                        });
+                    },
+                    delegate (string failmsg2) // failed to create profile
+                    {
+                        NotificationMgr.Instance.Notify(failmsg2);
                     });
                 },
-                delegate (string failmsg) // failed
+                delegate () // cancelled - don't create profile, sign out
                 {
-                    NotificationMgr.Instance.StopLoad();
-                    NotificationMgr.Instance.Notify(failmsg + "\n\nCreate new profile?",
-                    delegate() // ok pressed
-                    {
-                        // create profile
-                        NotificationMgr.Instance.NotifyLoad("Creating profile");
-                        DatabaseMgr.Instance.SavePlayerProfile(
-                        delegate () // success
-                        {
-                            NotificationMgr.Instance.StopLoad();
-
-                            // transit to menu screen
-                            TransitMgr.Instance.Fade(delegate ()
-                            {
-                                UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
-                                TransitMgr.Instance.Emerge();
-                            });
-                        },
-                        delegate (string failmsg2) // failed to create profile
-                        {
-                            NotificationMgr.Instance.Notify(failmsg2);
-                        });
-                    },               
-                    delegate() // cancel pressed
-                    {
-                        // nothing
-                    });
+                    if (DatabaseMgr.Instance.IsLoggedIn)
+                        DatabaseMgr.Instance.Logout();
                 });
-         }
-        else
-        {
-            DatabaseMgr.Instance.SignOut();
-            NotificationMgr.Instance.Notify("Before you can login, you must verify your email first by clicking on the link sent! Remember to check your junk folder.");
-        }
-       
+            },
+            delegate () // cancel pressed - don't create profile, sign out
+            {
+                if (DatabaseMgr.Instance.IsLoggedIn)
+                    DatabaseMgr.Instance.Logout();
+            });
+        });
+
     }
 }
