@@ -4,12 +4,7 @@ using UnityEngine;
 using Firebase.Auth;
 using System.Collections;
 using System.Collections.Generic;
-
-public enum DBQueryType
-{
-    Profile,
-    Session
-}
+using Facebook.Unity;
 
 public class DatabaseMgr : MonoBehaviour
 {
@@ -29,24 +24,25 @@ public class DatabaseMgr : MonoBehaviour
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(continuationAction: task =>
         {
             _database = FirebaseDatabase.DefaultInstance;
-            Debug.Log("DatabaseMgr: Firebase init success");
+            Debug.Log("Firebase Init success");
         });
 
-        // init LoginAPIs
-        _facebookapi.Initialise();
+        // init facebook sdk
+        FB.Init(delegate ()
+        {
+            Debug.Log("FB Init Success");
+        });
     }
+
     // Private variables
     private FirebaseDatabase _database;
-    private LoginAPI _currentapi;
-    private FacebookLoginAPI _facebookapi = new FacebookLoginAPI();
-    private bool lastDBFetchSuccess = false;
+    private APILinker _apiLinker;
 
-    // Public variables
+    // Public variables, can be accessed from UI classes
     public string Id { get { return FirebaseAuth.DefaultInstance.CurrentUser.UserId; } private set { } }
     public bool IsEmailVerified { get { return FirebaseAuth.DefaultInstance.CurrentUser.IsEmailVerified; } private set { } }
     public string Email { get { return FirebaseAuth.DefaultInstance.CurrentUser.Email; } private set { } }
     public bool IsLoggedIn { get { return (FirebaseAuth.DefaultInstance.CurrentUser != null); } private set { } }
-
     public List <string> LoginTypes {
         get
         {
@@ -59,42 +55,125 @@ public class DatabaseMgr : MonoBehaviour
         }
         private set { } }
 
-    public bool LastFBFetchSuccess { get { return lastDBFetchSuccess; } private set { } }
-
-
-    private string SetPath(DBQueryType type)
-    {
-        switch (type)
-        {
-            case DBQueryType.Profile:
-                return DBConstants.PATH_PROFILE;
-            case DBQueryType.Session:
-                return DBConstants.PATH_SESSION;
-            default:
-                return "unknown/";
-        }
-    }
+    // Logout from firebase account
+    // Can be directly called from UI classes
     public void Logout()
     {
         FirebaseAuth.DefaultInstance.SignOut();
     }
 
-    public void FacebookLogin(SimpleCallback successCallback, MessageCallback failCallback)
+    // Can be directly called from UI classes, pass in success and failure delegate methods to specify your desired action for each case
+    public void SNSLogin(SNSType provider, SimpleCallback successCallback, MessageCallback failCallback)
     {
-        _currentapi = _facebookapi;
-        _currentapi.Authenticate(successCallback, failCallback);
+        switch (provider)
+        {
+            case SNSType.Facebook:
+                _apiLinker = new FBAPILinker();
+                break;
+            default:
+                failCallback?.Invoke("Provider error");
+                return;
+        }
+
+        _apiLinker.Authenticate(successCallback, failCallback);
     }
 
+    // Can be directly called from UI classes, pass in success and failure methods to specify your desired action for each case
     public void EmailRegister(string email, string pw, SimpleCallback passcb, MessageCallback failcb)
     {
         StartCoroutine(Sequence_EmailRegister(email, pw, passcb, failcb));
     }
 
+    // Can be directly called from UI classes, pass in success and failure delegate methods to specify your desired action for each case
     public void EmailLogin(string email, string pw, SimpleCallback passcb, MessageCallback failcb)
     {
         StartCoroutine(Sequence_EmailLogin(email, pw, passcb, failcb));
     }
 
+    // Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    public void DBFetch(DBQueryType type, string query, MessageCallback successCallback = null, MessageCallback failCallback = null)
+    {
+        StartCoroutine(Sequence_DBFetch(type, query, successCallback, failCallback));
+    }
+
+    // Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    public void DBUpdate(DBQueryType type, string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
+    {
+        StartCoroutine(Sequence_DBUpdate(type, query, data, successCallback, failCallback));
+    }
+
+    // Used by LoginAPIs, no need to be called directly in UI classes
+    public void ProcessSNSLogin(Credential credential, SimpleCallback successCallback, MessageCallback failCallback)
+    {
+        StartCoroutine(Sequence_SNSLogin(credential, successCallback, failCallback));
+    }
+
+    // Private coroutines used in the above methods
+
+    // For DBFetch
+    private IEnumerator Sequence_DBFetch(DBQueryType type, string query, MessageCallback successCallback = null, MessageCallback failCallback = null)
+    {
+        string path = DBConstants.SetPath(type);
+        var task = _database.GetReference(path + query).GetValueAsync();
+        yield return new WaitUntil(predicate: () => task.IsCompleted);
+        if (task.Exception == null)
+        {
+            // success
+            string result = task.Result.GetRawJsonValue();
+            if (result != null)
+            {
+                successCallback?.Invoke(result);
+            }
+            else
+            {
+                failCallback?.Invoke("Failed to fetch data.");
+            }
+        }
+        else
+        {
+            // failed
+            failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+        }
+    }
+
+    // For DBUpdate
+    private IEnumerator Sequence_DBUpdate(DBQueryType type, string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
+    {
+        string path = DBConstants.SetPath(type);
+
+        var task = _database.GetReference(path + query).SetRawJsonValueAsync(JsonUtility.ToJson(data));
+        yield return new WaitUntil(predicate: () => task.IsCompleted);
+
+        if (task.Exception == null)
+        {
+            // success
+            successCallback?.Invoke();
+        }
+        else
+        {
+            // failed
+            failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+        }
+    }
+
+    // For ProcessSNSLogin
+    private IEnumerator Sequence_SNSLogin(Credential credential, SimpleCallback successCallback, MessageCallback failCallback)
+    {
+        var auth = FirebaseAuth.DefaultInstance;
+        var task = auth.SignInWithCredentialAsync(credential);
+        yield return new WaitUntil(predicate: () => task.IsCompleted);
+
+        if (task.Exception == null) // success
+        {
+            successCallback?.Invoke();
+        }
+        else // failed
+        {
+            failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+        }
+    }
+
+    // For EmailRegister
     private IEnumerator Sequence_EmailRegister(string email, string pw, SimpleCallback successCallback, MessageCallback failCallback)
     {
         var auth = FirebaseAuth.DefaultInstance;
@@ -115,6 +194,7 @@ public class DatabaseMgr : MonoBehaviour
         }
     }
 
+    // For EmailLogin
     private IEnumerator Sequence_EmailLogin(string email, string pw, SimpleCallback successCallback, MessageCallback failCallback)
     {
         var auth = FirebaseAuth.DefaultInstance;
@@ -123,118 +203,6 @@ public class DatabaseMgr : MonoBehaviour
 
         if (task.Exception == null)
         {
-            successCallback?.Invoke();
-        }
-        else
-        {
-            failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-        }
-    }
-
-    public void DBFetch(DBQueryType type, string query, MessageCallback successCallback = null, MessageCallback failCallback = null)
-    {
-        StartCoroutine(Sequence_DBFetch(type, query, successCallback, failCallback));
-    }
-
-    public void DBUpdate(DBQueryType type, string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
-    {
-        StartCoroutine(Sequence_DBUpdate(type, query, data, successCallback, failCallback));
-    }
-
-    private IEnumerator Sequence_DBFetch(DBQueryType type, string query, MessageCallback successCallback = null, MessageCallback failCallback = null)
-    {
-        string path = SetPath(type);
-        var task = _database.GetReference(path + query).GetValueAsync();
-        yield return new WaitUntil(predicate: () => task.IsCompleted);
-        if (task.Exception == null)
-        {
-            // success
-            string result = task.Result.GetRawJsonValue();
-            if (result != null)
-            {
-                if (!lastDBFetchSuccess)
-                    lastDBFetchSuccess = true;
-
-                successCallback?.Invoke(result);
-            }
-            else
-            {
-                if (lastDBFetchSuccess)
-                    lastDBFetchSuccess = false;
-
-                failCallback?.Invoke("Failed to fetch data.");
-            }
-        }
-        else
-        {
-            // failed
-            failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-        }
-    }
-
-    private IEnumerator Sequence_DBUpdate(DBQueryType type, string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
-    {
-        string path = SetPath(type);
-
-        var task = _database.GetReference(path + query).SetRawJsonValueAsync(JsonUtility.ToJson(data));
-        yield return new WaitUntil(predicate: () => task.IsCompleted);
-
-        if (task.Exception == null)
-        {
-            // success
-            successCallback?.Invoke();
-        }
-        else
-        {
-            // failed
-            failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-        }
-    }
-
-    public void SavePlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
-    {
-        // save profile
-        DatabaseMgr.Instance.DBUpdate(DBQueryType.Profile, DatabaseMgr.Instance.Id,
-        ProfileMgr.Instance.localProfile,
-        delegate () // success
-        {
-            successCallback?.Invoke();
-        },
-        delegate (string failmsg) // failed
-        {
-            NotificationMgr.Instance.Notify(failmsg);
-        });
-
-    }
-
-    public void LoadPlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
-    {
-        DatabaseMgr.Instance.DBFetch(DBQueryType.Profile, DatabaseMgr.Instance.Id,
-        delegate (string result) // success
-        {
-            ProfileMgr.Instance.localProfile = JsonUtility.FromJson<Profile>(result);
-            successCallback?.Invoke();
-        },
-        delegate (string failmsg) // failed
-        {
-            failCallback?.Invoke(failmsg);
-        });
-    }
-
-    public void SNSAuth(Credential credential, SimpleCallback successCallback, MessageCallback failCallback, string snsName)
-    {
-        StartCoroutine(Sequence_SNSLogin(credential, successCallback, failCallback, snsName));
-    }
-
-    private IEnumerator Sequence_SNSLogin(Credential credential, SimpleCallback successCallback, MessageCallback failCallback, string snsName)
-    {
-        var auth = FirebaseAuth.DefaultInstance;
-        var task = auth.SignInWithCredentialAsync(credential);
-        yield return new WaitUntil(predicate: () => task.IsCompleted);
-
-        if (task.Exception == null)
-        {
-            // success
             successCallback?.Invoke();
         }
         else

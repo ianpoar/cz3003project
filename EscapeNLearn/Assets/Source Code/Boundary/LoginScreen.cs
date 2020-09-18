@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class LoginScreen : UI
+public class LoginScreen : Screen
 {
     [SerializeField]
     private GameObject panel_signup;
@@ -19,31 +19,14 @@ public class LoginScreen : UI
     [SerializeField]
     private InputField input_loginPassword;
 
-    // Start is called before the first frame update
+    // Start of login screen
     protected override void Start()
     {
+        // Run autologin
         StartCoroutine(Autologin());
     }
 
-    private IEnumerator Autologin()
-    {
-        yield return new WaitForSeconds(0.5f);
-        // Check if user is already logged in
-        if (DatabaseMgr.Instance.IsLoggedIn)
-        {
-            bool verify = true;
-            foreach (string str in DatabaseMgr.Instance.LoginTypes)
-            {
-                if (str != "password")
-                    verify = false;
-
-                Debug.Log("Providerid: " + str);
-            }
-
-            VerifyAndTransitToMenu(verify);
-        }
-    }
-
+    // Button to show sign up panel pressed
     public void Btn_ShowSignUp(bool flag)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -51,6 +34,7 @@ public class LoginScreen : UI
         input_signUpEmail.text = input_password1.text = input_password2.text = "";
     }
 
+    // Login button pressed
     public void Btn_Login()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -82,6 +66,7 @@ public class LoginScreen : UI
         });
     }
 
+    // Sign up button pressed
     public void Btn_SignUp()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -123,10 +108,12 @@ public class LoginScreen : UI
         });
     }
 
+    // FBLogin button pressed
     public void Btn_FBLogin()
     {
         NotificationMgr.Instance.NotifyLoad("Logging in via Facebook...");
-        DatabaseMgr.Instance.FacebookLogin(
+        DatabaseMgr.Instance.SNSLogin(
+        SNSType.Facebook,
         delegate () // success
         {
             NotificationMgr.Instance.StopLoad();
@@ -139,11 +126,13 @@ public class LoginScreen : UI
         });
     }
 
+    // Transit to menu screen
     private void VerifyAndTransitToMenu(bool checkEmailVerified = true)
     {
+        // check for verified email
         if (checkEmailVerified)
         {
-            if (!DatabaseMgr.Instance.IsEmailVerified) // check for verified email
+            if (!DatabaseMgr.Instance.IsEmailVerified) // if email is not verified, prevent login
             {
                 if (DatabaseMgr.Instance.IsLoggedIn)
                     DatabaseMgr.Instance.Logout();
@@ -153,9 +142,10 @@ public class LoginScreen : UI
             }
         }
 
+        // Fetch player profile
         NotificationMgr.Instance.NotifyLoad("Fetching profile");
-        DatabaseMgr.Instance.LoadPlayerProfile(
-        delegate () // success
+        ProfileMgr.Instance.LoadPlayerProfile(
+        delegate () // successfully fetched
         {
             NotificationMgr.Instance.StopLoad();
             // transit to menu screen
@@ -165,7 +155,7 @@ public class LoginScreen : UI
                 TransitMgr.Instance.Emerge();
             });
         },
-        delegate (string failmsg) // failed
+        delegate (string failmsg) // failed to fetch an existing profile, need to create one
         {
             NotificationMgr.Instance.StopLoad();
             NotificationMgr.Instance.Notify(failmsg + "\n\nCreate new profile?",
@@ -178,10 +168,9 @@ public class LoginScreen : UI
                     ProfileMgr.Instance.localProfile.name = input; // set name
 
                     NotificationMgr.Instance.NotifyLoad("Creating profile");
-                    DatabaseMgr.Instance.SavePlayerProfile(
+                    ProfileMgr.Instance.SavePlayerProfile(
                     delegate () // success
                     {
-
                         NotificationMgr.Instance.StopLoad();
 
                         // transit to menu screen
@@ -202,12 +191,36 @@ public class LoginScreen : UI
                         DatabaseMgr.Instance.Logout();
                 });
             },
-            delegate () // cancel pressed - don't create profile, sign out
+            delegate () // cancelled - don't create profile, sign out
             {
                 if (DatabaseMgr.Instance.IsLoggedIn)
                     DatabaseMgr.Instance.Logout();
             });
         });
 
+    }
+
+    private IEnumerator Autologin()
+    {
+        // Delay for sdks to initialise
+        yield return new WaitForSeconds(0.5f);
+
+        // If user has already logged in before
+        if (DatabaseMgr.Instance.IsLoggedIn)
+        {
+            bool verify = true;
+
+            // Check login types
+            foreach (string str in DatabaseMgr.Instance.LoginTypes)
+            {
+                if (str != "password") // If user was authenticated by SNS
+                    verify = false; // Don't check for a verified email
+
+                Debug.Log("Providerid: " + str);
+            }
+
+            // Transit to menu
+            VerifyAndTransitToMenu(verify);
+        }
     }
 }

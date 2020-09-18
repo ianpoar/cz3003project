@@ -21,11 +21,16 @@ public class TransitMgr : MonoBehaviour // Singleton
     [SerializeField]
     private Image bg;
 
+    // Private variables
+    private float speed = 1.5f;
+
+    // Call this in UI classes when you want to hide the current screen
     public void Fade(SimpleCallback cb = null)
     {
         StartCoroutine(Sequence_Transit(true, cb));
     }
 
+    // Call this in UI classes when you want to show the current screen
     public void Emerge(SimpleCallback cb = null)
     {
         StartCoroutine(Sequence_Transit(false, cb));
@@ -49,7 +54,7 @@ public class TransitMgr : MonoBehaviour // Singleton
 
         while (emerging) // mask alpha goes from 1 to 0
         {
-            alpha -= Time.deltaTime * 3;
+            alpha -= Time.deltaTime * speed;
             if (alpha <= 0)
             {
                 alpha = 0;
@@ -62,7 +67,7 @@ public class TransitMgr : MonoBehaviour // Singleton
 
         while (fading) // mask alpha goes from 0 to 1
         {
-            alpha += Time.deltaTime * 3;
+            alpha += Time.deltaTime * speed;
             if (alpha >= 1)
             {
                 alpha = 1;

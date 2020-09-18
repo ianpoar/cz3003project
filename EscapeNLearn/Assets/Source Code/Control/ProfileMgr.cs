@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Firebase.Auth;
 
+// Data saved/loaded from firebase db
 public class Profile
 {
     public string name = "Unknown";
@@ -26,4 +27,37 @@ public class ProfileMgr : MonoBehaviour // Singleton class
 
     // Public variables
     public Profile localProfile = new Profile();
+
+    // Save player data to firebase db
+    // Can be directly called from UI classes, pass in success and failure delegate methods to specify your desired action for each case
+    public void SavePlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
+    {
+        // save profile
+        DatabaseMgr.Instance.DBUpdate(DBQueryType.Load_Save_Profile, DatabaseMgr.Instance.Id,
+        localProfile,
+        delegate () // success
+        {
+            successCallback?.Invoke();
+        },
+        delegate (string failmsg) // failed
+        {
+            NotificationMgr.Instance.Notify(failmsg);
+        });
+    }
+
+    // Load player data from firebase db
+    // Can be directly called from UI classes, pass in success and failure delegate methods to specify your desired action for each case
+    public void LoadPlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
+    {
+        DatabaseMgr.Instance.DBFetch(DBQueryType.Load_Save_Profile, DatabaseMgr.Instance.Id,
+        delegate (string result) // success
+        {
+            localProfile = JsonUtility.FromJson<Profile>(result);
+            successCallback?.Invoke();
+        },
+        delegate (string failmsg) // failed
+        {
+            failCallback?.Invoke(failmsg);
+        });
+    }
 }

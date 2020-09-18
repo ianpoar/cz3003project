@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Firebase.Auth;
 
-public class MenuScreen : UI
+public class MenuScreen : Screen
 {
     // References
     [SerializeField]
@@ -18,17 +18,25 @@ public class MenuScreen : UI
     [SerializeField]
     private Button btn_logout;
 
+    // Start of menu screen
     protected override void Start()
     {
+        // Call parent start
         base.Start();
-        if (DatabaseMgr.Instance.IsLoggedIn && ProfileMgr.Instance.localProfile.accountType == "Instructor") // enable instructor options
+        
+        // If user is logged in and is an instructor
+        if (DatabaseMgr.Instance.IsLoggedIn && ProfileMgr.Instance.localProfile.accountType == "Instructor")
         {
+            // show instructor UI
             foreach (GameObject obj in objects_instructorOnly)
                 obj.SetActive(true);
         }
+
+        // Play BGM
         AudioMgr.Instance.PlayBGM(AudioConstants.BGM_PERCEPTION);
     }
 
+    // Button to show profile pressed
     public void Btn_ShowProfile(bool show)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -41,7 +49,79 @@ public class MenuScreen : UI
         panel_profileinfo.SetActive(show);
     }
 
-    void RefreshProfileInfo()
+    // Button to show settings pressed
+    public void Btn_ShowSettings(bool show)
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        panel_settings.SetActive(show);
+    }
+
+    // Logout button at settings panel pressed
+    public void Btn_Logout()
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+
+        if (DatabaseMgr.Instance.IsLoggedIn)
+            DatabaseMgr.Instance.Logout();
+
+        TransitMgr.Instance.Fade(delegate ()
+        {
+            AudioMgr.Instance.StopBGM();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Login");
+            TransitMgr.Instance.Emerge();
+        });
+    }
+
+    // Play Normal button pressed, to be implemented
+    public void Btn_PlayNormal()
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+
+        NotificationMgr.Instance.RequestTextInput("Enter Session ID: ",
+        delegate (string input)
+        {
+            // use session ID to do something - to be implemented
+        },
+        delegate () // cancel
+        {
+            // do nth
+        });
+    }
+
+    // Example for Aru
+    public void Btn_FBLink()
+    {
+        NotificationMgr.Instance.NotifyLoad("Linking Fb");
+        DatabaseMgr.Instance.SNSLogin(
+        SNSType.Facebook,
+        delegate () // success
+        {
+            // link here
+        },
+        delegate (string failmsg) // failed
+        {
+            NotificationMgr.Instance.StopLoad();
+            NotificationMgr.Instance.Notify(failmsg);
+        });
+    }
+
+    // Placeholder function that increments a value in the player's profile data and saves it to firebase db
+    // Can be used as a reference for modifying user data and saving it to db
+    public void Btn_TestAddEXP()
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+
+        if (!DatabaseMgr.Instance.IsLoggedIn)
+            return;
+
+        ProfileMgr.Instance.localProfile.accountExp++;
+        ProfileMgr.Instance.SavePlayerProfile();
+        RefreshProfileInfo();
+    }
+
+    // Placeholder function that displays some debug text in settings panel
+    // Can be used as a reference for accessing user data such as login type etc.
+    private void RefreshProfileInfo()
     {
         txt_info.text = ""; // reset
 
@@ -77,53 +157,5 @@ public class MenuScreen : UI
 
             btn_logout.interactable = false;
         }
-    }
-
-    public void Btn_ShowSettings(bool show)
-    {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        panel_settings.SetActive(show);
-    }
-
-    public void Btn_Logout()
-    {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-
-        if (DatabaseMgr.Instance.IsLoggedIn)
-            DatabaseMgr.Instance.Logout();
-
-        TransitMgr.Instance.Fade(delegate ()
-        {
-            AudioMgr.Instance.StopBGM();
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Login");
-            TransitMgr.Instance.Emerge();
-        });
-    }
-
-    public void Btn_TestAddEXP()
-    {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-
-        if (!DatabaseMgr.Instance.IsLoggedIn)
-            return;
-
-        ProfileMgr.Instance.localProfile.accountExp++;
-        DatabaseMgr.Instance.SavePlayerProfile();
-        RefreshProfileInfo();
-    }
-
-    public void Btn_PlayNormal()
-    {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-
-        NotificationMgr.Instance.RequestTextInput("Enter Session ID: ",
-        delegate (string input)
-        {
-            // use session ID to do something - to be implemented
-        },
-        delegate () // cancel
-        {
-            // do nth
-        });
     }
 }

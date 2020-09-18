@@ -4,55 +4,61 @@ using UnityEngine;
 using Facebook.Unity;
 using Firebase.Auth;
 
-public class FacebookLoginAPI : LoginAPI
+public class FBAPILinker : APILinker
 {
     public override void Authenticate(SimpleCallback successCallback, MessageCallback failCallback)
     {
         if (!FB.IsInitialized)
         {
             failCallback?.Invoke("The FB sdk is not initialised yet.");
+            // init facebook sdk
+            FB.Init(delegate ()
+            {
+                Debug.Log("FB.Init Success");
+            });
             return;
         }
 
-        FB.LogInWithReadPermissions(new List<string>() { "public_profile", "email", "user_friends" },
+        FB.LogInWithReadPermissions(new List<string>() { "email" },
         delegate (ILoginResult result)
         {
             bool error = false;
             string msg = "";
-            if (result == null)
+
+            if (result == null) // null result error
             {
                 error = true;
                 msg = "Null Result";
             }
             else
             {
-                if (!string.IsNullOrEmpty(result.Error))
+                if (!string.IsNullOrEmpty(result.Error)) // error exists
                 {
                     error = true;
                     msg = result.Error;
                 }
-                else if (result.Cancelled)
+                else if (result.Cancelled) // login cancelled
                 {
                     error = true;
                     msg = "Cancelled Response:\n" + result.RawResult;
                 }
-                else if (!string.IsNullOrEmpty(result.RawResult)) // sucessful login, create credential and pass to DBMgr
+                else if (!string.IsNullOrEmpty(result.RawResult)) // sucessful login, connect to firebase
                 {
                     error = false;
-                    msg = AccessToken.CurrentAccessToken.TokenString;
-                    Credential credential = FacebookAuthProvider.GetCredential(msg);
-                    DatabaseMgr.Instance.SNSAuth(credential, successCallback, failCallback, "Facebook");
+
+                    Credential credential = FacebookAuthProvider.GetCredential(AccessToken.CurrentAccessToken.TokenString);
+                    LoginToDB(credential, successCallback, failCallback);
                 }
-                else
+                else // rawresult empty
                 {
                     error = true;
-                    msg = "Empty Response\n";
+                    msg = "Empty RawResult\n";
                 }
             }
 
-            if (error)
+            if (error) // if error encountered
             {
-                failCallback?.Invoke(msg);
+                failCallback?.Invoke(msg); // invoke failure method
             }
 
         });
@@ -67,7 +73,7 @@ public class FacebookLoginAPI : LoginAPI
                 IDictionary data = picResult.ResultDictionary["data"] as IDictionary;
                 string photoURL = data["url"] as string;
 
-                DatabaseMgr.Instance.StartCoroutine(fetchProfilePic(photoURL, successCallback, failCallback));
+                ProfileMgr.Instance.StartCoroutine(fetchProfilePic(photoURL, successCallback, failCallback));
             }
             else
             {
@@ -84,18 +90,5 @@ public class FacebookLoginAPI : LoginAPI
             successCallback?.Invoke(www.texture); // return Texture2D
         else
             failCallback?.Invoke(www.error);
-    }
-
-    public override void Initialise()
-    {
-        // init facebook sdk
-        FB.Init(delegate ()
-        {
-            Debug.Log("FB.Init Success");
-        },
-        delegate (bool isGameShown)
-        {
-
-        });
     }
 }

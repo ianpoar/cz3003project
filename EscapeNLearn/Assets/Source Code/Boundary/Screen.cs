@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UI : MonoBehaviour
+public abstract class Screen : MonoBehaviour
 {
     // Start is called before the first frame update
     protected virtual void Awake()
@@ -17,24 +17,24 @@ public abstract class UI : MonoBehaviour
 
     protected virtual void Start()
     {
+        // Fetch data without displaying notifications
         StartCoroutine(AutoFetchData());
     }
 
     IEnumerator AutoFetchData()
     {
         yield return new WaitForSeconds(0.5f);
-        if (DatabaseMgr.Instance.IsLoggedIn && !DatabaseMgr.Instance.LastFBFetchSuccess)
+        if (DatabaseMgr.Instance.IsLoggedIn)
         {
-            NotificationMgr.Instance.NotifyLoad("Fetching data");
-            DatabaseMgr.Instance.LoadPlayerProfile(
+            Debug.Log("AutoFetchData run");
+            ProfileMgr.Instance.LoadPlayerProfile(
                 delegate () // success
                 {
-                    NotificationMgr.Instance.StopLoad();
+                    Debug.Log("AutoFetchData success");
                 },
                 delegate (string failmsg)
                 {
-                    NotificationMgr.Instance.StopLoad();
-                    NotificationMgr.Instance.Notify(failmsg);
+                    Debug.Log("AutoFetchData failed");
                 });
         }
     }
