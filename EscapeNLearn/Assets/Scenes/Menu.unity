@@ -512,6 +512,7 @@ MonoBehaviour:
   panel_settings: {fileID: 692539201}
   txt_info: {fileID: 1994836165}
   btn_logout: {fileID: 694185840}
+  profilePic: {fileID: 503373102}
 --- !u!4 &223974228
 Transform:
   m_ObjectHideFlags: 0

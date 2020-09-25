@@ -24,6 +24,7 @@ public class LoginScreen : Screen
     {
         // Run autologin
         StartCoroutine(Autologin());
+        AudioMgr.Instance.PlayBGM(AudioConstants.BGM_CLEARDAY);
     }
 
     // Button to show sign up panel pressed
@@ -113,7 +114,7 @@ public class LoginScreen : Screen
     {
         NotificationMgr.Instance.NotifyLoad("Logging in via Facebook...");
         DatabaseMgr.Instance.SNSLogin(
-        SNSType.Facebook,
+        LoginTypeConstants.FACEBOOK,
         delegate () // success
         {
             NotificationMgr.Instance.StopLoad();
@@ -149,11 +150,7 @@ public class LoginScreen : Screen
         {
             NotificationMgr.Instance.StopLoad();
             // transit to menu screen
-            TransitMgr.Instance.Fade(delegate ()
-            {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
-                TransitMgr.Instance.Emerge();
-            });
+            TransitMgr.Instance.FadeToScene(SceneConstants.SCENE_MENU);
         },
         delegate (string failmsg) // failed to fetch an existing profile, need to create one
         {
@@ -174,11 +171,7 @@ public class LoginScreen : Screen
                         NotificationMgr.Instance.StopLoad();
 
                         // transit to menu screen
-                        TransitMgr.Instance.Fade(delegate ()
-                        {
-                            UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
-                            TransitMgr.Instance.Emerge();
-                        });
+                        TransitMgr.Instance.FadeToScene(SceneConstants.SCENE_MENU);
                     },
                     delegate (string failmsg2) // failed to create profile
                     {
@@ -213,9 +206,11 @@ public class LoginScreen : Screen
             // Check login types
             foreach (string str in DatabaseMgr.Instance.LoginTypes)
             {
-                if (str != "password") // If user was authenticated by SNS
+                if (str == LoginTypeConstants.FACEBOOK) // If user was authenticated by Facebook
+                {
                     verify = false; // Don't check for a verified email
-
+                    DatabaseMgr.Instance.SNSLogin(LoginTypeConstants.FACEBOOK, null, null, true); // sns login to facebook without actually going through auth
+                }
                 Debug.Log("Providerid: " + str);
             }
 

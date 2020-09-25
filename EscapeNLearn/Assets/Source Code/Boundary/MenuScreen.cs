@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Firebase.Auth;
 
 public class MenuScreen : Screen
 {
@@ -17,23 +16,22 @@ public class MenuScreen : Screen
     private Text txt_info;
     [SerializeField]
     private Button btn_logout;
+    [SerializeField]
+    private Image profilePic;
 
     // Start of menu screen
     protected override void Start()
     {
         // Call parent start
         base.Start();
-        
-        // If user is logged in and is an instructor
-        if (DatabaseMgr.Instance.IsLoggedIn && ProfileMgr.Instance.localProfile.accountType == "Instructor")
-        {
-            // show instructor UI
-            foreach (GameObject obj in objects_instructorOnly)
-                obj.SetActive(true);
-        }
 
         // Play BGM
         AudioMgr.Instance.PlayBGM(AudioConstants.BGM_PERCEPTION);
+    }
+
+    protected override void StartAfterDataFetched()
+    {
+        CheckLoginDetails();
     }
 
     // Button to show profile pressed
@@ -64,12 +62,7 @@ public class MenuScreen : Screen
         if (DatabaseMgr.Instance.IsLoggedIn)
             DatabaseMgr.Instance.Logout();
 
-        TransitMgr.Instance.Fade(delegate ()
-        {
-            AudioMgr.Instance.StopBGM();
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Login");
-            TransitMgr.Instance.Emerge();
-        });
+        TransitMgr.Instance.FadeToScene(SceneConstants.SCENE_LOGIN);
     }
 
     // Play Normal button pressed, to be implemented
@@ -93,7 +86,7 @@ public class MenuScreen : Screen
     {
         NotificationMgr.Instance.NotifyLoad("Linking Fb");
         DatabaseMgr.Instance.SNSLogin(
-        SNSType.Facebook,
+        LoginTypeConstants.FACEBOOK,
         delegate () // success
         {
             // link here
@@ -157,5 +150,37 @@ public class MenuScreen : Screen
 
             btn_logout.interactable = false;
         }
+    }
+
+    // Checking login details and displaying appropriate UI
+    private void CheckLoginDetails()
+    {
+        // If user is logged in
+        if (DatabaseMgr.Instance.IsLoggedIn)
+        {
+            // if user is an instructor
+            if (ProfileMgr.Instance.localProfile.accountType == "Instructor")
+            {
+                // show instructor UI
+                foreach (GameObject obj in objects_instructorOnly)
+                    obj.SetActive(true);
+            }
+
+            // if user has facebook linked
+            if (DatabaseMgr.Instance.LoginTypes.Contains(LoginTypeConstants.FACEBOOK))
+            {
+                // fetch profile pic
+                DatabaseMgr.Instance.FetchProfilePic(ProfileMgr.Instance.localProfile.facebookid,
+                    delegate (Sprite sprite)
+                    {
+                        profilePic.sprite = sprite;
+                    },
+                    delegate (string failmsg)
+                    {
+                        NotificationMgr.Instance.Notify(failmsg);
+                    });
+            }
+        }
+
     }
 }

@@ -28,10 +28,18 @@ public enum DBQueryType
     Session
 }
 
-// SNS Types
-public enum SNSType
+public static class LoginTypeConstants
 {
-    Facebook
+    public const string FACEBOOK = "facebook.com";
+    public const string EMAIL = "password";
+}
+
+// Scene constants
+public static class SceneConstants
+{
+    public const string SCENE_SPLASH = "Splash";
+    public const string SCENE_LOGIN = "Login";
+    public const string SCENE_MENU = "Menu";
 }
 
 // PlayerPref constants
@@ -53,4 +61,4 @@ public static class AudioConstants
 // Delegate types
 public delegate void SimpleCallback();
 public delegate void MessageCallback(string msg);
-public delegate void Texture2DCallback(Texture2D msg);
+public delegate void SpriteCallback(Sprite sprite);

@@ -63,19 +63,20 @@ public class DatabaseMgr : MonoBehaviour
     }
 
     // Can be directly called from UI classes, pass in success and failure delegate methods to specify your desired action for each case
-    public void SNSLogin(SNSType provider, SimpleCallback successCallback, MessageCallback failCallback)
+    public void SNSLogin(string provider, SimpleCallback successCallback, MessageCallback failCallback, bool skipAuth = false)
     {
         switch (provider)
         {
-            case SNSType.Facebook:
+            case LoginTypeConstants.FACEBOOK:
                 _apiLinker = new FBAPILinker();
                 break;
             default:
-                failCallback?.Invoke("Provider error");
+                failCallback?.Invoke("Provider error: " + provider);
                 return;
         }
 
-        _apiLinker.Authenticate(successCallback, failCallback);
+        if (!skipAuth)
+            _apiLinker.Authenticate(successCallback, failCallback);
     }
 
     // Can be directly called from UI classes, pass in success and failure methods to specify your desired action for each case
@@ -100,6 +101,15 @@ public class DatabaseMgr : MonoBehaviour
     public void DBUpdate(DBQueryType type, string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         StartCoroutine(Sequence_DBUpdate(type, query, data, successCallback, failCallback));
+    }
+
+    // Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    public void FetchProfilePic(string id, SpriteCallback successCallback, MessageCallback failCallback)
+    {
+        if (_apiLinker == null) // check that api linker exists
+            failCallback?.Invoke("apilinker is null");
+        else
+            _apiLinker.GetProfilePic(id, successCallback, failCallback);
     }
 
     // Used by LoginAPIs, no need to be called directly in UI classes

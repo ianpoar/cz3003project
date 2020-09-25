@@ -23,19 +23,29 @@ public abstract class Screen : MonoBehaviour
 
     IEnumerator AutoFetchData()
     {
-        yield return new WaitForSeconds(0.5f);
-        if (DatabaseMgr.Instance.IsLoggedIn)
+        yield return new WaitForSeconds(0.1f);
+        if (DatabaseMgr.Instance.IsLoggedIn) // if logged in
         {
+            if (DatabaseMgr.Instance.LoginTypes.Contains(LoginTypeConstants.FACEBOOK)) // if facebook login
+            {
+                DatabaseMgr.Instance.SNSLogin(LoginTypeConstants.FACEBOOK, null, null, true); // perform soft login
+            }
+
+            // Auto fetch data
             Debug.Log("AutoFetchData run");
             ProfileMgr.Instance.LoadPlayerProfile(
                 delegate () // success
                 {
+                    StartAfterDataFetched();
                     Debug.Log("AutoFetchData success");
                 },
                 delegate (string failmsg)
                 {
+                    StartAfterDataFetched();
                     Debug.Log("AutoFetchData failed");
                 });
         }
     }
+
+    protected virtual void StartAfterDataFetched() { }
 }

@@ -46,6 +46,7 @@ public class FBAPILinker : APILinker
                 {
                     error = false;
 
+                    ProfileMgr.Instance.localProfile.facebookid = AccessToken.CurrentAccessToken.UserId; // set facebook id
                     Credential credential = FacebookAuthProvider.GetCredential(AccessToken.CurrentAccessToken.TokenString);
                     LoginToDB(credential, successCallback, failCallback);
                 }
@@ -64,31 +65,21 @@ public class FBAPILinker : APILinker
         });
     }
 
-    public override void GetProfilePic(Texture2DCallback successCallback, MessageCallback failCallback)
+    public override void GetProfilePic(string id, SpriteCallback successCallback, MessageCallback failCallback)
     {
-        FB.API("/me/picture?redirect=false", HttpMethod.GET, delegate (IGraphResult picResult)
-        {
-            if (string.IsNullOrEmpty(picResult.Error) && !picResult.Cancelled)
-            {
-                IDictionary data = picResult.ResultDictionary["data"] as IDictionary;
-                string photoURL = data["url"] as string;
-
-                ProfileMgr.Instance.StartCoroutine(fetchProfilePic(photoURL, successCallback, failCallback));
-            }
-            else
-            {
-                failCallback?.Invoke("Error fetching pic.");
-            }
-        });
+        ProfileMgr.Instance.StartCoroutine(fetchProfilePic(id, successCallback, failCallback));
     }
 
-    private IEnumerator fetchProfilePic(string url, Texture2DCallback successCallback, MessageCallback failCallback)
+    private IEnumerator fetchProfilePic(string fbid, SpriteCallback successCallback, MessageCallback failCallback = null)
     {
-        WWW www = new WWW(url);
-        yield return www; //wait until it has downloaded
-        if (www.error == null)
-            successCallback?.Invoke(www.texture); // return Texture2D
-        else
-            failCallback?.Invoke(www.error);
+        Texture2D tex;
+        tex = new Texture2D(4, 4, TextureFormat.DXT1, false);
+        Debug.Log("Fetching profile pic of app-scoped fbid: " + fbid);
+        using (WWW www = new WWW("http://graph.facebook.com/" + fbid + "/picture?width=400&height=400" ))
+        {
+            yield return www;
+            www.LoadImageIntoTexture(tex);
+            successCallback?.Invoke(Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f)));
+        }
     }
 }

@@ -11,6 +11,8 @@ public class Profile
     public int accountExp = 0;
     public int currency_normal = 0;
     public int currency_premium = 0;
+    public string facebookid = "Unknown";
+    public string googleid = "Unknown";
 }
 
 public class ProfileMgr : MonoBehaviour // Singleton class

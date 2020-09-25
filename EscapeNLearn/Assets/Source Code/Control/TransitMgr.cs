@@ -30,6 +30,16 @@ public class TransitMgr : MonoBehaviour // Singleton
         StartCoroutine(Sequence_Transit(true, cb));
     }
 
+    // Call this in UI classes to transit to another scene
+    public void FadeToScene(string sceneName)
+    {
+        StartCoroutine(Sequence_Transit(true, delegate()
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName); // load scene
+            Emerge(); // then emerge
+        }));
+    }
+
     // Call this in UI classes when you want to show the current screen
     public void Emerge(SimpleCallback cb = null)
     {
