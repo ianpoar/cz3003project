@@ -25,6 +25,10 @@ public class NotificationMgr : MonoBehaviour // Singleton class
 
     // Inspector references
     [SerializeField]
+    private GameObject obj_default;
+    [SerializeField]
+    private GameObject obj_transparent;
+    [SerializeField]
     private Text txt_content = null;
     [SerializeField]
     private GameObject notificationObjects = null;
@@ -52,6 +56,13 @@ public class NotificationMgr : MonoBehaviour // Singleton class
     public void NotifyLoad(string content = null, SimpleCallback okCallback = null)
     {
         notificationList.Add(new Notification(NotifyType.Load, content, okCallback, null, null));
+        if (!notificationShowing)
+            ProcessNextNotification();
+    }
+
+    public void TransparentLoad(SimpleCallback okCallback = null)
+    {
+        notificationList.Add(new Notification(NotifyType.TransparentLoad, null, okCallback, null, null));
         if (!notificationShowing)
             ProcessNextNotification();
     }
@@ -120,6 +131,26 @@ public class NotificationMgr : MonoBehaviour // Singleton class
         ProcessNextNotification();
     }
 
+    private IEnumerator Sequence_TransparentLoading()
+    {
+        bool animate = true;
+
+        while (animate)
+        {
+            if (stopLoadIterator > 0)
+            {
+               animate = false;
+            }
+
+            yield return new WaitForSeconds(0);
+        }
+
+        HideAll();
+        stopLoadIterator--;
+        currentNotification.okCallback?.Invoke();
+        ProcessNextNotification();
+    }
+
     private void ProcessNextNotification()
     {
         if (notificationId < notificationList.Count)
@@ -129,6 +160,7 @@ public class NotificationMgr : MonoBehaviour // Singleton class
             switch (currentNotification.type)
             {
                 case NotifyType.Load:
+                    obj_default.SetActive(true);
                     if (currentNotification.text != null)
                     {
                         StartCoroutine(Sequence_Loading(currentNotification.text));
@@ -138,13 +170,19 @@ public class NotificationMgr : MonoBehaviour // Singleton class
                         StartCoroutine(Sequence_Loading());
                     }
                     break;
+                case NotifyType.TransparentLoad:
+                    obj_transparent.SetActive(true);
+                    StartCoroutine(Sequence_TransparentLoading());
+                    break;
                 case NotifyType.Notice:
+                    obj_default.SetActive(true);
                     txt_content.text = currentNotification.text;
                     okButton.gameObject.SetActive(true);
                     if (currentNotification.cancelCallback != null)
                         cancelButton.gameObject.SetActive(true);
                     break;
                 case NotifyType.RequestTextInput:
+                    obj_default.SetActive(true);
                     txt_content.text = currentNotification.text;
                     okButton.gameObject.SetActive(true);
                     if (currentNotification.cancelCallback != null)
@@ -166,6 +204,10 @@ public class NotificationMgr : MonoBehaviour // Singleton class
 
     void HideAll()
     {
+        if (obj_default.activeSelf)
+            obj_default.SetActive(false);
+        if (obj_transparent.activeSelf)
+            obj_transparent.SetActive(false);
         if (cancelButton.gameObject.activeSelf)
             cancelButton.gameObject.SetActive(false);
         if (okButton.gameObject.activeSelf)

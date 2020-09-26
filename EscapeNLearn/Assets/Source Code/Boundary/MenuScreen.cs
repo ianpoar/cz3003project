@@ -106,17 +106,25 @@ public class MenuScreen : Screen
         if (!DatabaseMgr.Instance.IsLoggedIn)
             return;
 
-        // Method to update data to db here!!
+        // Method to update data to db here!
+
+        // This is required to block input - only allow input after the update is done
+        NotificationMgr.Instance.TransparentLoad();
 
         Profile profile = ProfileMgr.Instance.localProfile;
-        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id, nameof(profile.accountExp), profile.accountExp,
+        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id, nameof(profile.accountExp), profile.accountExp+1,
         delegate() // write success
         {
-            NotificationMgr.Instance.StopLoad();
+            NotificationMgr.Instance.StopLoad(); // allow input
+
+            // refresh new data locally
             profile.accountExp++;
             RefreshProfileInfo();
         },
-        null);
+        delegate (string failmsg) // write failed
+        {
+            NotificationMgr.Instance.StopLoad(); // allow input
+        });
     }
 
     // Use this as a reference for accessing user data such as login type etc.

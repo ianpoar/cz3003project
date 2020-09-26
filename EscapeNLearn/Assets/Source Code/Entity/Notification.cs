@@ -1,6 +1,7 @@
 ﻿public enum NotifyType
 {
     Load,
+    TransparentLoad,
     Notice,
     RequestTextInput
 }
