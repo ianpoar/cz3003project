@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,9 +21,14 @@ public class LoginScreen : Screen
     // Start of login screen
     protected override void Start()
     {
-        // Run autologin
-        StartCoroutine(Autologin());
+        base.Start();
         AudioMgr.Instance.PlayBGM(AudioConstants.BGM_CLEARDAY);
+    }
+
+    protected override void StartAfterDataFetched()
+    {
+        // Run autologin
+        Autologin();
     }
 
     // Button to show sign up panel pressed
@@ -113,12 +117,25 @@ public class LoginScreen : Screen
     public void Btn_FBLogin()
     {
         NotificationMgr.Instance.NotifyLoad("Logging in via Facebook...");
-        DatabaseMgr.Instance.SNSLogin(
+
+        // call api login and get credential
+        DatabaseMgr.Instance.SNSRequestCredential(
         LoginTypeConstants.FACEBOOK,
-        delegate () // success
+        delegate (Firebase.Auth.Credential cred) // success
         {
-            NotificationMgr.Instance.StopLoad();
-            VerifyAndTransitToMenu(false); // don't verify email
+            // with credential, login via firebase db
+            DatabaseMgr.Instance.SNSLoginWithCredential(cred,
+            delegate () // successful login to db
+            {
+                NotificationMgr.Instance.StopLoad();
+                VerifyAndTransitToMenu(false); // don't verify email
+            },
+            delegate (string failmsg) // failed
+            {
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify(failmsg);
+            });
+          
         },
         delegate (string failmsg) // failed
         {
@@ -154,38 +171,16 @@ public class LoginScreen : Screen
         },
         delegate (string failmsg) // failed to fetch an existing profile, need to create one
         {
+            PlayerPrefs.SetInt(PPConstants.BUGFIX_StoppedAppInProfileCreation, 1);
             NotificationMgr.Instance.StopLoad();
             NotificationMgr.Instance.Notify(failmsg + "\n\nCreate new profile?",
             delegate () // ok pressed
             {
-                NotificationMgr.Instance.RequestTextInput("Enter a name/nickname.",
-                delegate (string input) // ok pressed
-                {
-                    // create profile
-                    ProfileMgr.Instance.localProfile.name = input; // set name
-
-                    NotificationMgr.Instance.NotifyLoad("Creating profile");
-                    ProfileMgr.Instance.SavePlayerProfile(
-                    delegate () // success
-                    {
-                        NotificationMgr.Instance.StopLoad();
-
-                        // transit to menu screen
-                        TransitMgr.Instance.FadeToScene(SceneConstants.SCENE_MENU);
-                    },
-                    delegate (string failmsg2) // failed to create profile
-                    {
-                        NotificationMgr.Instance.Notify(failmsg2);
-                    });
-                },
-                delegate () // cancelled - don't create profile, sign out
-                {
-                    if (DatabaseMgr.Instance.IsLoggedIn)
-                        DatabaseMgr.Instance.Logout();
-                });
+                CreateProfileSequence();
             },
             delegate () // cancelled - don't create profile, sign out
             {
+                PlayerPrefs.SetInt(PPConstants.BUGFIX_StoppedAppInProfileCreation, 0);
                 if (DatabaseMgr.Instance.IsLoggedIn)
                     DatabaseMgr.Instance.Logout();
             });
@@ -193,11 +188,100 @@ public class LoginScreen : Screen
 
     }
 
-    private IEnumerator Autologin()
+    private bool IsAlphaNum(string str)
     {
-        // Delay for sdks to initialise
-        yield return new WaitForSeconds(0.5f);
+        if (string.IsNullOrEmpty(str))
+            return false;
 
+        for (int i = 0; i < str.Length; i++)
+        {
+            if (!(char.IsLetter(str[i])) && (!(char.IsNumber(str[i]))))
+                return false;
+        }
+
+        return true;
+    }
+
+    private void CreateProfileSequence()
+    {
+        NotificationMgr.Instance.RequestTextInput("Please enter a unique ID (min. 3, max 10 characters). Allowed characters are: [a-zA-Z0-9]",
+                delegate (string input) // ok pressed
+                {
+                    // check that characters are valid
+
+                    if (input.Length > 10 || input.Length < 3) // length more than 10 or less than 3
+                    {
+                        NotificationMgr.Instance.Notify("Please ensure that your ID is between 3 - 10 characters. Your ID \'" + input + "\' is not allowed", // notify
+                        delegate () // on ok pressed
+                        {
+                            CreateProfileSequence(); // restart the profile creation process
+                        }, null);
+                    }
+                    else if (!IsAlphaNum(input)) // input is not alpha numberic
+                    {
+                        NotificationMgr.Instance.Notify("Allowed characters are: [a-zA-Z0-9]. Your ID \'" + input + "\' is not allowed", // notify
+                        delegate () // on ok pressed
+                        {
+                            CreateProfileSequence(); // restart the profile creation process
+                        }, null);
+                    }
+                    else // no problems on input, now check for existing user id
+                    {
+                        NotificationMgr.Instance.NotifyLoad("Performing existing ID check");
+                        // to be done
+                        DatabaseMgr.Instance.DBCheck(DBQueryConstants.QUERY_PROFILES, "id_account", input,
+                        delegate (string result) // exists
+                        {
+                            NotificationMgr.Instance.StopLoad();
+                            NotificationMgr.Instance.Notify("ID \'" + input + "\' already exists.", // notify
+                                delegate () // on ok pressed
+                                {
+                                    CreateProfileSequence(); // restart the profile creation process
+                                }, null);
+                        },
+                        delegate (string result) // does not exist
+                        {
+                            NotificationMgr.Instance.StopLoad();
+                            NotificationMgr.Instance.RequestTextInput("Please enter your name/nickname.",
+
+                                delegate (string nameInput) // name entered
+                                {
+                                    // create profile
+                                    ProfileMgr.Instance.localProfile.id_account = input; // set account id
+                                    ProfileMgr.Instance.localProfile.name = nameInput; // set name
+
+                                    NotificationMgr.Instance.NotifyLoad("Creating profile");
+                                    ProfileMgr.Instance.SavePlayerProfile(
+                                    delegate () // success
+                                    {
+                                        PlayerPrefs.SetInt(PPConstants.BUGFIX_StoppedAppInProfileCreation, 0);
+                                        NotificationMgr.Instance.StopLoad();
+
+                                        // transit to menu screen
+                                        TransitMgr.Instance.FadeToScene(SceneConstants.SCENE_MENU);
+                                    },
+                                    delegate (string failmsg2) // failed to create profile
+                                    {
+                                        NotificationMgr.Instance.Notify(failmsg2);
+                                    });
+                                },
+                                delegate () // cancelled
+                                {
+                                    CreateProfileSequence(); // restart the profile creation process
+                                });
+                        });
+                    }
+                },
+                delegate () // cancelled - don't create profile, sign out
+                {
+                    PlayerPrefs.SetInt(PPConstants.BUGFIX_StoppedAppInProfileCreation, 0);
+                    if (DatabaseMgr.Instance.IsLoggedIn)
+                        DatabaseMgr.Instance.Logout();
+                });
+    }
+
+    private void Autologin()
+    {
         // If user has already logged in before
         if (DatabaseMgr.Instance.IsLoggedIn)
         {
@@ -209,7 +293,7 @@ public class LoginScreen : Screen
                 if (str == LoginTypeConstants.FACEBOOK) // If user was authenticated by Facebook
                 {
                     verify = false; // Don't check for a verified email
-                    DatabaseMgr.Instance.SNSLogin(LoginTypeConstants.FACEBOOK, null, null, true); // sns login to facebook without actually going through auth
+                    DatabaseMgr.Instance.SNSRequestCredential(LoginTypeConstants.FACEBOOK, null, null, true); // sns login to facebook without actually going through auth
                 }
                 Debug.Log("Providerid: " + str);
             }

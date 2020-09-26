@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Firebase.Auth;
+﻿using UnityEngine;
 
 // Data saved/loaded from firebase db
 public class Profile
@@ -11,8 +8,9 @@ public class Profile
     public int accountExp = 0;
     public int currency_normal = 0;
     public int currency_premium = 0;
-    public string facebookid = "Unknown";
-    public string googleid = "Unknown";
+    public string id_facebook = "Unknown";
+    public string id_google = "Unknown";
+    public string id_account = "Unknown";
 }
 
 public class ProfileMgr : MonoBehaviour // Singleton class
@@ -35,7 +33,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
     public void SavePlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         // save profile
-        DatabaseMgr.Instance.DBUpdate(DBQueryType.Load_Save_Profile, DatabaseMgr.Instance.Id,
+        DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id,
         localProfile,
         delegate () // success
         {
@@ -51,7 +49,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
     // Can be directly called from UI classes, pass in success and failure delegate methods to specify your desired action for each case
     public void LoadPlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
-        DatabaseMgr.Instance.DBFetch(DBQueryType.Load_Save_Profile, DatabaseMgr.Instance.Id,
+        DatabaseMgr.Instance.DBFetch(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id,
         delegate (string result) // success
         {
             localProfile = JsonUtility.FromJson<Profile>(result);

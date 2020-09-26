@@ -6,7 +6,7 @@ using Firebase.Auth;
 
 public class FBAPILinker : APILinker
 {
-    public override void Authenticate(SimpleCallback successCallback, MessageCallback failCallback)
+    public override void Authenticate(CredentialCallback successCallback, MessageCallback failCallback)
     {
         if (!FB.IsInitialized)
         {
@@ -46,9 +46,9 @@ public class FBAPILinker : APILinker
                 {
                     error = false;
 
-                    ProfileMgr.Instance.localProfile.facebookid = AccessToken.CurrentAccessToken.UserId; // set facebook id
+                    ProfileMgr.Instance.localProfile.id_facebook = AccessToken.CurrentAccessToken.UserId; // set facebook id
                     Credential credential = FacebookAuthProvider.GetCredential(AccessToken.CurrentAccessToken.TokenString);
-                    LoginToDB(credential, successCallback, failCallback);
+                    successCallback?.Invoke(credential);
                 }
                 else // rawresult empty
                 {

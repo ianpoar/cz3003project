@@ -1,31 +1,14 @@
 ﻿using UnityEngine;
+using Firebase.Auth;
 
 /* Add on to these for project-wide usage */
 
 // FOR DATABASEMGR
 // need to populate DBQueryType and SetPath method as well
-public static class DBConstants
+public static class DBQueryConstants
 {
-    public const string PATH_PROFILE = "profiles/";
-    public const string PATH_SESSION = "sessions/";
-
-    public static string SetPath(DBQueryType type)
-    {
-        switch (type)
-        {
-            case DBQueryType.Load_Save_Profile:
-                return PATH_PROFILE;
-            case DBQueryType.Session:
-                return PATH_SESSION;
-            default:
-                return "unknown/";
-        }
-    }
-}
-public enum DBQueryType
-{
-    Load_Save_Profile,
-    Session
+    public const string QUERY_PROFILES = "profiles/";
+    public const string QUERY_SESSIONS = "sessions/";
 }
 
 public static class LoginTypeConstants
@@ -47,6 +30,7 @@ public static class PPConstants
 {
     public const string KEY_BGMVOL = "BGMVol";
     public const string KEY_SFXVOL = "SFXVol";
+    public const string BUGFIX_StoppedAppInProfileCreation = "bugfix1";
 }
 
 // Audio file constants
@@ -62,3 +46,4 @@ public static class AudioConstants
 public delegate void SimpleCallback();
 public delegate void MessageCallback(string msg);
 public delegate void SpriteCallback(Sprite sprite);
+public delegate void CredentialCallback(Credential cred);

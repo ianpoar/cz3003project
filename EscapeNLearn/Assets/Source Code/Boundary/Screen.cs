@@ -24,11 +24,19 @@ public abstract class Screen : MonoBehaviour
     IEnumerator AutoFetchData()
     {
         yield return new WaitForSeconds(0.1f);
+        
+        // Bug fix for de-sync between user account and profile
+        if (PlayerPrefs.GetInt(PPConstants.BUGFIX_StoppedAppInProfileCreation) == 1)
+        {
+            DatabaseMgr.Instance.Logout();
+            PlayerPrefs.SetInt(PPConstants.BUGFIX_StoppedAppInProfileCreation, 0);
+        }
+
         if (DatabaseMgr.Instance.IsLoggedIn) // if logged in
         {
             if (DatabaseMgr.Instance.LoginTypes.Contains(LoginTypeConstants.FACEBOOK)) // if facebook login
             {
-                DatabaseMgr.Instance.SNSLogin(LoginTypeConstants.FACEBOOK, null, null, true); // perform soft login
+                DatabaseMgr.Instance.SNSRequestCredential(LoginTypeConstants.FACEBOOK, null, null, true); // perform soft login
             }
 
             // Auto fetch data
@@ -36,13 +44,13 @@ public abstract class Screen : MonoBehaviour
             ProfileMgr.Instance.LoadPlayerProfile(
                 delegate () // success
                 {
-                    StartAfterDataFetched();
                     Debug.Log("AutoFetchData success");
+                    StartAfterDataFetched();            
                 },
                 delegate (string failmsg)
                 {
-                    StartAfterDataFetched();
                     Debug.Log("AutoFetchData failed");
+                    StartAfterDataFetched();         
                 });
         }
     }

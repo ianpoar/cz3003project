@@ -85,9 +85,9 @@ public class MenuScreen : Screen
     public void Btn_FBLink()
     {
         NotificationMgr.Instance.NotifyLoad("Linking Fb");
-        DatabaseMgr.Instance.SNSLogin(
+        DatabaseMgr.Instance.SNSRequestCredential(
         LoginTypeConstants.FACEBOOK,
-        delegate () // success
+        delegate (Firebase.Auth.Credential cred) // success
         {
             // link here
         },
@@ -98,8 +98,7 @@ public class MenuScreen : Screen
         });
     }
 
-    // Placeholder function that increments a value in the player's profile data and saves it to firebase db
-    // Can be used as a reference for modifying user data and saving it to db
+    // Use this as a reference for modifying user data and saving it to db
     public void Btn_TestAddEXP()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -107,13 +106,20 @@ public class MenuScreen : Screen
         if (!DatabaseMgr.Instance.IsLoggedIn)
             return;
 
-        ProfileMgr.Instance.localProfile.accountExp++;
-        ProfileMgr.Instance.SavePlayerProfile();
-        RefreshProfileInfo();
+        // Method to update data to db here!!
+
+        Profile profile = ProfileMgr.Instance.localProfile;
+        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id, nameof(profile.accountExp), profile.accountExp,
+        delegate() // write success
+        {
+            NotificationMgr.Instance.StopLoad();
+            profile.accountExp++;
+            RefreshProfileInfo();
+        },
+        null);
     }
 
-    // Placeholder function that displays some debug text in settings panel
-    // Can be used as a reference for accessing user data such as login type etc.
+    // Use this as a reference for accessing user data such as login type etc.
     private void RefreshProfileInfo()
     {
         txt_info.text = ""; // reset
@@ -121,8 +127,8 @@ public class MenuScreen : Screen
         if (DatabaseMgr.Instance.IsLoggedIn)
         {
             txt_info.text +=
-                "\nUID: " + DatabaseMgr.Instance.Id +
-                "\n Email: " + DatabaseMgr.Instance.Email;
+                "Firebase UID: " + DatabaseMgr.Instance.Id +
+                "\nEmail: " + DatabaseMgr.Instance.Email;
             if (DatabaseMgr.Instance.IsEmailVerified)
                 txt_info.text += " (Verified)";
 
@@ -136,10 +142,13 @@ public class MenuScreen : Screen
             Profile profile = ProfileMgr.Instance.localProfile;
             txt_info.text +=
                 "\nName: " + profile.name +
+                "\nAccount ID: " + profile.id_account +
                 "\nAccount Type: " + profile.accountType +
                 "\nAccount EXP: " + profile.accountExp +
                 "\nNormal Currency: " + profile.currency_normal +
-                "\nPremium Currency: " + profile.currency_premium;
+                "\nPremium Currency: " + profile.currency_premium +
+                "\nFacebook ID: " + profile.id_facebook +
+                "\nGoogle ID: " + profile.id_google;
 
             btn_logout.interactable = true;
         }
@@ -170,15 +179,12 @@ public class MenuScreen : Screen
             if (DatabaseMgr.Instance.LoginTypes.Contains(LoginTypeConstants.FACEBOOK))
             {
                 // fetch profile pic
-                DatabaseMgr.Instance.FetchProfilePic(ProfileMgr.Instance.localProfile.facebookid,
+                DatabaseMgr.Instance.FetchProfilePic(ProfileMgr.Instance.localProfile.id_facebook,
                     delegate (Sprite sprite)
                     {
                         profilePic.sprite = sprite;
                     },
-                    delegate (string failmsg)
-                    {
-                        NotificationMgr.Instance.Notify(failmsg);
-                    });
+                    null);
             }
         }
 

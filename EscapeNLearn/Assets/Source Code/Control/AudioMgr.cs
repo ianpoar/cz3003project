@@ -26,6 +26,8 @@ public class AudioMgr : MonoBehaviour
 
     private void Start()
     {
+        // Read volume if exists, otherwise set default vol of 1 and save
+
         if (PlayerPrefs.HasKey(PPConstants.KEY_BGMVOL))
         {
             bgmSource.volume = PlayerPrefs.GetFloat(PPConstants.KEY_BGMVOL);
@@ -47,9 +49,21 @@ public class AudioMgr : MonoBehaviour
             sfxSource.volume = defaultVol;
             PlayerPrefs.SetFloat(PPConstants.KEY_SFXVOL, defaultVol);
         }
-        //PlayBGM(AudioConstants.BGM_PERCEPTION);
     }
 
+    // Set bgm vol, for rakshitha
+    public void SetBGMVol(float vol)
+    {
+        bgmSource.volume = vol;
+    }
+
+    // Set sfx vol, for rakshitha
+    public void SetSFXVol (float vol)
+    {
+        sfxSource.volume = vol;
+    }
+
+    // Call this to play sfx
     public void PlaySFX(int id)
     {
         AudioClip clip = sfxClips[id];
@@ -59,6 +73,7 @@ public class AudioMgr : MonoBehaviour
             Debug.Log("No sfx clip with id " + id);
     }
 
+    // Call this to play bgm
     public void PlayBGM(int id)
     {
         StopBGM();
@@ -75,6 +90,7 @@ public class AudioMgr : MonoBehaviour
         bgmSource.Play();
     }
 
+    // Call this to stop bgm
     public void StopBGM()
     {
         if (bgmSource.isPlaying)
