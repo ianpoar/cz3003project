@@ -13,6 +13,8 @@ public class MenuScreen : Screen
     [SerializeField]
     private GameObject panel_settings;
     [SerializeField]
+    private GameObject panel_sessions;
+    [SerializeField]
     private Text txt_info;
     [SerializeField]
     private Button btn_logout;
@@ -54,6 +56,13 @@ public class MenuScreen : Screen
         panel_settings.SetActive(show);
     }
 
+    // Button to show sessions pressed
+    public void Btn_ShowSessions(bool show)
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        panel_sessions.SetActive(show);
+    }
+
     // Logout button at settings panel pressed
     public void Btn_Logout()
     {
@@ -69,16 +78,19 @@ public class MenuScreen : Screen
     public void Btn_PlayNormal()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        TransitMgr.Instance.FadeToScene("Game_Escape");
 
+        /*
         NotificationMgr.Instance.RequestTextInput("Enter Session ID: ",
         delegate (string input)
         {
             // use session ID to do something - to be implemented
+            TransitMgr.Instance.FadeToScene("Game_Escape");
         },
         delegate () // cancel
         {
             // do nth
-        });
+        }); */
     }
 
     // Example for Aru
@@ -180,7 +192,10 @@ public class MenuScreen : Screen
             {
                 // show instructor UI
                 foreach (GameObject obj in objects_instructorOnly)
-                    obj.SetActive(true);
+                {
+                    if (obj != null)
+                        obj.SetActive(true);
+                }
             }
 
             // if user has facebook linked

@@ -7,8 +7,8 @@ using Firebase.Auth;
 // need to populate DBQueryType and SetPath method as well
 public static class DBQueryConstants
 {
-    public const string QUERY_PROFILES = "profiles/";
-    public const string QUERY_SESSIONS = "sessions/";
+    public const string QUERY_PROFILES = "profiles";
+    public const string QUERY_SESSIONS = "sessions";
 }
 
 public static class LoginTypeConstants

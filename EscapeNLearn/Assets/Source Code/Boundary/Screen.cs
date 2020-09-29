@@ -21,6 +21,8 @@ public abstract class Screen : MonoBehaviour
         StartCoroutine(AutoFetchData());
     }
 
+    protected virtual void StartAfterDataFetched() { }
+
     IEnumerator AutoFetchData()
     {
         yield return new WaitForSeconds(0.1f);
@@ -54,6 +56,4 @@ public abstract class Screen : MonoBehaviour
                 });
         }
     }
-
-    protected virtual void StartAfterDataFetched() { }
 }

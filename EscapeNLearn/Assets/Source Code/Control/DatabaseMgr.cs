@@ -103,16 +103,60 @@ public class DatabaseMgr : MonoBehaviour
         StartCoroutine(Sequence_DBFetch(query, successCallback, failCallback));
     }
 
-    // Checks if document exists in db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
-    public void DBCheck(string query, string orderbyID, string id, MessageCallback successCallback = null, MessageCallback failCallback = null)
+    public void DBFetchMulti(string query, string orderbyID, string id, int first, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
-        StartCoroutine(Sequence_DBCheck(query, orderbyID, id, successCallback, failCallback));
+        StopAllCoroutines();
+        FirebaseDatabase.DefaultInstance
+            .GetReference(query).OrderByChild(orderbyID).EqualTo(id).LimitToFirst(first)
+            .GetValueAsync().ContinueWith(task => {
+                if (task.IsFaulted)
+                {
+                    failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+                }
+                else if (task.IsCompleted)
+                {
+                    DataSnapshot snapshot = task.Result;
+                    string result = snapshot.GetRawJsonValue();
+                    if (result == null || result == "{}")
+                    {
+                        failCallback?.Invoke("No data found.");
+                    }
+                    else
+                    {
+                        successCallback?.Invoke(result);
+                    }
+                }
+            });
     }
 
-    // Writes an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    // Updates an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
     public void DBUpdate(string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         StartCoroutine(Sequence_DBUpdate( query, data, successCallback, failCallback));
+    }
+
+    // Pushes an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    public void DBPush(string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
+    {
+        FirebaseDatabase.DefaultInstance
+           .GetReference(query).Push().SetRawJsonValueAsync(JsonUtility.ToJson(data))
+           .ContinueWith(task => {
+               if (task.IsFaulted)
+               {
+                   failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+               }
+               else if (task.IsCompleted)
+               {
+                   if (task.Exception == null)
+                   {
+                       successCallback?.Invoke();
+                   }
+                   else
+                   {
+                     failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+                   }
+               }
+           });
     }
 
     // Writes only a specific value in a document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
@@ -148,31 +192,6 @@ public class DatabaseMgr : MonoBehaviour
             else
             {
                 failCallback?.Invoke("Failed to fetch data.");
-            }
-        }
-        else
-        {
-            // failed
-            failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-        }
-    }
-
-    // For DBCheck
-    private IEnumerator Sequence_DBCheck(string query, string itemToCheck, string value, MessageCallback successCallback = null, MessageCallback failCallback = null)
-    {
-        var task = _database.GetReference(query).OrderByChild(itemToCheck).EqualTo(value).LimitToFirst(1).GetValueAsync();
-        yield return new WaitUntil(predicate: () => task.IsCompleted);
-        if (task.Exception == null)
-        {
-            // found
-            string result = task.Result.GetRawJsonValue();
-            if (result != null && result != "{}")
-            {
-                successCallback?.Invoke(result);
-            }
-            else
-            {
-                failCallback?.Invoke("Data exists.");
             }
         }
         else

@@ -36,6 +36,7 @@ public class TransitMgr : MonoBehaviour // Singleton
         StartCoroutine(Sequence_Transit(true, delegate()
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName); // load scene
+            AudioMgr.Instance.StopBGM(); // stop bgm
             Emerge(); // then emerge
         }));
     }

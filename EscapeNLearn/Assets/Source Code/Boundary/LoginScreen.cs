@@ -229,7 +229,7 @@ public class LoginScreen : Screen
                     {
                         NotificationMgr.Instance.NotifyLoad("Performing existing ID check");
                         // to be done
-                        DatabaseMgr.Instance.DBCheck(DBQueryConstants.QUERY_PROFILES, "id_account", input,
+                        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_PROFILES, "id_account", input, 1,
                         delegate (string result) // exists
                         {
                             NotificationMgr.Instance.StopLoad();

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 // Data saved/loaded from firebase db
 public class Profile
 {
@@ -49,7 +48,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
     // Can be directly called from UI classes, pass in success and failure delegate methods to specify your desired action for each case
     public void LoadPlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
-        DatabaseMgr.Instance.DBFetch(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id,
+        DatabaseMgr.Instance.DBFetch(DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
         delegate (string result) // success
         {
             localProfile = JsonUtility.FromJson<Profile>(result);
