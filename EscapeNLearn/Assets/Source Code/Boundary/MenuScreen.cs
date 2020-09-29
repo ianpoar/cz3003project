@@ -78,7 +78,7 @@ public class MenuScreen : Screen
     public void Btn_PlayNormal()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        TransitMgr.Instance.FadeToScene("Game_Escape");
+        TransitMgr.Instance.FadeToScene("Game_1");
 
         /*
         NotificationMgr.Instance.RequestTextInput("Enter Session ID: ",
