@@ -101,6 +101,23 @@ public class MenuScreen : Screen
         LoginTypeConstants.FACEBOOK,
         delegate (Firebase.Auth.Credential cred) // success
         {
+            Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+            auth.CurrentUser.LinkWithCredentialAsync(cred).ContinueWith(task => {
+                if (task.IsCanceled)
+                {
+                    Debug.LogError("LinkWithCredentialAsync was canceled.");
+                    return;
+                }
+                if (task.IsFaulted)
+                {
+                    Debug.LogError("LinkWithCredentialAsync encountered an error: " + task.Exception);
+                    return;
+                }
+
+                Firebase.Auth.FirebaseUser newUser = task.Result;
+                Debug.LogFormat("Credentials successfully linked to Firebase user: {0} ({1})",
+                    newUser.DisplayName, newUser.UserId);
+            });
             // link here
         },
         delegate (string failmsg) // failed
