@@ -9,6 +9,8 @@ public static class DBQueryConstants
 {
     public const string QUERY_PROFILES = "profiles";
     public const string QUERY_SESSIONS = "sessions";
+    public const string QUERY_CONNECTIONS = "connections";
+    public const string QUERY_QUESTIONS = "questions";
 }
 
 public static class LoginTypeConstants
