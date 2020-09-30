@@ -25,6 +25,8 @@ public class MenuScreen : Screen
     private Button btn_logout;
     [SerializeField]
     private Image profilePic;
+    [SerializeField]
+    private GameObject panel_createquestion;
 
     // Start of menu screen
     protected override void Start()
@@ -95,6 +97,14 @@ public class MenuScreen : Screen
         }
     }
 
+    public void Btn_CreateQuestion(bool show)
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+
+        panel_createquestion.SetActive(!panel_createquestion.activeSelf); // show create question
+
+    }
+
     // Example for Aru
     public void Btn_FBLink()
     {
@@ -126,8 +136,8 @@ public class MenuScreen : Screen
         NotificationMgr.Instance.TransparentLoad();
 
         Profile profile = ProfileMgr.Instance.localProfile;
-        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id, nameof(profile.accountExp), profile.accountExp+1,
-        delegate() // write success
+        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id, nameof(profile.accountExp), profile.accountExp + 1,
+        delegate () // write success
         {
             NotificationMgr.Instance.StopLoad(); // allow input
 
