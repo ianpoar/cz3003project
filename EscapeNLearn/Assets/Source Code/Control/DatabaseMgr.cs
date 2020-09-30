@@ -105,28 +105,54 @@ public class DatabaseMgr : MonoBehaviour
 
     public void DBFetchMulti(string query, string orderbyID, string id, int first, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
-        StopAllCoroutines();
-        FirebaseDatabase.DefaultInstance
-            .GetReference(query).OrderByChild(orderbyID).EqualTo(id).LimitToFirst(first)
-            .GetValueAsync().ContinueWith(task => {
-                if (task.IsFaulted)
-                {
-                    failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-                }
-                else if (task.IsCompleted)
-                {
-                    DataSnapshot snapshot = task.Result;
-                    string result = snapshot.GetRawJsonValue();
-                    if (result == null || result == "{}")
+        if (orderbyID == null || id == null) // fetch all
+        {
+            FirebaseDatabase.DefaultInstance
+                .GetReference(query).LimitToFirst(first)
+                .GetValueAsync().ContinueWith(task => {
+                    if (task.IsFaulted)
                     {
-                        failCallback?.Invoke("No data found.");
+                        failCallback?.Invoke(task.Exception.GetBaseException().ToString());
                     }
-                    else
+                    else if (task.IsCompleted)
                     {
-                        successCallback?.Invoke(result);
+                        DataSnapshot snapshot = task.Result;
+                        string result = snapshot.GetRawJsonValue();
+                        if (result == null || result == "{}")
+                        {
+                            failCallback?.Invoke("No data found.");
+                        }
+                        else
+                        {
+                            successCallback?.Invoke(result);
+                        }
                     }
-                }
-            });
+                });
+        }
+        else
+        {
+            FirebaseDatabase.DefaultInstance
+                .GetReference(query).OrderByChild(orderbyID).EqualTo(id).LimitToFirst(first)
+                .GetValueAsync().ContinueWith(task => {
+                    if (task.IsFaulted)
+                    {
+                        failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+                    }
+                    else if (task.IsCompleted)
+                    {
+                        DataSnapshot snapshot = task.Result;
+                        string result = snapshot.GetRawJsonValue();
+                        if (result == null || result == "{}")
+                        {
+                            failCallback?.Invoke("No data found.");
+                        }
+                        else
+                        {
+                            successCallback?.Invoke(result);
+                        }
+                    }
+                });
+        }
     }
 
     // Updates an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
@@ -136,10 +162,13 @@ public class DatabaseMgr : MonoBehaviour
     }
 
     // Pushes an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
-    public void DBPush(string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
+    public void DBPush(string query, object data, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
+        string key = FirebaseDatabase.DefaultInstance
+           .GetReference(query).Push().Key;
+
         FirebaseDatabase.DefaultInstance
-           .GetReference(query).Push().SetRawJsonValueAsync(JsonUtility.ToJson(data))
+           .GetReference(query + "/" + key).SetRawJsonValueAsync(JsonUtility.ToJson(data))
            .ContinueWith(task => {
                if (task.IsFaulted)
                {
@@ -149,7 +178,7 @@ public class DatabaseMgr : MonoBehaviour
                {
                    if (task.Exception == null)
                    {
-                       successCallback?.Invoke();
+                       successCallback?.Invoke(key);
                    }
                    else
                    {
@@ -204,19 +233,41 @@ public class DatabaseMgr : MonoBehaviour
     // For DBUpdate
     private IEnumerator Sequence_DBUpdate(string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
-        var task = _database.GetReference(query).SetRawJsonValueAsync(JsonUtility.ToJson(data));
-        yield return new WaitUntil(predicate: () => task.IsCompleted);
-
-        if (task.Exception == null)
+        if (data != null)
         {
-            // success
-            successCallback?.Invoke();
+
+            var task = _database.GetReference(query).SetRawJsonValueAsync(JsonUtility.ToJson(data));
+            yield return new WaitUntil(predicate: () => task.IsCompleted);
+
+            if (task.Exception == null)
+            {
+                // success
+                successCallback?.Invoke();
+            }
+            else
+            {
+                // failed
+                failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+            }
         }
+
         else
         {
-            // failed
-            failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+            var task = _database.GetReference(query).RemoveValueAsync();
+            yield return new WaitUntil(predicate: () => task.IsCompleted);
+
+            if (task.Exception == null)
+            {
+                // success
+                successCallback?.Invoke();
+            }
+            else
+            {
+                // failed
+                failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+            }
         }
+
     }
 
     // For DBLightUpdate

@@ -19,14 +19,6 @@ public static class LoginTypeConstants
     public const string EMAIL = "password";
 }
 
-// Scene constants
-public static class SceneConstants
-{
-    public const string SCENE_SPLASH = "Splash";
-    public const string SCENE_LOGIN = "Login";
-    public const string SCENE_MENU = "Menu";
-}
-
 // PlayerPref constants
 public static class PPConstants
 {

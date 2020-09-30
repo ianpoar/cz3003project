@@ -4588,6 +4588,7 @@ MonoBehaviour:
   txt_ans4: {fileID: 2127637705}
   mask_pause: {fileID: 9637274}
   txt_timer: {fileID: 509853233}
+  txt_tips: {fileID: 8318799228820784539}
 --- !u!114 &1103660738 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8318799227725579096, guid: efb4706aab17a9d4ebcc0e5e556efa3a,
@@ -10249,3 +10250,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efb4706aab17a9d4ebcc0e5e556efa3a, type: 3}
+--- !u!114 &8318799228820784539 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1813741832, guid: efb4706aab17a9d4ebcc0e5e556efa3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8318799228820784538}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

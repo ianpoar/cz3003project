@@ -15,6 +15,6 @@ public class SplashScreen : Screen
     {
         TransitMgr.Instance.Emerge(); // emerge screen
         yield return new WaitForSeconds(2); // wait for 2 seconds
-        TransitMgr.Instance.FadeToScene(SceneConstants.SCENE_LOGIN);
+        TransitMgr.Instance.FadeToScene("Login");
     }
 }

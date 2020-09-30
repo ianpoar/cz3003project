@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Screen : MonoBehaviour
 {
+    private bool run = false;
+
     // Start is called before the first frame update
     protected virtual void Awake()
     {
@@ -19,6 +21,15 @@ public abstract class Screen : MonoBehaviour
     {
         // Fetch data without displaying notifications
         StartCoroutine(AutoFetchData());
+    }
+
+    private void Update()
+    {
+        if (run)
+        {
+            StartAfterDataFetched();
+            run = false;
+        }
     }
 
     protected virtual void StartAfterDataFetched() { }
@@ -47,12 +58,12 @@ public abstract class Screen : MonoBehaviour
                 delegate () // success
                 {
                     Debug.Log("AutoFetchData success");
-                    StartAfterDataFetched();            
+                    run = true;         
                 },
                 delegate (string failmsg)
                 {
                     Debug.Log("AutoFetchData failed");
-                    StartAfterDataFetched();         
+                    run = true;    
                 });
         }
     }

@@ -1,16 +1,6 @@
 ﻿using UnityEngine;
-// Data saved/loaded from firebase db
-public class Profile
-{
-    public string name = "Unknown";
-    public string accountType = "Student";
-    public int accountExp = 0;
-    public int currency_normal = 0;
-    public int currency_premium = 0;
-    public string id_facebook = "Unknown";
-    public string id_google = "Unknown";
-    public string id_account = "Unknown";
-}
+using System.Collections.Generic;
+using Facebook.MiniJSON;
 
 public class ProfileMgr : MonoBehaviour // Singleton class
 {
@@ -26,6 +16,8 @@ public class ProfileMgr : MonoBehaviour // Singleton class
 
     // Public variables
     public Profile localProfile = new Profile();
+    public Connection currentConnection = null;
+    public string connectionID = null;
 
     // Save player data to firebase db
     // Can be directly called from UI classes, pass in success and failure delegate methods to specify your desired action for each case
@@ -51,8 +43,33 @@ public class ProfileMgr : MonoBehaviour // Singleton class
         DatabaseMgr.Instance.DBFetch(DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
         delegate (string result) // success
         {
+
             localProfile = JsonUtility.FromJson<Profile>(result);
-            successCallback?.Invoke();
+            // load connections
+            DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_CONNECTIONS,
+            "id_player", localProfile.id_account, 1,
+            delegate (string result2)
+            {
+                Dictionary<string, object> dic = Json.Deserialize(result2) as Dictionary<string, object>;
+                foreach (KeyValuePair<string, object> pair in dic)
+                {
+                    Connection c = JsonUtility.FromJson<Connection>(Json.Serialize(pair.Value));
+                   
+                    if (c != null)
+                    {
+                        Debug.Log("ConnectionID: " + pair.Key + ", SessionID: " + c.id_session + ", PlayerID: " + c.id_player);
+                        connectionID = pair.Key;
+                        currentConnection = c;
+                    }
+                }
+
+                successCallback?.Invoke();
+            },
+            delegate (string failmsg) // no connections
+            {
+                successCallback?.Invoke();
+            });
+
         },
         delegate (string failmsg) // failed
         {

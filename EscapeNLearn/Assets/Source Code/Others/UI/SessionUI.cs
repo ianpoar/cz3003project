@@ -14,13 +14,11 @@ public class SessionUI : MonoBehaviour
     public Dropdown dropdown_l2q;
     public Dropdown dropdown_l3q;
 
-    string tempstr;
-    bool flag = false;
+    string tempstr = null;
 
     List<GameObject> list = new List<GameObject>();
     private void OnEnable()
     {
-        flag = false;
         tempstr = null;
         GenerateSessionObjects();
     }
@@ -33,13 +31,10 @@ public class SessionUI : MonoBehaviour
     private void Update()
     {
         // To address bug of Instantiate not working in delegates...
-        if (!flag)
+        if (tempstr != null)
         {
-            if (tempstr != null)
-            {
-                SpawnSessionObjects(tempstr);
-                flag = true;
-            }
+            SpawnSessionObjects(tempstr);
+            tempstr = null;
         }
     }
 
@@ -84,6 +79,7 @@ public class SessionUI : MonoBehaviour
 
     public void EditSession(string id)
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         Debug.Log("Edit session " + id);
     }
 
@@ -105,7 +101,7 @@ public class SessionUI : MonoBehaviour
             SessionUIItem script = obj.GetComponent<SessionUIItem>();
             script.transform.SetParent(Panel);
             script.transform.localScale = SessionUIItem.transform.localScale;
-            script.Init(this, pair.Key, session.session_name);
+            script.Init(pair.Key, session.session_name, this, null);
 
             list.Add(obj);
         }
@@ -130,7 +126,7 @@ public class SessionUI : MonoBehaviour
         s.id_l3queslist = l3q.ToString();
 
         DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_SESSIONS + "/", s,
-        delegate
+        delegate (string key)
         {
             NotificationMgr.Instance.StopLoad();
             NotificationMgr.Instance.Notify("Session created.",
@@ -148,13 +144,4 @@ public class SessionUI : MonoBehaviour
             NotificationMgr.Instance.Notify(failmsg2);
         });
     }
-}
-
-public class Session
-{
-    public string session_name;
-    public string id_owner;
-    public string id_l1queslist;
-    public string id_l2queslist;
-    public string id_l3queslist;
 }

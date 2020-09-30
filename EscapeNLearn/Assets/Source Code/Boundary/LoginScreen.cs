@@ -167,7 +167,7 @@ public class LoginScreen : Screen
         {
             NotificationMgr.Instance.StopLoad();
             // transit to menu screen
-            TransitMgr.Instance.FadeToScene(SceneConstants.SCENE_MENU);
+            TransitMgr.Instance.FadeToScene("Menu");
         },
         delegate (string failmsg) // failed to fetch an existing profile, need to create one
         {
@@ -258,7 +258,7 @@ public class LoginScreen : Screen
                                         NotificationMgr.Instance.StopLoad();
 
                                         // transit to menu screen
-                                        TransitMgr.Instance.FadeToScene(SceneConstants.SCENE_MENU);
+                                        TransitMgr.Instance.FadeToScene("Menu");
                                     },
                                     delegate (string failmsg2) // failed to create profile
                                     {

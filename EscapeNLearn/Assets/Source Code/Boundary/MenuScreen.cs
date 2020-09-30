@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Facebook.MiniJSON;
 
 public class MenuScreen : Screen
 {
@@ -14,6 +15,10 @@ public class MenuScreen : Screen
     private GameObject panel_settings;
     [SerializeField]
     private GameObject panel_sessions;
+    [SerializeField]
+    public GameObject panel_sessionlobby;
+    [SerializeField]
+    private GameObject panel_levelselect;
     [SerializeField]
     private Text txt_info;
     [SerializeField]
@@ -71,26 +76,23 @@ public class MenuScreen : Screen
         if (DatabaseMgr.Instance.IsLoggedIn)
             DatabaseMgr.Instance.Logout();
 
-        TransitMgr.Instance.FadeToScene(SceneConstants.SCENE_LOGIN);
+        TransitMgr.Instance.FadeToScene("Login");
     }
 
     // Play Normal button pressed, to be implemented
-    public void Btn_PlayNormal()
+    public void Btn_PlayNormal(bool playsound)
     {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        TransitMgr.Instance.FadeToScene("Game_1");
+        if (playsound)
+            AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
 
-        /*
-        NotificationMgr.Instance.RequestTextInput("Enter Session ID: ",
-        delegate (string input)
+        if (ProfileMgr.Instance.currentConnection != null)
         {
-            // use session ID to do something - to be implemented
-            TransitMgr.Instance.FadeToScene("Game_Escape");
-        },
-        delegate () // cancel
+            panel_levelselect.SetActive(true); // show level select
+        }
+        else
         {
-            // do nth
-        }); */
+            panel_sessionlobby.SetActive(true); // show session lobby
+        }
     }
 
     // Example for Aru
@@ -194,7 +196,9 @@ public class MenuScreen : Screen
                 foreach (GameObject obj in objects_instructorOnly)
                 {
                     if (obj != null)
+                    {
                         obj.SetActive(true);
+                    }
                 }
             }
 

@@ -30,7 +30,7 @@ public class GameScreen : Screen
     public Text txt_ans4;
     public GameObject mask_pause;
     public Text txt_timer;
-
+    public Text txt_tips;
 
     protected override void Start()
     {
@@ -73,6 +73,11 @@ public class GameScreen : Screen
         }
     }
 
+    public void SetTips(string tips)
+    {
+        txt_tips.text = tips;
+    }
+
     // used by gamemgr
     public void ShowResultsScreen()
     {
@@ -98,6 +103,8 @@ public class GameScreen : Screen
     // called by UI
     public void Btn_Pause(bool flag)
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+
         if (flag)
             mask_pause.SetActive(true);
         else
@@ -109,18 +116,22 @@ public class GameScreen : Screen
 
     public void Btn_LeaveGame()
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+
         TransitMgr.Instance.FadeToScene("Menu");
     }
 
     // called by UI
     public void AnswerQuestion(int choice)
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         GameManager.AnswerQuestion(choice);
     }
 
     // called by UI
     public void Btn_CancelQuestion(bool playsound)
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         mask_npcquestions.SetActive(false);
         PauseInput(false);
     }

@@ -20,6 +20,7 @@ public class Game1 : GameMgr
         AudioMgr.Instance.PlayBGM(AudioConstants.BGM_CLEARDAY);
 
         ScreenRef.SetHP(PlayerHP, PlayerMaxHP);
+        ScreenRef.SetTips("Speak to the gem to recover HP.");
     }
 
     protected override void QuestionsComplete()
@@ -71,7 +72,7 @@ public class Game1 : GameMgr
         {
             savedPlayerpos = Player.transform.localPosition;
             Player.transform.position = new Vector3(0, 0, 0);
-
+            ScreenRef.SetTips("You are too weak to defeat this monster! Escape before it kills you.");
             room1.SetActive(false);
             room2.SetActive(true);
             TransitMgr.Instance.Emerge(
@@ -90,6 +91,7 @@ public class Game1 : GameMgr
         TransitMgr.Instance.Fade(
         delegate ()
         {
+            ScreenRef.SetTips("Speak to the gem to recover HP.");
             Player.transform.position = savedPlayerpos + new Vector3(0, -2, 0);
             room1.SetActive(true);
             room2.SetActive(false);
