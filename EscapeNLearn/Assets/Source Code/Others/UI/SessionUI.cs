@@ -32,11 +32,12 @@ public class SessionUI : MonoBehaviour
 
     private void Update()
     {
+        // To address bug of Instantiate not working in delegates...
         if (!flag)
         {
             if (tempstr != null)
             {
-                SpawnObjects(tempstr);
+                SpawnSessionObjects(tempstr);
                 flag = true;
             }
         }
@@ -86,7 +87,7 @@ public class SessionUI : MonoBehaviour
         Debug.Log("Edit session " + id);
     }
 
-    void SpawnObjects(string result)
+    void SpawnSessionObjects(string result)
     {
         Debug.Log(result);
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
@@ -96,12 +97,16 @@ public class SessionUI : MonoBehaviour
 
         foreach (KeyValuePair<string, object> pair in results)
         {
+            string sessiondata = Json.Serialize(pair.Value);
+            Session session = JsonUtility.FromJson<Session>(sessiondata);
+
             GameObject obj = Instantiate(SessionUIItem, Panel.transform.position, Quaternion.identity);
-            Debug.Log(results.Count);
+
             SessionUIItem script = obj.GetComponent<SessionUIItem>();
             script.transform.SetParent(Panel);
             script.transform.localScale = SessionUIItem.transform.localScale;
-            script.Init(this, pair.Key, null);
+            script.Init(this, pair.Key, session.session_name);
+
             list.Add(obj);
         }
     }

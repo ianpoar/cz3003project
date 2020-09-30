@@ -77,7 +77,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'SessionID: 2391921832'
+  m_Text: SessionName
 --- !u!1 &2404339404529092933
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +155,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: PlayerCount
+  m_Text: SessionID
 --- !u!1 &2404623563263914435
 GameObject:
   m_ObjectHideFlags: 0

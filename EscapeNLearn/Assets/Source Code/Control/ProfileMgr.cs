@@ -32,7 +32,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
     public void SavePlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         // save profile
-        DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id,
+        DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
         localProfile,
         delegate () // success
         {
