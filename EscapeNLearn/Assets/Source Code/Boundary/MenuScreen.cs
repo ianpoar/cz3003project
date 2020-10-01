@@ -26,7 +26,7 @@ public class MenuScreen : Screen
     [SerializeField]
     private Image profilePic;
     [SerializeField]
-    private GameObject panel_createquestion;
+    private GameObject panel_questionlist;
 
     // Start of menu screen
     protected override void Start()
@@ -97,12 +97,16 @@ public class MenuScreen : Screen
         }
     }
 
-    public void Btn_CreateQuestion(bool show)
+    public void Btn_QuestionList(bool show)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
 
-        panel_createquestion.SetActive(!panel_createquestion.activeSelf); // show create question
+<<<<<<< Updated upstream
+        panel_createquestion.SetActive(! panel_createquestion.activeSelf); // show create question
 
+=======
+        panel_questionlist.SetActive(!panel_questionlist.activeSelf); // show create question
+>>>>>>> Stashed changes
     }
 
     // Example for Aru
@@ -136,8 +140,8 @@ public class MenuScreen : Screen
         NotificationMgr.Instance.TransparentLoad();
 
         Profile profile = ProfileMgr.Instance.localProfile;
-        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id, nameof(profile.accountExp), profile.accountExp + 1,
-        delegate () // write success
+        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id, nameof(profile.accountExp), profile.accountExp+1,
+        delegate() // write success
         {
             NotificationMgr.Instance.StopLoad(); // allow input
 

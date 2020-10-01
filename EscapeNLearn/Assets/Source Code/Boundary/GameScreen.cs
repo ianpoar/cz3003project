@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 66541e3913bb48704e70deb10f121063e2dbe653
 public class GameScreen : Screen
 {
     public GameMgr GameManager;

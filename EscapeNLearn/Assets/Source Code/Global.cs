@@ -11,6 +11,7 @@ public static class DBQueryConstants
     public const string QUERY_SESSIONS = "sessions";
     public const string QUERY_CONNECTIONS = "connections";
     public const string QUERY_QUESTIONS = "questions";
+    public const string QUERY_QUESTIONLISTS = "questionlists";
 }
 
 public static class LoginTypeConstants
