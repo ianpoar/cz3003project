@@ -101,12 +101,7 @@ public class MenuScreen : Screen
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
 
-<<<<<<< Updated upstream
-        panel_createquestion.SetActive(! panel_createquestion.activeSelf); // show create question
-
-=======
         panel_questionlist.SetActive(!panel_questionlist.activeSelf); // show create question
->>>>>>> Stashed changes
     }
 
     // Example for Aru
