@@ -27,6 +27,10 @@ public class MenuScreen : Screen
     private Image profilePic;
     [SerializeField]
     private GameObject panel_questionlist;
+    [SerializeField]
+    private GameObject FBLinkButton;
+    [SerializeField]
+    private GameObject FBUnLinkButton;
 
     // Start of menu screen
     protected override void Start()
@@ -61,9 +65,6 @@ public class MenuScreen : Screen
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         panel_settings.SetActive(show);
-        Debug.Log("Database Instance" + DatabaseMgr.Instance.Id);
-        Debug.Log("ProfileMgr Instance" + ProfileMgr.Instance.localProfile.id_account);
-        Debug.Log("Firebase Instance" + Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId);
     }
 
     // Button to show sessions pressed
@@ -109,49 +110,39 @@ public class MenuScreen : Screen
 
     public void Btn_FBUnlink()
     {
-        Debug.Log(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser);
-        NotificationMgr.Instance.NotifyLoad("Linking Fb");
-        DatabaseMgr.Instance.SNSRequestCredential(
-        LoginTypeConstants.FACEBOOK,
-        delegate (Firebase.Auth.Credential cred) // success
-        {
-            Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UnlinkAsync("facebook.com").ContinueWith(task =>
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        NotificationMgr.Instance.NotifyLoad("Unlinking");
+        DatabaseMgr.Instance.UnlinkCredentials(LoginTypeConstants.FACEBOOK,
+            delegate ()
             {
-                if (task.IsCanceled)
-                {
-                    Debug.LogError("UnlinkAsync was canceled.");
-                    NotificationMgr.Instance.StopLoad();
-                    NotificationMgr.Instance.Notify("UnlinkAsync was canceled.");
-                    return;
-                }
-                if (task.IsFaulted)
-                {
-                    Debug.LogError("UnlinkAsync encountered an error: " + task.Exception);
-                    NotificationMgr.Instance.StopLoad();
-                    NotificationMgr.Instance.Notify("UnlinkAsync encountered an error: " + task.Exception.ToString());
-                    return;
-                }
+                ProfileMgr.Instance.localProfile.id_facebook = "Unknown"; // unlinked, reset id_facebook
 
-                // The user has been unlinked from the provider.
-                Firebase.Auth.FirebaseUser newUser = task.Result;
-                Debug.LogFormat("Credentials successfully unlinked from user: {0} ({1})",
-                    newUser.DisplayName, newUser.UserId);
+                DatabaseMgr.Instance.DBLightUpdate(
+                DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
+                nameof(ProfileMgr.Instance.localProfile.id_facebook),
+                ProfileMgr.Instance.localProfile.id_facebook,
+                delegate () // write success
+                {
+                    NotificationMgr.Instance.StopLoad();
+                    NotificationMgr.Instance.Notify("Unlink successful");
+                    // refresh new data locally
+                    RefreshProfileInfo();
+                },
+                delegate (string failmsg) // write failed
+                {
+                    NotificationMgr.Instance.StopLoad();
+                    NotificationMgr.Instance.Notify(failmsg);
+                });
+            },
+            delegate (string failmsg) {
                 NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify("Credentials successfully unlinked from user");
+                NotificationMgr.Instance.Notify(failmsg);
             });
-        },
-        delegate (string failmsg) // failed
-        {
-            NotificationMgr.Instance.StopLoad();
-            NotificationMgr.Instance.Notify(failmsg);
-        });
-
     }
 
-    // Example for Aru
     public void Btn_FBLink()
     {
-        Debug.Log(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser);
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         NotificationMgr.Instance.NotifyLoad("Linking Fb");
         DatabaseMgr.Instance.SNSRequestCredential(
         LoginTypeConstants.FACEBOOK,
@@ -159,27 +150,30 @@ public class MenuScreen : Screen
         {
             DatabaseMgr.Instance.LinkCredentials(
                 cred,
-                delegate ()
+                delegate () // successfully linked, update facebook id
                 {
                     DatabaseMgr.Instance.DBLightUpdate(
-                        DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
-                        nameof(ProfileMgr.Instance.localProfile.id_facebook),
-                        ProfileMgr.Instance.localProfile.id_facebook,
-                        delegate () // write success
+                       DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
+                       nameof(ProfileMgr.Instance.localProfile.id_facebook),
+                       ProfileMgr.Instance.localProfile.id_facebook,
+                       delegate () // write success
                         {
+                           DatabaseMgr.Instance.Logout();
+                           NotificationMgr.Instance.StopLoad();
+                           NotificationMgr.Instance.Notify("Link successful. Please relogin.",
+                           delegate()
+                           {
+                               TransitMgr.Instance.FadeToScene("Login");
+                           });
                             // refresh new data locally
-                            Profile profile = ProfileMgr.Instance.localProfile;
-                            profile.id_facebook = ProfileMgr.Instance.localProfile.id_facebook;
                             RefreshProfileInfo();
-                            NotificationMgr.Instance.StopLoad();
-                            NotificationMgr.Instance.Notify("Link succsessful");
                         },
-                        delegate (string failmsg) // write failed
+                       delegate (string failmsg) // write failed
                         {
-                            NotificationMgr.Instance.StopLoad(); // allow input
-                            NotificationMgr.Instance.Notify(failmsg);
-                        }
-                    );
+                           NotificationMgr.Instance.StopLoad();
+                           NotificationMgr.Instance.Notify(failmsg);
+                       }
+                   );
                 },
                 delegate (string failmsg)
                 {
@@ -210,7 +204,7 @@ public class MenuScreen : Screen
         NotificationMgr.Instance.TransparentLoad();
 
         Profile profile = ProfileMgr.Instance.localProfile;
-        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_PROFILES + DatabaseMgr.Instance.Id, nameof(profile.accountExp), profile.accountExp + 1,
+        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id, nameof(profile.accountExp), profile.accountExp + 1,
         delegate () // write success
         {
             NotificationMgr.Instance.StopLoad(); // allow input
@@ -228,10 +222,14 @@ public class MenuScreen : Screen
     // Use this as a reference for accessing user data such as login type etc.
     private void RefreshProfileInfo()
     {
+        FBUnLinkButton.SetActive(false);
+        FBLinkButton.SetActive(false);
         txt_info.text = ""; // reset
 
         if (DatabaseMgr.Instance.IsLoggedIn)
         {
+            FBLinkButton.SetActive(true);
+
             txt_info.text +=
                 "Firebase UID: " + DatabaseMgr.Instance.Id +
                 "\nEmail: " + DatabaseMgr.Instance.Email;
@@ -243,6 +241,11 @@ public class MenuScreen : Screen
             foreach (string str in DatabaseMgr.Instance.LoginTypes)
             {
                 txt_info.text += str + " | ";
+                if (str == LoginTypeConstants.FACEBOOK)
+                {
+                    FBUnLinkButton.SetActive(true);
+                    FBLinkButton.SetActive(false);
+                }
             }
 
             Profile profile = ProfileMgr.Instance.localProfile;

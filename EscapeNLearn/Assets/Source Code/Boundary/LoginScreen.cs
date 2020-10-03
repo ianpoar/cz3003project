@@ -21,7 +21,7 @@ public class LoginScreen : Screen
     // Start of login screen
     protected override void Start()
     {
-        base.Start();
+        // no base.start() - don't refresh profile into here as there's autologin
         AudioMgr.Instance.PlayBGM(AudioConstants.BGM_CLEARDAY);
     }
 

@@ -63,33 +63,14 @@ public class DatabaseMgr : MonoBehaviour
         FirebaseAuth.DefaultInstance.SignOut();
     }
 
-    public void LinkCredentials(Firebase.Auth.Credential cred, SimpleCallback successCallback = null, MessageCallback failCallback = null)
+    public void LinkCredentials(Credential cred, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
-        Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-        Firebase.Auth.FirebaseUser old_user = auth.CurrentUser;
-        // auth.CurrentUser.UnlinkAsync("facebook.com");
-        auth.CurrentUser.LinkWithCredentialAsync(cred).ContinueWith(task =>
-        {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("LinkWithCredentialAsync was canceled.");
-                failCallback?.Invoke("Link cancelled");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                Debug.LogError("LinkWithCredentialAsync encountered an error: " + task.Exception);
-                failCallback?.Invoke("Link unsuccsessful, error:" + task.Exception.ToString());
-                return;
-            }
+        StartCoroutine(Sequence_LinkCredentials(cred, successCallback, failCallback));
+    }
 
-            Firebase.Auth.FirebaseUser newUser = task.Result;
-            Debug.LogFormat("Credentials successfully linked to Firebase user: {0} ({1})",
-                newUser.DisplayName, newUser.UserId);
-            successCallback?.Invoke();
-        });
-        // link here
-
+    public void UnlinkCredentials(string provider, SimpleCallback successCallback, MessageCallback failCallback)
+    {
+        StartCoroutine(Sequence_UnlinkCredentials(provider, successCallback, failCallback));
     }
 
     // Call SNS api to perform SNS login and get credential. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
@@ -136,54 +117,7 @@ public class DatabaseMgr : MonoBehaviour
 
     public void DBFetchMulti(string query, string orderbyID, string id, int first, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
-        if (orderbyID == null || id == null) // fetch all
-        {
-            FirebaseDatabase.DefaultInstance
-                .GetReference(query).LimitToFirst(first)
-                .GetValueAsync().ContinueWith(task => {
-                    if (task.IsFaulted)
-                    {
-                        failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-                    }
-                    else if (task.IsCompleted)
-                    {
-                        DataSnapshot snapshot = task.Result;
-                        string result = snapshot.GetRawJsonValue();
-                        if (result == null || result == "{}")
-                        {
-                            failCallback?.Invoke("No data found.");
-                        }
-                        else
-                        {
-                            successCallback?.Invoke(result);
-                        }
-                    }
-                });
-        }
-        else
-        {
-            FirebaseDatabase.DefaultInstance
-                .GetReference(query).OrderByChild(orderbyID).EqualTo(id).LimitToFirst(first)
-                .GetValueAsync().ContinueWith(task => {
-                    if (task.IsFaulted)
-                    {
-                        failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-                    }
-                    else if (task.IsCompleted)
-                    {
-                        DataSnapshot snapshot = task.Result;
-                        string result = snapshot.GetRawJsonValue();
-                        if (result == null || result == "{}")
-                        {
-                            failCallback?.Invoke("No data found.");
-                        }
-                        else
-                        {
-                            successCallback?.Invoke(result);
-                        }
-                    }
-                });
-        }
+        StartCoroutine(Sequence_DBFetchMulti(query, orderbyID, id, first, successCallback, failCallback));
     }
 
     // Updates an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
@@ -195,28 +129,7 @@ public class DatabaseMgr : MonoBehaviour
     // Pushes an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
     public void DBPush(string query, object data, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
-        string key = FirebaseDatabase.DefaultInstance
-           .GetReference(query).Push().Key;
-
-        FirebaseDatabase.DefaultInstance
-           .GetReference(query + "/" + key).SetRawJsonValueAsync(JsonUtility.ToJson(data))
-           .ContinueWith(task => {
-               if (task.IsFaulted)
-               {
-                   failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-               }
-               else if (task.IsCompleted)
-               {
-                   if (task.Exception == null)
-                   {
-                       successCallback?.Invoke(key);
-                   }
-                   else
-                   {
-                       failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-                   }
-               }
-           });
+        StartCoroutine(Sequence_DBPush(query, data, successCallback, failCallback));
     }
 
     // Writes only a specific value in a document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
@@ -258,6 +171,59 @@ public class DatabaseMgr : MonoBehaviour
         {
             // failed
             failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+        }
+    }
+
+    // For DBFetchMulti
+    private IEnumerator Sequence_DBFetchMulti(string query, string orderbyID, string id, int first, MessageCallback successCallback, MessageCallback failCallback)
+    {
+        if (orderbyID == null || id == null) // fetch all
+        {
+            var task = FirebaseDatabase.DefaultInstance
+                .GetReference(query).LimitToFirst(first)
+                .GetValueAsync();
+            yield return new WaitUntil(predicate: () => task.IsCompleted);
+            if (task.IsFaulted)
+                    {
+                        failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+                    }
+                    else if (task.IsCompleted)
+                    {
+                        DataSnapshot snapshot = task.Result;
+                        string result = snapshot.GetRawJsonValue();
+                        if (result == null || result == "{}")
+                        {
+                            failCallback?.Invoke("No data found.");
+                        }
+                        else
+                        {
+                            successCallback?.Invoke(result);
+                        }
+                    }
+        }
+        else
+        {
+            var task = FirebaseDatabase.DefaultInstance
+                .GetReference(query).OrderByChild(orderbyID).EqualTo(id).LimitToFirst(first)
+                .GetValueAsync();
+            yield return new WaitUntil(predicate: () => task.IsCompleted);
+                    if (task.IsFaulted)
+                    {
+                        failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+                    }
+                    else if (task.IsCompleted)
+                    {
+                        DataSnapshot snapshot = task.Result;
+                        string result = snapshot.GetRawJsonValue();
+                        if (result == null || result == "{}")
+                        {
+                            failCallback?.Invoke("No data found.");
+                        }
+                        else
+                        {
+                            successCallback?.Invoke(result);
+                        }
+                    }
         }
     }
 
@@ -370,6 +336,79 @@ public class DatabaseMgr : MonoBehaviour
         else
         {
             failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+        }
+    }
+
+    // For DBPush
+    private IEnumerator Sequence_DBPush(string query, object data, MessageCallback successCallback, MessageCallback failCallback)
+    {
+        string key = FirebaseDatabase.DefaultInstance
+           .GetReference(query).Push().Key;
+
+        var task = FirebaseDatabase.DefaultInstance
+           .GetReference(query + "/" + key).SetRawJsonValueAsync(JsonUtility.ToJson(data));
+        yield return new WaitUntil(predicate: () => task.IsCompleted);
+        if (task.IsFaulted)
+               {
+                   failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+               }
+               else if (task.IsCompleted)
+               {
+                   if (task.Exception == null)
+                   {
+                       successCallback?.Invoke(key);
+                   }
+                   else
+                   {
+                       failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+                   }
+               }
+    }
+
+    // for LinkCredentials
+    private IEnumerator Sequence_LinkCredentials(Credential cred, SimpleCallback successCallback, MessageCallback failCallback)
+    {
+        Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        Firebase.Auth.FirebaseUser old_user = auth.CurrentUser;
+        // auth.CurrentUser.UnlinkAsync("facebook.com");
+        var task = auth.CurrentUser.LinkWithCredentialAsync(cred);
+        yield return new WaitUntil(predicate: () => task.IsCompleted);
+        if (task.IsCanceled)
+        {
+            Debug.LogError("LinkWithCredentialAsync was canceled.");
+            failCallback?.Invoke("Link cancelled");
+        }
+        else if (task.IsFaulted)
+        {
+            Debug.LogError("LinkWithCredentialAsync encountered an error: " + task.Exception);
+            failCallback?.Invoke("Link unsuccsessful, error:" + task.Exception.ToString());
+        }
+        else
+        {
+            Firebase.Auth.FirebaseUser newUser = task.Result;
+            Debug.LogFormat("Credentials successfully linked to Firebase user: {0} ({1})",
+                newUser.DisplayName, newUser.UserId);
+            successCallback?.Invoke();
+        }
+        // link here
+    }
+
+    // for UnLinkCredentials
+    private IEnumerator Sequence_UnlinkCredentials(string provider, SimpleCallback successCallback, MessageCallback failCallback)
+    {
+        var task = Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UnlinkAsync(provider);
+        yield return new WaitUntil(predicate: () => task.IsCompleted);
+        if (task.IsCanceled)
+        {
+            failCallback?.Invoke("Cancelled");
+        }
+        else if (task.IsFaulted)
+        {
+            failCallback?.Invoke(task.Exception.ToString());
+        }
+        else if (task.IsCompleted)
+        {
+            successCallback?.Invoke();
         }
     }
 }
