@@ -43,22 +43,53 @@ public class DatabaseMgr : MonoBehaviour
     public bool IsEmailVerified { get { return FirebaseAuth.DefaultInstance.CurrentUser.IsEmailVerified; } private set { } }
     public string Email { get { return FirebaseAuth.DefaultInstance.CurrentUser.Email; } private set { } }
     public bool IsLoggedIn { get { return (FirebaseAuth.DefaultInstance.CurrentUser != null); } private set { } }
-    public List <string> LoginTypes {
+    public List<string> LoginTypes
+    {
         get
         {
-                List<string> list = new List<string>();
-                foreach (IUserInfo info in FirebaseAuth.DefaultInstance.CurrentUser.ProviderData)
-                {
-                    list.Add(info.ProviderId);
-                }
-                return list;
+            List<string> list = new List<string>();
+            foreach (IUserInfo info in FirebaseAuth.DefaultInstance.CurrentUser.ProviderData)
+            {
+                list.Add(info.ProviderId);
+            }
+            return list;
         }
-        private set { } }
+        private set { }
+    }
 
     // Logs out from firebase account, can be directly called from other classes
     public void Logout()
     {
         FirebaseAuth.DefaultInstance.SignOut();
+    }
+
+    public void LinkCredentials(Firebase.Auth.Credential cred, SimpleCallback successCallback = null, MessageCallback failCallback = null)
+    {
+        Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        Firebase.Auth.FirebaseUser old_user = auth.CurrentUser;
+        // auth.CurrentUser.UnlinkAsync("facebook.com");
+        auth.CurrentUser.LinkWithCredentialAsync(cred).ContinueWith(task =>
+        {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("LinkWithCredentialAsync was canceled.");
+                failCallback?.Invoke("Link cancelled");
+                return;
+            }
+            if (task.IsFaulted)
+            {
+                Debug.LogError("LinkWithCredentialAsync encountered an error: " + task.Exception);
+                failCallback?.Invoke("Link unsuccsessful, error:" + task.Exception.ToString());
+                return;
+            }
+
+            Firebase.Auth.FirebaseUser newUser = task.Result;
+            Debug.LogFormat("Credentials successfully linked to Firebase user: {0} ({1})",
+                newUser.DisplayName, newUser.UserId);
+            successCallback?.Invoke();
+        });
+        // link here
+
     }
 
     // Call SNS api to perform SNS login and get credential. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
@@ -158,7 +189,7 @@ public class DatabaseMgr : MonoBehaviour
     // Updates an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
     public void DBUpdate(string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
-        StartCoroutine(Sequence_DBUpdate( query, data, successCallback, failCallback));
+        StartCoroutine(Sequence_DBUpdate(query, data, successCallback, failCallback));
     }
 
     // Pushes an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
@@ -182,7 +213,7 @@ public class DatabaseMgr : MonoBehaviour
                    }
                    else
                    {
-                     failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+                       failCallback?.Invoke(task.Exception.GetBaseException().ToString());
                    }
                }
            });
