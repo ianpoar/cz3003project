@@ -6,9 +6,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Facebook.Unity;
 
+/// <summary>
+/// Database Manager Subsystem Interface, a Control Class that handles all communication with the database in the game, implemented with the data access object pattern in mind.
+/// </summary>
 public class DatabaseMgr : MonoBehaviour
 {
-    // Singleton implementation
+    /// <summary>
+    /// Singleton instance.
+    /// </summary>
     public static DatabaseMgr Instance { get; private set; }
     private void Awake()
     {
@@ -57,23 +62,33 @@ public class DatabaseMgr : MonoBehaviour
         private set { }
     }
 
-    // Logs out from firebase account, can be directly called from other classes
+    /// <summary>
+    /// Logs out from the game.
+    /// </summary>
     public void Logout()
     {
         FirebaseAuth.DefaultInstance.SignOut();
     }
 
+    /// <summary>
+    /// Links SNS credentials to account.
+    /// </summary>
     public void LinkCredentials(Credential cred, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         StartCoroutine(Sequence_LinkCredentials(cred, successCallback, failCallback));
     }
 
+    /// <summary>
+    /// Unlinks SNS credentials from account.
+    /// </summary>
     public void UnlinkCredentials(string provider, SimpleCallback successCallback, MessageCallback failCallback)
     {
         StartCoroutine(Sequence_UnlinkCredentials(provider, successCallback, failCallback));
     }
 
-    // Call SNS api to perform SNS login and get credential. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    /// <summary>
+    ///  Call SNS API to perform SNS login and get credentials.
+    /// </summary>
     public void SNSRequestCredential(string provider, CredentialCallback successCallback, MessageCallback failCallback, bool skipAuth = false)
     {
         Debug.Log("SNSRequestCredential");
@@ -94,54 +109,77 @@ public class DatabaseMgr : MonoBehaviour
             _apiLinker.Authenticate(successCallback, failCallback);
     }
 
-    // With SNS credential, login to firebase db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    /// <summary>
+    /// Perform account login with SNS credentials.
+    /// </summary>
     public void SNSLoginWithCredential(Credential credential, SimpleCallback successCallback, MessageCallback failCallback)
     {
         StartCoroutine(Sequence_SNSLogin(credential, successCallback, failCallback));
     }
 
-    // Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    /// <summary>
+    /// Perform account registration via email.
+    /// </summary>
     public void EmailRegister(string email, string pw, SimpleCallback passcb, MessageCallback failcb)
     {
         StartCoroutine(Sequence_EmailRegister(email, pw, passcb, failcb));
     }
 
-    // Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    /// <summary>
+    /// Perform account login via email.
+    /// </summary>
     public void EmailLogin(string email, string pw, SimpleCallback passcb, MessageCallback failcb)
     {
         StartCoroutine(Sequence_EmailLogin(email, pw, passcb, failcb));
     }
 
-    // Fetch an entire document from db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    /// <summary>
+    /// Fetch an entire document from the database.
+    /// </summary>
     public void DBFetch(string query, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
         StartCoroutine(Sequence_DBFetch(query, successCallback, failCallback));
     }
 
+    /// <summary>
+    /// Fetch multiple documents from the database.
+    /// </summary>
+    /// <param name="targetKey"> Specify a key to only fetch documents with properties that match. Fetches everything if left null. </param>
+    /// /// <param name="targetValue"> Specify the value to match with the target key. </param>
     public void DBFetchMulti(string query, string targetKey, string targetValue, int first, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
         StartCoroutine(Sequence_DBFetchMulti(query, targetKey, targetValue, first, successCallback, failCallback));
     }
 
-    // Updates an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    /// <summary>
+    /// Updates an entire document to the database.
+    /// </summary>
     public void DBUpdate(string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         StartCoroutine(Sequence_DBUpdate(query, data, successCallback, failCallback));
     }
 
-    // Pushes an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    /// <summary>
+    /// Pushes an entire document to the database, returning the generated key in the succsess callback.
+    /// </summary>
     public void DBPush(string query, object data, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
         StartCoroutine(Sequence_DBPush(query, data, successCallback, failCallback));
     }
 
-    // Writes only a specific value in a document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    /// <summary>
+    /// Updates only a specific property in a document in the database.
+    /// </summary>
+    /// <param name="itemToWrite"> Specify a key for the item to be written to. </param>
+    /// /// <param name="value"> Specify the item to be writen. </param>
     public void DBLightUpdate(string query, string itemToWrite, object value, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         StartCoroutine(Sequence_DBLightUpdate(query, itemToWrite, value, successCallback, failCallback));
     }
 
-    // Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case
+    /// <summary>
+    /// Fetch a profile picture.
+    /// </summary>
     public void FetchProfilePic(string id, SpriteCallback successCallback, MessageCallback failCallback)
     {
         if (_apiLinker == null) // check that api linker exists
@@ -152,7 +190,9 @@ public class DatabaseMgr : MonoBehaviour
 
     // Private coroutines used in the above methods
 
-    // For DBFetch
+    /// <summary>
+    /// Coroutine for DBFetch.
+    /// </summary>
     private IEnumerator Sequence_DBFetch(string query, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
         var task = _database.GetReference(query).GetValueAsync();
@@ -177,7 +217,9 @@ public class DatabaseMgr : MonoBehaviour
         }
     }
 
-    // For DBFetchMulti
+    /// <summary>
+    /// Coroutine for DBFetchMulti.
+    /// </summary>
     private IEnumerator Sequence_DBFetchMulti(string query, string orderbyID, string id, int first, MessageCallback successCallback, MessageCallback failCallback)
     {
         if (orderbyID == null || id == null) // fetch all
@@ -230,7 +272,9 @@ public class DatabaseMgr : MonoBehaviour
         }
     }
 
-    // For DBUpdate
+    /// <summary>
+    /// Coroutine for DBUpdate.
+    /// </summary>
     private IEnumerator Sequence_DBUpdate(string query, object data, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         if (data != null)
@@ -270,7 +314,9 @@ public class DatabaseMgr : MonoBehaviour
 
     }
 
-    // For DBLightUpdate
+    /// <summary>
+    /// Coroutine for DBLightUpdate.
+    /// </summary>
     private IEnumerator Sequence_DBLightUpdate(string query, string itemToWrite, object value, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         var task = _database.GetReference(query).Child(itemToWrite).SetValueAsync(value);
@@ -287,7 +333,9 @@ public class DatabaseMgr : MonoBehaviour
         }
     }
 
-    // For SNSLoginWithCredential
+    /// <summary>
+    /// Coroutine for SNSLoginWithCredential.
+    /// </summary>
     private IEnumerator Sequence_SNSLogin(Credential credential, SimpleCallback successCallback, MessageCallback failCallback)
     {
         var auth = FirebaseAuth.DefaultInstance;
@@ -304,7 +352,9 @@ public class DatabaseMgr : MonoBehaviour
         }
     }
 
-    // For EmailRegister
+    /// <summary>
+    /// Coroutine for EmailRegister.
+    /// </summary>
     private IEnumerator Sequence_EmailRegister(string email, string pw, SimpleCallback successCallback, MessageCallback failCallback)
     {
         var auth = FirebaseAuth.DefaultInstance;
@@ -325,7 +375,9 @@ public class DatabaseMgr : MonoBehaviour
         }
     }
 
-    // For EmailLogin
+    /// <summary>
+    /// Coroutine for EmailLogin.
+    /// </summary>
     private IEnumerator Sequence_EmailLogin(string email, string pw, SimpleCallback successCallback, MessageCallback failCallback)
     {
         var auth = FirebaseAuth.DefaultInstance;
@@ -342,7 +394,9 @@ public class DatabaseMgr : MonoBehaviour
         }
     }
 
-    // For DBPush
+    /// <summary>
+    /// Coroutine for DBPush.
+    /// </summary>
     private IEnumerator Sequence_DBPush(string query, object data, MessageCallback successCallback, MessageCallback failCallback)
     {
         string key = FirebaseDatabase.DefaultInstance
@@ -368,7 +422,9 @@ public class DatabaseMgr : MonoBehaviour
                }
     }
 
-    // for LinkCredentials
+    /// <summary>
+    /// Coroutine for LinkCredentials.
+    /// </summary>
     private IEnumerator Sequence_LinkCredentials(Credential cred, SimpleCallback successCallback, MessageCallback failCallback)
     {
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
@@ -396,7 +452,9 @@ public class DatabaseMgr : MonoBehaviour
         // link here
     }
 
-    // for UnLinkCredentials
+    /// <summary>
+    /// Coroutine for UnLinkCredentials.
+    /// </summary>
     private IEnumerator Sequence_UnlinkCredentials(string provider, SimpleCallback successCallback, MessageCallback failCallback)
     {
         var task = Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UnlinkAsync(provider);

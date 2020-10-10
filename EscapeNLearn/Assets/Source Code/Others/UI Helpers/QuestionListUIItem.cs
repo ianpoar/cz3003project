@@ -4,6 +4,9 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// A UI helper class that provides functionalities for an question list display object.
+/// </summary>
 public class QuestionListUIItem : MonoBehaviour
 {
     public Text txt_name;

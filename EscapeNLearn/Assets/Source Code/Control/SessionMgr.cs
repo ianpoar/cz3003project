@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Facebook.MiniJSON;
 
@@ -10,9 +9,14 @@ public enum ReportType
     SESSION
 }
 
+/// <summary>
+/// Session Manager Subsystem Interface, a Control Class that handles all report related processes. 
+/// </summary>
 public class SessionMgr : MonoBehaviour
 {
-    // Singleton implementation
+    /// <summary>
+    /// Singleton instance.
+    /// </summary>
     public static SessionMgr Instance { get; private set; }
     private void Awake()
     {
@@ -29,10 +33,11 @@ public class SessionMgr : MonoBehaviour
     public string passedInSessionID;
     public Connection passedInConnection = null;
 
-    // public get, private set
     public ReportType CurrentReportType = ReportType.INDIVIDUAL;
 
-    // loads all student reports
+    /// <summary>
+    /// Loads all reports based on the individual.
+    /// </summary>
     public void LoadIndividualSessionReports(Connection c, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         passedInConnection = c;
@@ -65,7 +70,9 @@ public class SessionMgr : MonoBehaviour
          });
     }
 
-    // loads all session reports
+    /// <summary>
+    /// Loads all reports based on the session.
+    /// </summary>
     public void LoadAllSessionReports(string id_session, Session session, SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         passedInSessionID = id_session;
@@ -96,7 +103,9 @@ public class SessionMgr : MonoBehaviour
          });
     }
 
-    // loads the level report
+    /// <summary>
+    /// Loads a single report.
+    /// </summary>
     public void LoadLevelReport(Report report)
     {
         CurrentReportType = ReportType.LEVEL;

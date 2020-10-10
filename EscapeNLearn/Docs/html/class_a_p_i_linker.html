@@ -90,25 +90,32 @@ $(document).ready(function(){initNavTree('class_a_p_i_linker.html',''); initResi
 <div class="title">APILinker Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>API Subsystem Interface, a Control Class that handles different SNS authentication APIs, implemented in a strategy pattern where functionality can be changed at runtime to facilitate different SNS authentication processes.  
+ <a href="class_a_p_i_linker.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for APILinker:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_a_p_i_linker.png" usemap="#APILinker_map" alt=""/>
   <map id="APILinker_map" name="APILinker_map">
-<area href="class_f_b_a_p_i_linker.html" alt="FBAPILinker" shape="rect" coords="0,56,107,80"/>
-<area href="class_google_a_p_i_linker.html" alt="GoogleAPILinker" shape="rect" coords="117,56,224,80"/>
+<area href="class_f_b_a_p_i_linker.html" title="A concrete class derived from APILinker, executes Facebook API code." alt="FBAPILinker" shape="rect" coords="0,56,107,80"/>
+<area href="class_google_a_p_i_linker.html" title="A concrete class derived from APILinker, executes Google API code." alt="GoogleAPILinker" shape="rect" coords="117,56,224,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0fb22ae93667f19db78fc2cc4960c436"><td class="memItemLeft" align="right" valign="top">abstract void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_p_i_linker.html#a0fb22ae93667f19db78fc2cc4960c436">Authenticate</a> (<a class="el" href="_global_8cs.html#a0237683485b31a7e7ae875d3320e7d47">CredentialCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:a0fb22ae93667f19db78fc2cc4960c436"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SNS-dependent Authentication API code.  <a href="class_a_p_i_linker.html#a0fb22ae93667f19db78fc2cc4960c436">More...</a><br /></td></tr>
 <tr class="separator:a0fb22ae93667f19db78fc2cc4960c436"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78ba6c5943bd28b708b4c18ce7cfe9f8"><td class="memItemLeft" align="right" valign="top">abstract void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_p_i_linker.html#a78ba6c5943bd28b708b4c18ce7cfe9f8">GetProfilePic</a> (string id, <a class="el" href="_global_8cs.html#a9fdd59ac73e6f395b0abcf4b9509e788">SpriteCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:a78ba6c5943bd28b708b4c18ce7cfe9f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SNS-dependent Get <a class="el" href="class_profile.html" title="A profile Entity Class.">Profile</a> Picture API code.  <a href="class_a_p_i_linker.html#a78ba6c5943bd28b708b4c18ce7cfe9f8">More...</a><br /></td></tr>
 <tr class="separator:a78ba6c5943bd28b708b4c18ce7cfe9f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>API Subsystem Interface, a Control Class that handles different SNS authentication APIs, implemented in a strategy pattern where functionality can be changed at runtime to facilitate different SNS authentication processes. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a0fb22ae93667f19db78fc2cc4960c436"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0fb22ae93667f19db78fc2cc4960c436">&#9670;&nbsp;</a></span>Authenticate()</h2>
 
@@ -142,6 +149,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Executes SNS-dependent Authentication API code. </p>
 
 <p>Implemented in <a class="el" href="class_google_a_p_i_linker.html#ade4af8249191b6a867b93b4c5a1b9740">GoogleAPILinker</a>, and <a class="el" href="class_f_b_a_p_i_linker.html#a01d3f8b588cab6617b83385d01e91c98">FBAPILinker</a>.</p>
 
@@ -187,6 +196,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Executes SNS-dependent Get <a class="el" href="class_profile.html" title="A profile Entity Class.">Profile</a> Picture API code. </p>
+
 <p>Implemented in <a class="el" href="class_google_a_p_i_linker.html#abbf586e091dd0d509251adf83abc91c1">GoogleAPILinker</a>, and <a class="el" href="class_f_b_a_p_i_linker.html#a3b7f5c77d7d599f4ff2fe3e687107aa4">FBAPILinker</a>.</p>
 
 </div>
@@ -200,7 +211,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_a_p_i_linker.html">APILinker</a></li>
-    <li class="footer">Generated on Sun Oct 11 2020 00:55:14 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sun Oct 11 2020 03:38:43 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

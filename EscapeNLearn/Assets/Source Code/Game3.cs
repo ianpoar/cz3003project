@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script for game level 3.
+/// </summary>
 public class Game3 : GameMgr
 {
     public GameObject Player;

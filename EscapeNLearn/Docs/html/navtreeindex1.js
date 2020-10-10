@@ -1,20 +1,22 @@
 var NAVTREEINDEX1 =
 {
+"_rest_client_promise_8cs.html":[2,0,0,7,0,0,2],
+"_rotate_gesture_recognizer_8cs.html":[2,0,0,3,0,0,1,7],
 "_rotate_gesture_recognizer_component_script_8cs.html":[2,0,0,3,0,0,0,10],
 "_scale_gesture_recognizer_8cs.html":[2,0,0,3,0,0,1,8],
 "_scale_gesture_recognizer_component_script_8cs.html":[2,0,0,3,0,0,0,11],
 "_screen_8cs.html":[2,0,0,8,0,4],
-"_scroll_snap_rect_8cs.html":[2,0,0,8,3,3,4],
+"_scroll_snap_rect_8cs.html":[2,0,0,8,3,4,4],
 "_session_8cs.html":[2,0,0,8,2,6],
-"_session_lobby_u_i_8cs.html":[2,0,0,8,3,2,2],
+"_session_lobby_u_i_8cs.html":[2,0,0,8,3,3,2],
 "_session_mgr_8cs.html":[2,0,0,8,1,8],
 "_session_mgr_8cs.html#ae4f179a72db5cca021a37ec4c6fe4c68":[2,0,0,8,1,8,1],
 "_session_mgr_8cs.html#ae4f179a72db5cca021a37ec4c6fe4c68a8e32a82fa7897baa1c7f2bbf920b0ff1":[2,0,0,8,1,8,1,2],
 "_session_mgr_8cs.html#ae4f179a72db5cca021a37ec4c6fe4c68a938873bbf7fe69b2f3836e6103f2a323":[2,0,0,8,1,8,1,1],
 "_session_mgr_8cs.html#ae4f179a72db5cca021a37ec4c6fe4c68aec46cfef93df98a48cda0c5df179485e":[2,0,0,8,1,8,1,0],
-"_session_u_i_8cs.html":[2,0,0,8,3,2,3],
-"_session_u_i_item_8cs.html":[2,0,0,8,3,3,5],
-"_settings_u_i_8cs.html":[2,0,0,8,3,2,4],
+"_session_u_i_8cs.html":[2,0,0,8,3,3,3],
+"_session_u_i_item_8cs.html":[2,0,0,8,3,4,5],
+"_settings_u_i_8cs.html":[2,0,0,8,3,3,4],
 "_sign_in_helper_object_8cs.html":[2,0,0,5,0,3],
 "_splash_screen_8cs.html":[2,0,0,8,0,5],
 "_static_coroutine_8cs.html":[2,0,0,7,0,0,0,8],
@@ -247,7 +249,5 @@ var NAVTREEINDEX1 =
 "class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a3b6405cd5b2179cf498bed051ea895da":[1,0,0,10,1],
 "class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a43544e21f5a3dd98bd8668a9646047ac":[1,0,0,10,14],
 "class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a68302635991353605bb2168b8bb82d1c":[1,0,0,10,6],
-"class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a6fa0991882bf55aaede92cdde71b03c1":[1,0,0,10,9],
-"class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a81d2a70f4032b59fdf0416734329de95":[1,0,0,10,11],
-"class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a8980ca6193bbd8a2727dc34948be6257":[1,0,0,10,0]
+"class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a6fa0991882bf55aaede92cdde71b03c1":[1,0,0,10,9]
 };

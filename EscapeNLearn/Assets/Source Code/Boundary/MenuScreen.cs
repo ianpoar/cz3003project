@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Facebook.MiniJSON;
 
+/// <summary>
+/// UI Boundary Class for the Menu scene.
+/// </summary>
 public class MenuScreen : Screen
 {
     // References

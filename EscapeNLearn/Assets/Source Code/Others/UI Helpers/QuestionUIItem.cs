@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// A UI helper class that provides functionalities for an question display object.
+/// </summary>
 public class QuestionUIItem : MonoBehaviour
 {
     public Text txt_name;

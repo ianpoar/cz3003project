@@ -2,10 +2,6 @@ using System;
 using Proyecto26;
 using UnityEngine;
 
-/// <summary>
-/// Handles calls to the Google provider for authentication
-/// </summary>
-
 public class GoogleAuthHandler
 {
     private const string ClientId = "900118418800-cfcpn1bebpr8ju8ojfjkstc5svahr822.apps.googleusercontent.com"; //TODO: Change [CLIENT_ID] to your CLIENT_ID

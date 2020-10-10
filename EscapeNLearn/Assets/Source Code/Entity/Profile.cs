@@ -1,4 +1,7 @@
-﻿public class Profile
+﻿/// <summary>
+/// A profile Entity Class.
+/// </summary>
+public class Profile
 {
     public string name = "Unknown";
     public string accountType = "Student";

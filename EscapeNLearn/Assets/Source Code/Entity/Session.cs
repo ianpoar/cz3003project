@@ -1,4 +1,6 @@
-﻿
+﻿/// <summary>
+/// A session Entity Class.
+/// </summary>
 public class Session
 {
     public string session_name;

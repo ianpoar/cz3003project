@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Notification Subsystem Interface, a Control Class that handles all in-game popup and loading notifications.
+/// </summary>
 public class NotificationMgr : MonoBehaviour // Singleton class
 {
-    // Singleton implementation
+    /// <summary>
+    /// Singleton instance.
+    /// </summary>
     public static NotificationMgr Instance { get; private set; }
     private void Awake()
     {
@@ -39,6 +44,9 @@ public class NotificationMgr : MonoBehaviour // Singleton class
     [SerializeField]
     private InputField input_text = null;
 
+    /// <summary>
+    /// Displays an in-game popup notification.
+    /// </summary>
     public void Notify(string content = null, SimpleCallback okCallback = null, SimpleCallback cancelCallback = null)
     {
         notificationList.Add(new Notification(NotifyType.Notice, content, okCallback, cancelCallback, null));
@@ -46,6 +54,9 @@ public class NotificationMgr : MonoBehaviour // Singleton class
             ProcessNextNotification();
     }
 
+    /// <summary>
+    /// Displays an in-game popup notification and requests for a text input from the user.
+    /// </summary>
     public void RequestTextInput(string content = null, MessageCallback inputTextCallback = null, SimpleCallback cancelCallback = null)
     {
         notificationList.Add(new Notification(NotifyType.RequestTextInput, content, null, cancelCallback, inputTextCallback));
@@ -53,6 +64,9 @@ public class NotificationMgr : MonoBehaviour // Singleton class
             ProcessNextNotification();
     }
 
+    /// <summary>
+    /// Displays an in-game loading notification.
+    /// </summary>
     public void NotifyLoad(string content = null, SimpleCallback okCallback = null)
     {
         notificationList.Add(new Notification(NotifyType.Load, content, okCallback, null, null));
@@ -60,6 +74,9 @@ public class NotificationMgr : MonoBehaviour // Singleton class
             ProcessNextNotification();
     }
 
+    /// <summary>
+    /// Block all in-game inputs without displaying any notification.
+    /// </summary>
     public void TransparentLoad(SimpleCallback okCallback = null)
     {
         notificationList.Add(new Notification(NotifyType.TransparentLoad, null, okCallback, null, null));
@@ -67,6 +84,9 @@ public class NotificationMgr : MonoBehaviour // Singleton class
             ProcessNextNotification();
     }
 
+    /// <summary>
+    /// OK button handler.
+    /// </summary>
     public void Btn_OK()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -80,6 +100,9 @@ public class NotificationMgr : MonoBehaviour // Singleton class
         ProcessNextNotification();
     }
 
+    /// <summary>
+    /// Cancel button handler.
+    /// </summary>
     public void Btn_Cancel()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -89,11 +112,17 @@ public class NotificationMgr : MonoBehaviour // Singleton class
         ProcessNextNotification();
     }
 
+    /// <summary>
+    /// Stops loading notification from being displayed.
+    /// </summary>
     public void StopLoad()
     {
         stopLoadIterator++;
     }
 
+    /// <summary>
+    /// Loading coroutine.
+    /// </summary>
     private IEnumerator Sequence_Loading(string loadingText = "Loading")
     {
         bool animate = true;
@@ -131,6 +160,9 @@ public class NotificationMgr : MonoBehaviour // Singleton class
         ProcessNextNotification();
     }
 
+    /// <summary>
+    /// Transparent load coroutine.
+    /// </summary>
     private IEnumerator Sequence_TransparentLoading()
     {
         bool animate = true;
@@ -151,6 +183,9 @@ public class NotificationMgr : MonoBehaviour // Singleton class
         ProcessNextNotification();
     }
 
+    /// <summary>
+    /// Processes the next notification in the list, if any.
+    /// </summary>
     private void ProcessNextNotification()
     {
         if (notificationId < notificationList.Count)
@@ -202,6 +237,9 @@ public class NotificationMgr : MonoBehaviour // Singleton class
         }
     }
 
+    /// <summary>
+    /// Hide all notification displays.
+    /// </summary>
     void HideAll()
     {
         if (obj_default.activeSelf)

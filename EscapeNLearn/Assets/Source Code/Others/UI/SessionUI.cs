@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using Facebook.MiniJSON;
 
+/// <summary>
+/// A UI class that provides session management functionalities, encapsulated in the menu scene in Unity.
+/// </summary>
 public class SessionUI : MonoBehaviour
 {
     public GameObject SessionUIItem;

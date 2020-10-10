@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// A UI helper class that provides fading 3D text used during gameplay.
+/// </summary>
 public class Fading3DText : MonoBehaviour
 {
     public float speed;

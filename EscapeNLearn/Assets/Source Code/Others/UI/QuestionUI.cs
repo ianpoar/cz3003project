@@ -7,6 +7,9 @@ using Facebook.MiniJSON;
 using System.Net.Mail;
 using System.Linq;
 
+/// <summary>
+/// A UI class that provides question management functionalities, encapsulated in the menu scene in Unity.
+/// </summary>
 public class QuestionUI : MonoBehaviour
 {
     [SerializeField]

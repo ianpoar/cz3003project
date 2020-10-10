@@ -91,6 +91,9 @@ $(document).ready(function(){initNavTree('class_transit_mgr.html',''); initResiz
 <div class="title">TransitMgr Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Transition Manager Subsystem Interface, a Control Class that handles all in-game transitions.  
+ <a href="class_transit_mgr.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for TransitMgr:</div>
 <div class="dyncontent">
@@ -101,18 +104,24 @@ Inheritance diagram for TransitMgr:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae895d557cd990e29ce988397ded2915c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_transit_mgr.html#ae895d557cd990e29ce988397ded2915c">Fade</a> (<a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> cb=null)</td></tr>
+<tr class="memdesc:ae895d557cd990e29ce988397ded2915c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fades the current screen.  <a href="class_transit_mgr.html#ae895d557cd990e29ce988397ded2915c">More...</a><br /></td></tr>
 <tr class="separator:ae895d557cd990e29ce988397ded2915c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3c70b728f7a10eef60753e33a88acb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_transit_mgr.html#ab3c70b728f7a10eef60753e33a88acb7">FadeToScene</a> (string sceneName)</td></tr>
+<tr class="memdesc:ab3c70b728f7a10eef60753e33a88acb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fades the current screen and switches the scene.  <a href="class_transit_mgr.html#ab3c70b728f7a10eef60753e33a88acb7">More...</a><br /></td></tr>
 <tr class="separator:ab3c70b728f7a10eef60753e33a88acb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6ac03a5f94382e3a68e1f431f996f53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_transit_mgr.html#ab6ac03a5f94382e3a68e1f431f996f53">Emerge</a> (<a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> cb=null)</td></tr>
+<tr class="memdesc:ab6ac03a5f94382e3a68e1f431f996f53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emerges the current screen.  <a href="class_transit_mgr.html#ab6ac03a5f94382e3a68e1f431f996f53">More...</a><br /></td></tr>
 <tr class="separator:ab6ac03a5f94382e3a68e1f431f996f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a677da116147328e71c0115974c591131"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_transit_mgr.html">TransitMgr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_transit_mgr.html#a677da116147328e71c0115974c591131">Instance</a><code> [get]</code></td></tr>
+<tr class="memdesc:a677da116147328e71c0115974c591131"><td class="mdescLeft">&#160;</td><td class="mdescRight">Singleton instance.  <a href="class_transit_mgr.html#a677da116147328e71c0115974c591131">More...</a><br /></td></tr>
 <tr class="separator:a677da116147328e71c0115974c591131"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Transition Manager Subsystem Interface, a Control Class that handles all in-game transitions. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ab6ac03a5f94382e3a68e1f431f996f53"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab6ac03a5f94382e3a68e1f431f996f53">&#9670;&nbsp;</a></span>Emerge()</h2>
 
@@ -128,6 +137,9 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Emerges the current screen. </p>
+<p>Call this in UI classes when you want to show the current screen</p>
 
 </div>
 </div>
@@ -147,6 +159,9 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Fades the current screen. </p>
+<p>Call this in UI classes to hide the current screen</p>
+
 </div>
 </div>
 <a id="ab3c70b728f7a10eef60753e33a88acb7"></a>
@@ -164,6 +179,9 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Fades the current screen and switches the scene. </p>
+<p>Call this in UI classes to transit to another scene</p>
 
 </div>
 </div>
@@ -188,6 +206,8 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Singleton instance. </p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
@@ -199,7 +219,7 @@ Properties</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_transit_mgr.html">TransitMgr</a></li>
-    <li class="footer">Generated on Sun Oct 11 2020 00:55:14 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sun Oct 11 2020 03:38:43 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

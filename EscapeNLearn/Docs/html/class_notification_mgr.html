@@ -91,6 +91,9 @@ $(document).ready(function(){initNavTree('class_notification_mgr.html',''); init
 <div class="title">NotificationMgr Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="class_notification.html" title="A notification Entity Class.">Notification</a> Subsystem Interface, a Control Class that handles all in-game popup and loading notifications.  
+ <a href="class_notification_mgr.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for NotificationMgr:</div>
 <div class="dyncontent">
@@ -101,26 +104,36 @@ Inheritance diagram for NotificationMgr:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6d72e731e5c29afea4594aff1eca0ab0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_notification_mgr.html#a6d72e731e5c29afea4594aff1eca0ab0">Notify</a> (string content=null, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> okCallback=null, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> cancelCallback=null)</td></tr>
+<tr class="memdesc:a6d72e731e5c29afea4594aff1eca0ab0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays an in-game popup notification.  <a href="class_notification_mgr.html#a6d72e731e5c29afea4594aff1eca0ab0">More...</a><br /></td></tr>
 <tr class="separator:a6d72e731e5c29afea4594aff1eca0ab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5c7f4209ddb7af56eb85c336cad7cb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_notification_mgr.html#af5c7f4209ddb7af56eb85c336cad7cb6">RequestTextInput</a> (string content=null, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> inputTextCallback=null, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> cancelCallback=null)</td></tr>
+<tr class="memdesc:af5c7f4209ddb7af56eb85c336cad7cb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays an in-game popup notification and requests for a text input from the user.  <a href="class_notification_mgr.html#af5c7f4209ddb7af56eb85c336cad7cb6">More...</a><br /></td></tr>
 <tr class="separator:af5c7f4209ddb7af56eb85c336cad7cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3f0b58c23fa072216c47beb7076405f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_notification_mgr.html#ab3f0b58c23fa072216c47beb7076405f">NotifyLoad</a> (string content=null, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> okCallback=null)</td></tr>
+<tr class="memdesc:ab3f0b58c23fa072216c47beb7076405f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays an in-game loading notification.  <a href="class_notification_mgr.html#ab3f0b58c23fa072216c47beb7076405f">More...</a><br /></td></tr>
 <tr class="separator:ab3f0b58c23fa072216c47beb7076405f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6f879413dea64041d1e1577bd375dff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_notification_mgr.html#ab6f879413dea64041d1e1577bd375dff">TransparentLoad</a> (<a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> okCallback=null)</td></tr>
+<tr class="memdesc:ab6f879413dea64041d1e1577bd375dff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block all in-game inputs without displaying any notification.  <a href="class_notification_mgr.html#ab6f879413dea64041d1e1577bd375dff">More...</a><br /></td></tr>
 <tr class="separator:ab6f879413dea64041d1e1577bd375dff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73fe784d205302ba1b3f3601398a06db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_notification_mgr.html#a73fe784d205302ba1b3f3601398a06db">Btn_OK</a> ()</td></tr>
+<tr class="memdesc:a73fe784d205302ba1b3f3601398a06db"><td class="mdescLeft">&#160;</td><td class="mdescRight">OK button handler.  <a href="class_notification_mgr.html#a73fe784d205302ba1b3f3601398a06db">More...</a><br /></td></tr>
 <tr class="separator:a73fe784d205302ba1b3f3601398a06db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03875dbcf6fb377eee261d59a0fbadd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_notification_mgr.html#a03875dbcf6fb377eee261d59a0fbadd7">Btn_Cancel</a> ()</td></tr>
+<tr class="memdesc:a03875dbcf6fb377eee261d59a0fbadd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel button handler.  <a href="class_notification_mgr.html#a03875dbcf6fb377eee261d59a0fbadd7">More...</a><br /></td></tr>
 <tr class="separator:a03875dbcf6fb377eee261d59a0fbadd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e36779674257d12f818aee18ccaa751"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_notification_mgr.html#a2e36779674257d12f818aee18ccaa751">StopLoad</a> ()</td></tr>
+<tr class="memdesc:a2e36779674257d12f818aee18ccaa751"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops loading notification from being displayed.  <a href="class_notification_mgr.html#a2e36779674257d12f818aee18ccaa751">More...</a><br /></td></tr>
 <tr class="separator:a2e36779674257d12f818aee18ccaa751"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:afbfdc239e5c7a9ece76d89b7c49bd425"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_notification_mgr.html">NotificationMgr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_notification_mgr.html#afbfdc239e5c7a9ece76d89b7c49bd425">Instance</a><code> [get]</code></td></tr>
+<tr class="memdesc:afbfdc239e5c7a9ece76d89b7c49bd425"><td class="mdescLeft">&#160;</td><td class="mdescRight">Singleton instance.  <a href="class_notification_mgr.html#afbfdc239e5c7a9ece76d89b7c49bd425">More...</a><br /></td></tr>
 <tr class="separator:afbfdc239e5c7a9ece76d89b7c49bd425"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="class_notification.html" title="A notification Entity Class.">Notification</a> Subsystem Interface, a Control Class that handles all in-game popup and loading notifications. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a03875dbcf6fb377eee261d59a0fbadd7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a03875dbcf6fb377eee261d59a0fbadd7">&#9670;&nbsp;</a></span>Btn_Cancel()</h2>
 
@@ -135,6 +148,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Cancel button handler. </p>
 
 </div>
 </div>
@@ -152,6 +167,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>OK button handler. </p>
 
 </div>
 </div>
@@ -187,6 +204,8 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Displays an in-game popup notification. </p>
+
 </div>
 </div>
 <a id="ab3f0b58c23fa072216c47beb7076405f"></a>
@@ -214,6 +233,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Displays an in-game loading notification. </p>
 
 </div>
 </div>
@@ -249,6 +270,8 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Displays an in-game popup notification and requests for a text input from the user. </p>
+
 </div>
 </div>
 <a id="a2e36779674257d12f818aee18ccaa751"></a>
@@ -265,6 +288,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Stops loading notification from being displayed. </p>
 
 </div>
 </div>
@@ -283,6 +308,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Block all in-game inputs without displaying any notification. </p>
 
 </div>
 </div>
@@ -307,6 +334,8 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Singleton instance. </p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
@@ -318,7 +347,7 @@ Properties</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_notification_mgr.html">NotificationMgr</a></li>
-    <li class="footer">Generated on Sun Oct 11 2020 00:55:14 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sun Oct 11 2020 03:38:43 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

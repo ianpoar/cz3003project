@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// A UI class that provides the settings functionality, encapsulated in the menu scene in Unity.
+/// </summary>
 public class SettingsUI : MonoBehaviour
 {
     public Slider SFXSlider;

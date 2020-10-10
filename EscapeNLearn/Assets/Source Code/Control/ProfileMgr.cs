@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using Facebook.MiniJSON;
 
+/// <summary>
+/// Profile Manager Subsystem Interface, a Control Class that handles all profile and session-connection related processes. 
+/// </summary>
 public class ProfileMgr : MonoBehaviour // Singleton class
 {
-    // Singleton implementation
+    /// <summary>
+    /// Singleton instance.
+    /// </summary>
     public static ProfileMgr Instance { get; private set; }
     private void Awake()
     {
@@ -19,9 +24,9 @@ public class ProfileMgr : MonoBehaviour // Singleton class
     public Connection currentConnection = null;
     public string connectionID = null;
 
-
-    // Save player data to firebase db
-    // Can be directly called from UI classes, pass in success and failure delegate methods to specify your desired action for each case
+    /// <summary>
+    /// Saves player profile to the database.
+    /// </summary>
     public void SavePlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         // save profile
@@ -37,8 +42,9 @@ public class ProfileMgr : MonoBehaviour // Singleton class
         });
     }
 
-    // Load player data from firebase db
-    // Can be directly called from UI classes, pass in success and failure delegate methods to specify your desired action for each case
+    /// <summary>
+    /// Loads player profile and connection information from the database.
+    /// </summary>
     public void LoadPlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
     {
         DatabaseMgr.Instance.DBFetch(DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,

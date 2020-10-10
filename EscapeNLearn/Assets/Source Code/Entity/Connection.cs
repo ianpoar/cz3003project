@@ -1,4 +1,7 @@
-﻿public class Connection
+﻿/// <summary>
+/// A connection Entity Class.
+/// </summary>
+public class Connection
 {
     public int level_cleared;
     public string session_name;

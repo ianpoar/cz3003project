@@ -2,7 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
+/// <summary>
+/// UI Boundary Class for the Login scene.
+/// </summary>
 public class LoginScreen : Screen
 {
     [SerializeField]

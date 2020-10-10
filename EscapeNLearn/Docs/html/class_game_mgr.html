@@ -93,27 +93,34 @@ $(document).ready(function(){initNavTree('class_game_mgr.html',''); initResizabl
 <div class="title">GameMgr Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Game Manager Subsystem Interface, a Control Class that handles all gameplay related processes.  
+ <a href="class_game_mgr.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for GameMgr:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_game_mgr.png" usemap="#GameMgr_map" alt=""/>
   <map id="GameMgr_map" name="GameMgr_map">
-<area href="class_game1.html" alt="Game1" shape="rect" coords="0,112,102,136"/>
-<area href="class_game2.html" alt="Game2" shape="rect" coords="112,112,214,136"/>
-<area href="class_game3.html" alt="Game3" shape="rect" coords="224,112,326,136"/>
+<area href="class_game1.html" title="Script for game level 1." alt="Game1" shape="rect" coords="0,112,102,136"/>
+<area href="class_game2.html" title="Script for game level 2." alt="Game2" shape="rect" coords="112,112,214,136"/>
+<area href="class_game3.html" title="Script for game level 3." alt="Game3" shape="rect" coords="224,112,326,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac91962d34524c312fa16fa45e94abecb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_mgr.html#ac91962d34524c312fa16fa45e94abecb">StartGame</a> (<a class="el" href="class_game_screen.html">GameScreen</a> reference)</td></tr>
+<tr class="memdesc:ac91962d34524c312fa16fa45e94abecb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the game.  <a href="class_game_mgr.html#ac91962d34524c312fa16fa45e94abecb">More...</a><br /></td></tr>
 <tr class="separator:ac91962d34524c312fa16fa45e94abecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2396e42740d339c35e182bceb2ba032c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_mgr.html#a2396e42740d339c35e182bceb2ba032c">PauseGame</a> (bool flag)</td></tr>
+<tr class="memdesc:a2396e42740d339c35e182bceb2ba032c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pauses the game.  <a href="class_game_mgr.html#a2396e42740d339c35e182bceb2ba032c">More...</a><br /></td></tr>
 <tr class="separator:a2396e42740d339c35e182bceb2ba032c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac974cb46510e202bcebc4f5be04ecb60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_mgr.html#ac974cb46510e202bcebc4f5be04ecb60">AnswerQuestion</a> (int choice)</td></tr>
+<tr class="memdesc:ac974cb46510e202bcebc4f5be04ecb60"><td class="mdescLeft">&#160;</td><td class="mdescRight">A handler for when the player answers a question.  <a href="class_game_mgr.html#ac974cb46510e202bcebc4f5be04ecb60">More...</a><br /></td></tr>
 <tr class="separator:ac974cb46510e202bcebc4f5be04ecb60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29525391d8a1bfee67ce94a880ebc622"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_mgr.html#a29525391d8a1bfee67ce94a880ebc622">SendReportToDB</a> ()</td></tr>
+<tr class="memdesc:a29525391d8a1bfee67ce94a880ebc622"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a gameplay report to the database.  <a href="class_game_mgr.html#a29525391d8a1bfee67ce94a880ebc622">More...</a><br /></td></tr>
 <tr class="separator:a29525391d8a1bfee67ce94a880ebc622"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -128,12 +135,16 @@ Public Attributes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aa92099a1128450bd1f6083998769ea58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_mgr.html#aa92099a1128450bd1f6083998769ea58">ShowQuestions</a> (string npcname, int listnumber, int numberOfQuestions)</td></tr>
+<tr class="memdesc:aa92099a1128450bd1f6083998769ea58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays questions in-game.  <a href="class_game_mgr.html#aa92099a1128450bd1f6083998769ea58">More...</a><br /></td></tr>
 <tr class="separator:aa92099a1128450bd1f6083998769ea58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33aaba360a7e5152d29e97146a0a5d91"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_mgr.html#a33aaba360a7e5152d29e97146a0a5d91">QuestionsComplete</a> ()</td></tr>
+<tr class="memdesc:a33aaba360a7e5152d29e97146a0a5d91"><td class="mdescLeft">&#160;</td><td class="mdescRight">A handler for when all in-game questions have been completed.  <a href="class_game_mgr.html#a33aaba360a7e5152d29e97146a0a5d91">More...</a><br /></td></tr>
 <tr class="separator:a33aaba360a7e5152d29e97146a0a5d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42c43ea7d9e67dde5fa0abda5214f645"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_mgr.html#a42c43ea7d9e67dde5fa0abda5214f645">GameClear</a> ()</td></tr>
+<tr class="memdesc:a42c43ea7d9e67dde5fa0abda5214f645"><td class="mdescLeft">&#160;</td><td class="mdescRight">A handler for when the game level is cleared.  <a href="class_game_mgr.html#a42c43ea7d9e67dde5fa0abda5214f645">More...</a><br /></td></tr>
 <tr class="separator:a42c43ea7d9e67dde5fa0abda5214f645"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3c46298cba1fad1762a8165f96c751f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_mgr.html#ab3c46298cba1fad1762a8165f96c751f">GameFailed</a> ()</td></tr>
+<tr class="memdesc:ab3c46298cba1fad1762a8165f96c751f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A handler for when the player has failed the game level.  <a href="class_game_mgr.html#ab3c46298cba1fad1762a8165f96c751f">More...</a><br /></td></tr>
 <tr class="separator:ab3c46298cba1fad1762a8165f96c751f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -149,7 +160,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:afd9e437adeb26ef2c5f39f894d84bb8c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_mgr.html#afd9e437adeb26ef2c5f39f894d84bb8c">GameLevel</a> = 0</td></tr>
 <tr class="separator:afd9e437adeb26ef2c5f39f894d84bb8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Game Manager Subsystem Interface, a Control Class that handles all gameplay related processes. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ac974cb46510e202bcebc4f5be04ecb60"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac974cb46510e202bcebc4f5be04ecb60">&#9670;&nbsp;</a></span>AnswerQuestion()</h2>
 
@@ -165,6 +178,8 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>A handler for when the player answers a question. </p>
 
 </div>
 </div>
@@ -191,6 +206,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>A handler for when the game level is cleared. </p>
+
 </div>
 </div>
 <a id="ab3c46298cba1fad1762a8165f96c751f"></a>
@@ -216,6 +233,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>A handler for when the player has failed the game level. </p>
+
 </div>
 </div>
 <a id="a2396e42740d339c35e182bceb2ba032c"></a>
@@ -233,6 +252,8 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Pauses the game. </p>
 
 </div>
 </div>
@@ -259,6 +280,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>A handler for when all in-game questions have been completed. </p>
+
 <p>Reimplemented in <a class="el" href="class_game3.html#a557cb247cf213191ce2319836e4b63f7">Game3</a>, <a class="el" href="class_game2.html#a277eda044df4a067fb5a89185961d5df">Game2</a>, and <a class="el" href="class_game1.html#ae25e66f753f6a140ca9bb8cafa671b79">Game1</a>.</p>
 
 </div>
@@ -277,6 +300,8 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sends a gameplay report to the database. </p>
 
 </div>
 </div>
@@ -320,6 +345,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Displays questions in-game. </p>
+
 </div>
 </div>
 <a id="ac91962d34524c312fa16fa45e94abecb"></a>
@@ -345,6 +372,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Starts the game. </p>
 
 <p>Reimplemented in <a class="el" href="class_game3.html#a19a839b1647330f23aac80ae2f9f63bc">Game3</a>, <a class="el" href="class_game2.html#a8af54682a2560fee46a5bbcbcd47cdf5">Game2</a>, and <a class="el" href="class_game1.html#aec5e2b5a42048ddf92424c710ba8650b">Game1</a>.</p>
 
@@ -512,7 +541,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_game_mgr.html">GameMgr</a></li>
-    <li class="footer">Generated on Sun Oct 11 2020 00:55:14 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sun Oct 11 2020 03:38:43 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

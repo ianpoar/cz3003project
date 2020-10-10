@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Game Manager Subsystem Interface, a Control Class that handles all gameplay related processes.
+/// </summary>
 public abstract class GameMgr : MonoBehaviour
 {
     // reference
@@ -26,6 +29,9 @@ public abstract class GameMgr : MonoBehaviour
     private int currNoOfQues = 0;
     private Report report = new Report();
 
+    /// <summary>
+    /// Starts the game.
+    /// </summary>
     public virtual void StartGame(GameScreen reference)
     {
         ScreenRef = reference;
@@ -77,11 +83,18 @@ public abstract class GameMgr : MonoBehaviour
         StartCoroutine(Timer());
 
     }
+
+    /// <summary>
+    /// Pauses the game.
+    /// </summary>
     public void PauseGame(bool flag)
     {
         IsPaused = flag;
     }
 
+    /// <summary>
+    /// Displays questions in-game.
+    /// </summary>
     protected void ShowQuestions(string npcname, int listnumber, int numberOfQuestions)
     {
         // randomly sort list
@@ -114,11 +127,17 @@ public abstract class GameMgr : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A handler for when all in-game questions have been completed.
+    /// </summary>
     protected virtual void QuestionsComplete()
     {
         ScreenRef.Btn_CancelQuestion(false);
     }
 
+    /// <summary>
+    /// A handler for when the player answers a question.
+    /// </summary>
     public void AnswerQuestion(int choice)
     {
         Question ques = QuestionList[currQuesIterator];
@@ -166,6 +185,9 @@ public abstract class GameMgr : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Coroutine for the in-game timer.
+    /// </summary>
     private IEnumerator Timer()
     {
         bool time = true;
@@ -177,6 +199,9 @@ public abstract class GameMgr : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A handler for when the game level is cleared.
+    /// </summary>
     protected void GameClear()
     {
         PauseGame(true);
@@ -193,6 +218,9 @@ public abstract class GameMgr : MonoBehaviour
         ScreenRef.ShowResultsScreen(report);
     }
 
+    /// <summary>
+    /// A handler for when the player has failed the game level.
+    /// </summary>
     protected void GameFailed()
     {
         PauseGame(true);
@@ -205,6 +233,9 @@ public abstract class GameMgr : MonoBehaviour
         ScreenRef.ShowGameFailed(report);
     }
 
+    /// <summary>
+    /// Sends a gameplay report to the database.
+    /// </summary>
     public void SendReportToDB()
     {
         report.time_elapsed = secondsElapsed;

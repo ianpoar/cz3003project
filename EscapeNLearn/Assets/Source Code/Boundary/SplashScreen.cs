@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// UI Boundary Class for the Splash scene.
+/// </summary>
 public class SplashScreen : Screen
 {
     // Start is called before the first frame update

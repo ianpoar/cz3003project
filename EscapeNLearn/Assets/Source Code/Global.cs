@@ -3,8 +3,9 @@ using Firebase.Auth;
 
 /* Add on to these for project-wide usage */
 
-// FOR DATABASEMGR
-// need to populate DBQueryType and SetPath method as well
+/// <summary>
+/// Database query constants.
+/// </summary>
 public static class DBQueryConstants
 {
     public const string QUERY_PROFILES = "profiles";
@@ -15,6 +16,9 @@ public static class DBQueryConstants
     public const string QUERY_REPORTS = "reports";
 }
 
+/// <summary>
+/// Login type constants.
+/// </summary>
 public static class LoginTypeConstants
 {
     public const string FACEBOOK = "facebook.com";
@@ -22,7 +26,9 @@ public static class LoginTypeConstants
     public const string GOOGLE = "google.com";
 }
 
-// PlayerPref constants
+/// <summary>
+/// PlayerPref (local savedata) constants.
+/// </summary>
 public static class PPConstants
 {
     public const string KEY_BGMVOL = "BGMVol";
@@ -30,7 +36,9 @@ public static class PPConstants
     public const string BUGFIX_StoppedAppInProfileCreation = "bugfix1";
 }
 
-// Audio file constants
+/// <summary>
+/// Audio file constants.
+/// </summary>
 public static class AudioConstants
 {
     public const int SFX_CLICK = 0;

@@ -6,6 +6,9 @@
     RequestTextInput
 }
 
+/// <summary>
+/// A notification Entity Class.
+/// </summary>
 public class Notification
 {
     public SimpleCallback okCallback { get; private set; }

@@ -1,4 +1,6 @@
-﻿
+﻿/// <summary>
+/// A question Entity Class.
+/// </summary>
 public class Question
 {
     public string id_owner;

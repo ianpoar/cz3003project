@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// A UI class that provides level selection functionalities, encapsulated in the menu scene in Unity.
+/// </summary>
 public class LevelSelectUI : MonoBehaviour
 {
     public GameObject[] lockedUI;

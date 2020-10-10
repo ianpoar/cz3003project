@@ -1,26 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
-using UnityEngine;
 
-[Serializable]
-public class Answer
-{
-    public string question;
-    public string answer1;
-    public string answer2;
-    public string answer3;
-    public string answer4;
-    public int correctanswer;
-    public int answer;
-}
-
-[Serializable]
-public class AnswerList
-{
-    public List<Answer> list = new List<Answer>();
-}
-
+/// <summary>
+/// A report Entity Class.
+/// </summary>
 public class Report
 {
     public int time_elapsed = 0;

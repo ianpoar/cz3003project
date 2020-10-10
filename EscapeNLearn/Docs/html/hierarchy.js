@@ -293,10 +293,10 @@ var hierarchy =
     [ "Proyecto26.StaticCoroutine", "class_proyecto26_1_1_static_coroutine.html", null ],
     [ "StringSerializationAPI", "class_string_serialization_a_p_i.html", null ],
     [ "RSG.TimeData", "struct_r_s_g_1_1_time_data.html", null ],
-    [ "RSG.Tuple< T1, T2, T3 >", "class_r_s_g_1_1_tuple.html", null ],
     [ "RSG.Tuple< T1, T2 >", "class_r_s_g_1_1_tuple.html", null ],
-    [ "RSG.Tuple< T1, T2, T3, T4 >", "class_r_s_g_1_1_tuple.html", null ],
     [ "RSG.Tuple", "class_r_s_g_1_1_tuple.html", null ],
+    [ "RSG.Tuple< T1, T2, T3, T4 >", "class_r_s_g_1_1_tuple.html", null ],
+    [ "RSG.Tuple< T1, T2, T3 >", "class_r_s_g_1_1_tuple.html", null ],
     [ "UnityAppController(GoogleSignInAppController)", "category_unity_app_controller_07_google_sign_in_app_controller_08.html", null ],
     [ "UnityAppController(GoogleSignInController)", "category_unity_app_controller_07_google_sign_in_controller_08.html", null ],
     [ "UnityEvent", null, [

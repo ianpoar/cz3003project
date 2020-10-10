@@ -4,8 +4,14 @@ using UnityEngine;
 using Facebook.Unity;
 using Firebase.Auth;
 
+/// <summary>
+/// A concrete class derived from APILinker, executes Facebook API code.
+/// </summary>
 public class FBAPILinker : APILinker
 {
+    /// <summary>
+    /// Executes Facebook Authentication API code.
+    /// </summary>
     public override void Authenticate(CredentialCallback successCallback, MessageCallback failCallback)
     {
         if (!FB.IsInitialized)
@@ -65,11 +71,17 @@ public class FBAPILinker : APILinker
         });
     }
 
+    /// <summary>
+    /// Executes Facebook Get Profile Pic API code.
+    /// </summary>
     public override void GetProfilePic(string id, SpriteCallback successCallback, MessageCallback failCallback)
     {
         ProfileMgr.Instance.StartCoroutine(fetchProfilePic(id, successCallback, failCallback));
     }
 
+    /// <summary>
+    /// Coroutine for GetProfilePic.
+    /// </summary>
     private IEnumerator fetchProfilePic(string fbid, SpriteCallback successCallback, MessageCallback failCallback = null)
     {
         Texture2D tex;

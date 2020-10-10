@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Audio Subsystem Interface, a Control Class that handles all audio in the game.
+/// </summary>
 public class AudioMgr : MonoBehaviour
 {
-    // Singleton implementation
+    /// <summary>
+    /// Singleton instance.
+    /// </summary>
     public static AudioMgr Instance { get; private set; }
     private void Awake()
     {
@@ -51,19 +56,25 @@ public class AudioMgr : MonoBehaviour
         }
     }
 
-    // Set bgm vol, for rakshitha
+    /// <summary>
+    /// Set background music volume.
+    /// </summary>
     public void SetBGMVol(float vol)
     {
         bgmSource.volume = vol;
     }
 
-    // Set sfx vol, for rakshitha
+    /// <summary>
+    /// Set sound effects volume.
+    /// </summary>
     public void SetSFXVol (float vol)
     {
         sfxSource.volume = vol;
     }
 
-    // Call this to play sfx
+    /// <summary>
+    /// Plays a sound effect.
+    /// </summary>
     public void PlaySFX(int id)
     {
         AudioClip clip = sfxClips[id];
@@ -73,7 +84,9 @@ public class AudioMgr : MonoBehaviour
             Debug.Log("No sfx clip with id " + id);
     }
 
-    // Call this to play bgm
+    /// <summary>
+    /// Plays background music.
+    /// </summary>
     public void PlayBGM(int id)
     {
         StopBGM();
@@ -90,7 +103,9 @@ public class AudioMgr : MonoBehaviour
         bgmSource.Play();
     }
 
-    // Call this to stop bgm
+    /// <summary>
+    /// Stops background music.
+    /// </summary>
     public void StopBGM()
     {
         if (bgmSource.isPlaying)

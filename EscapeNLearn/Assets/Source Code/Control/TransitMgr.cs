@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TransitMgr : MonoBehaviour // Singleton
+/// <summary>
+/// Transition Manager Subsystem Interface, a Control Class that handles all in-game transitions.
+/// </summary>
+public class TransitMgr : MonoBehaviour
 {
-    // Singleton implementation
+
+    /// <summary>
+    /// Singleton instance.
+    /// </summary>
     public static TransitMgr Instance { get; private set; }
     private void Awake()
     {
@@ -24,13 +30,17 @@ public class TransitMgr : MonoBehaviour // Singleton
     // Private variables
     private float speed = 1.5f;
 
-    // Call this in UI classes when you want to hide the current screen
+    /// <summary>
+    /// Fades the current screen. Call this in UI classes to hide the current screen
+    /// </summary>
     public void Fade(SimpleCallback cb = null)
     {
         StartCoroutine(Sequence_Transit(true, cb));
     }
 
-    // Call this in UI classes to transit to another scene
+    /// <summary>
+    /// Fades the current screen and switches the scene. Call this in UI classes to transit to another scene
+    /// </summary>
     public void FadeToScene(string sceneName)
     {
         StartCoroutine(Sequence_Transit(true, delegate()
@@ -41,12 +51,17 @@ public class TransitMgr : MonoBehaviour // Singleton
         }));
     }
 
-    // Call this in UI classes when you want to show the current screen
+    /// <summary>
+    /// Emerges the current screen. Call this in UI classes when you want to show the current screen
+    /// </summary>
     public void Emerge(SimpleCallback cb = null)
     {
         StartCoroutine(Sequence_Transit(false, cb));
     }
 
+    /// <summary>
+    /// Transition coroutine.
+    /// </summary>
     IEnumerator Sequence_Transit(bool fade, SimpleCallback cb = null)
     {
         bool fading = false;

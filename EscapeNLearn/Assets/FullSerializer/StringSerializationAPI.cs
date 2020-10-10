@@ -1,10 +1,6 @@
 using System;
 using FullSerializer;
 
-/// <summary>
-/// API of the FullSerializer Library
-/// </summary>
-
 public static class StringSerializationAPI
 {
     private static readonly fsSerializer Serializer = new fsSerializer();

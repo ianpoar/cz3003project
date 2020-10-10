@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
+/// <summary>
+/// UI Boundary Class for the Report scene.
+/// </summary>
 public class ReportScreen : Screen
 {
    public Text txt_header;

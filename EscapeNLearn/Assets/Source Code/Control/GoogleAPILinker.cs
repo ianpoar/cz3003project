@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Firebase.Auth;
-using Proyecto26;
+﻿using Firebase.Auth;
 
+/// <summary>
+/// A concrete class derived from APILinker, executes Google API code.
+/// </summary>
 public class GoogleAPILinker : APILinker
 {
-
+    /// <summary>
+    /// Executes Google Authentication API code.
+    /// </summary>
     public override void Authenticate(CredentialCallback successCallback, MessageCallback failCallback)
     {
         NotificationMgr.Instance.RequestTextInput("Paste your Google code here:",
@@ -29,6 +30,9 @@ public class GoogleAPILinker : APILinker
         GoogleAuthHandler.GetAuthCode();
     }
 
+    /// <summary>
+    /// Not implemented, as this is not supported.
+    /// </summary>
     public override void GetProfilePic(string id, SpriteCallback successCallback, MessageCallback failCallback)
     {
         throw new System.NotImplementedException();

@@ -91,6 +91,9 @@ $(document).ready(function(){initNavTree('class_database_mgr.html',''); initResi
 <div class="title">DatabaseMgr Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Database Manager Subsystem Interface, a Control Class that handles all communication with the database in the game, implemented with the data access object pattern in mind.  
+ <a href="class_database_mgr.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for DatabaseMgr:</div>
 <div class="dyncontent">
@@ -101,35 +104,49 @@ Inheritance diagram for DatabaseMgr:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a516fa46bcb3160bc7f00f4b92eadcea1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#a516fa46bcb3160bc7f00f4b92eadcea1">Logout</a> ()</td></tr>
+<tr class="memdesc:a516fa46bcb3160bc7f00f4b92eadcea1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs out from the game.  <a href="class_database_mgr.html#a516fa46bcb3160bc7f00f4b92eadcea1">More...</a><br /></td></tr>
 <tr class="separator:a516fa46bcb3160bc7f00f4b92eadcea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a152054a3b2602a92ef7d5c0fa79912fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#a152054a3b2602a92ef7d5c0fa79912fd">LinkCredentials</a> (Credential cred, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback=null, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback=null)</td></tr>
+<tr class="memdesc:a152054a3b2602a92ef7d5c0fa79912fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Links SNS credentials to account.  <a href="class_database_mgr.html#a152054a3b2602a92ef7d5c0fa79912fd">More...</a><br /></td></tr>
 <tr class="separator:a152054a3b2602a92ef7d5c0fa79912fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d7f9be2dba3ae2b6efbe6545156b008"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#a4d7f9be2dba3ae2b6efbe6545156b008">UnlinkCredentials</a> (string provider, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:a4d7f9be2dba3ae2b6efbe6545156b008"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlinks SNS credentials from account.  <a href="class_database_mgr.html#a4d7f9be2dba3ae2b6efbe6545156b008">More...</a><br /></td></tr>
 <tr class="separator:a4d7f9be2dba3ae2b6efbe6545156b008"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a095e60652489614f4bc9acad2587acfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#a095e60652489614f4bc9acad2587acfb">SNSRequestCredential</a> (string provider, <a class="el" href="_global_8cs.html#a0237683485b31a7e7ae875d3320e7d47">CredentialCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback, bool skipAuth=false)</td></tr>
+<tr class="memdesc:a095e60652489614f4bc9acad2587acfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call SNS API to perform SNS login and get credentials.  <a href="class_database_mgr.html#a095e60652489614f4bc9acad2587acfb">More...</a><br /></td></tr>
 <tr class="separator:a095e60652489614f4bc9acad2587acfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafe61b6622bc08af43def3b5fe828b1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#aafe61b6622bc08af43def3b5fe828b1b">SNSLoginWithCredential</a> (Credential credential, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:aafe61b6622bc08af43def3b5fe828b1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform account login with SNS credentials.  <a href="class_database_mgr.html#aafe61b6622bc08af43def3b5fe828b1b">More...</a><br /></td></tr>
 <tr class="separator:aafe61b6622bc08af43def3b5fe828b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24c17a6b14db7275cc23caee9c8b0dc3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#a24c17a6b14db7275cc23caee9c8b0dc3">EmailRegister</a> (string email, string pw, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> passcb, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failcb)</td></tr>
+<tr class="memdesc:a24c17a6b14db7275cc23caee9c8b0dc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform account registration via email.  <a href="class_database_mgr.html#a24c17a6b14db7275cc23caee9c8b0dc3">More...</a><br /></td></tr>
 <tr class="separator:a24c17a6b14db7275cc23caee9c8b0dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae565229f400b1ab9fa8d0892835d4c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#aae565229f400b1ab9fa8d0892835d4c6">EmailLogin</a> (string email, string pw, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> passcb, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failcb)</td></tr>
+<tr class="memdesc:aae565229f400b1ab9fa8d0892835d4c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform account login via email.  <a href="class_database_mgr.html#aae565229f400b1ab9fa8d0892835d4c6">More...</a><br /></td></tr>
 <tr class="separator:aae565229f400b1ab9fa8d0892835d4c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a582c045249c4af5ba8087d5be3335e28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#a582c045249c4af5ba8087d5be3335e28">DBFetch</a> (string query, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> successCallback=null, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback=null)</td></tr>
+<tr class="memdesc:a582c045249c4af5ba8087d5be3335e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch an entire document from the database.  <a href="class_database_mgr.html#a582c045249c4af5ba8087d5be3335e28">More...</a><br /></td></tr>
 <tr class="separator:a582c045249c4af5ba8087d5be3335e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f73b056b66390c87bf15fb857ed1fdd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#a3f73b056b66390c87bf15fb857ed1fdd">DBFetchMulti</a> (string query, string targetKey, string targetValue, int first, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> successCallback=null, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback=null)</td></tr>
+<tr class="memdesc:a3f73b056b66390c87bf15fb857ed1fdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch multiple documents from the database.  <a href="class_database_mgr.html#a3f73b056b66390c87bf15fb857ed1fdd">More...</a><br /></td></tr>
 <tr class="separator:a3f73b056b66390c87bf15fb857ed1fdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac79094a3efcdfac8fae4d0fd26de2cd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#ac79094a3efcdfac8fae4d0fd26de2cd7">DBUpdate</a> (string query, object data, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback=null, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback=null)</td></tr>
+<tr class="memdesc:ac79094a3efcdfac8fae4d0fd26de2cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates an entire document to the database.  <a href="class_database_mgr.html#ac79094a3efcdfac8fae4d0fd26de2cd7">More...</a><br /></td></tr>
 <tr class="separator:ac79094a3efcdfac8fae4d0fd26de2cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacf0aeffb1d35e62508f77e2077da668"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#aacf0aeffb1d35e62508f77e2077da668">DBPush</a> (string query, object data, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> successCallback=null, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback=null)</td></tr>
+<tr class="memdesc:aacf0aeffb1d35e62508f77e2077da668"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pushes an entire document to the database, returning the generated key in the succsess callback.  <a href="class_database_mgr.html#aacf0aeffb1d35e62508f77e2077da668">More...</a><br /></td></tr>
 <tr class="separator:aacf0aeffb1d35e62508f77e2077da668"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6abf928c2b035787b0c69f6c788f6c0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#a6abf928c2b035787b0c69f6c788f6c0a">DBLightUpdate</a> (string query, string itemToWrite, object value, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback=null, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback=null)</td></tr>
+<tr class="memdesc:a6abf928c2b035787b0c69f6c788f6c0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates only a specific property in a document in the database.  <a href="class_database_mgr.html#a6abf928c2b035787b0c69f6c788f6c0a">More...</a><br /></td></tr>
 <tr class="separator:a6abf928c2b035787b0c69f6c788f6c0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acba6ac687881b558337de05e1d4f19cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#acba6ac687881b558337de05e1d4f19cc">FetchProfilePic</a> (string id, <a class="el" href="_global_8cs.html#a9fdd59ac73e6f395b0abcf4b9509e788">SpriteCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:acba6ac687881b558337de05e1d4f19cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch a profile picture.  <a href="class_database_mgr.html#acba6ac687881b558337de05e1d4f19cc">More...</a><br /></td></tr>
 <tr class="separator:acba6ac687881b558337de05e1d4f19cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:af117fee2a6665f33cf71ec083604773f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_database_mgr.html">DatabaseMgr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#af117fee2a6665f33cf71ec083604773f">Instance</a><code> [get]</code></td></tr>
+<tr class="memdesc:af117fee2a6665f33cf71ec083604773f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Singleton instance.  <a href="class_database_mgr.html#af117fee2a6665f33cf71ec083604773f">More...</a><br /></td></tr>
 <tr class="separator:af117fee2a6665f33cf71ec083604773f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53d733a12bd10f14071750c12cebbacc"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#a53d733a12bd10f14071750c12cebbacc">Id</a><code> [get]</code></td></tr>
 <tr class="separator:a53d733a12bd10f14071750c12cebbacc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,7 +159,9 @@ Properties</h2></td></tr>
 <tr class="memitem:aefc901f3ba3efdd0bb13606d74652eba"><td class="memItemLeft" align="right" valign="top">List&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_mgr.html#aefc901f3ba3efdd0bb13606d74652eba">LoginTypes</a><code> [get]</code></td></tr>
 <tr class="separator:aefc901f3ba3efdd0bb13606d74652eba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Database Manager Subsystem Interface, a Control Class that handles all communication with the database in the game, implemented with the data access object pattern in mind. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a582c045249c4af5ba8087d5be3335e28"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a582c045249c4af5ba8087d5be3335e28">&#9670;&nbsp;</a></span>DBFetch()</h2>
 
@@ -174,6 +193,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Fetch an entire document from the database. </p>
 
 </div>
 </div>
@@ -227,6 +248,20 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Fetch multiple documents from the database. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targetKey</td><td>Specify a key to only fetch documents with properties that match. Fetches everything if left null. </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>/// </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targetValue</td><td>Specify the value to match with the target key. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a6abf928c2b035787b0c69f6c788f6c0a"></a>
@@ -273,6 +308,20 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Updates only a specific property in a document in the database. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">itemToWrite</td><td>Specify a key for the item to be written to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>/// </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>Specify the item to be writen. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="aacf0aeffb1d35e62508f77e2077da668"></a>
@@ -312,6 +361,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Pushes an entire document to the database, returning the generated key in the succsess callback. </p>
 
 </div>
 </div>
@@ -353,6 +404,8 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Updates an entire document to the database. </p>
+
 </div>
 </div>
 <a id="aae565229f400b1ab9fa8d0892835d4c6"></a>
@@ -392,6 +445,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Perform account login via email. </p>
 
 </div>
 </div>
@@ -433,6 +488,8 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Perform account registration via email. </p>
+
 </div>
 </div>
 <a id="acba6ac687881b558337de05e1d4f19cc"></a>
@@ -466,6 +523,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Fetch a profile picture. </p>
 
 </div>
 </div>
@@ -501,6 +560,8 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Links SNS credentials to account. </p>
+
 </div>
 </div>
 <a id="a516fa46bcb3160bc7f00f4b92eadcea1"></a>
@@ -517,6 +578,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Logs out from the game. </p>
 
 </div>
 </div>
@@ -551,6 +614,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Perform account login with SNS credentials. </p>
 
 </div>
 </div>
@@ -592,6 +657,8 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Call SNS API to perform SNS login and get credentials. </p>
+
 </div>
 </div>
 <a id="a4d7f9be2dba3ae2b6efbe6545156b008"></a>
@@ -625,6 +692,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Unlinks SNS credentials from account. </p>
 
 </div>
 </div>
@@ -692,6 +761,8 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Singleton instance. </p>
 
 </div>
 </div>
@@ -770,7 +841,7 @@ Properties</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_database_mgr.html">DatabaseMgr</a></li>
-    <li class="footer">Generated on Sun Oct 11 2020 00:55:14 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sun Oct 11 2020 03:38:43 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

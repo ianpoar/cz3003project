@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using Facebook.MiniJSON;
 
+/// <summary>
+/// A UI class that provides session lobby functionalities, encapsulated in the menu scene in Unity.
+/// </summary>
 public class SessionLobbyUI : MonoBehaviour
 {
     public GameObject SessionUIItem;

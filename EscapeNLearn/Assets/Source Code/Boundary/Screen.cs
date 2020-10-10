@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// UI Boundary Class for all Unity scenes,  allows all scenes to automatically refresh player data.
+/// </summary>
 public abstract class Screen : MonoBehaviour
 {
     private bool run = false;

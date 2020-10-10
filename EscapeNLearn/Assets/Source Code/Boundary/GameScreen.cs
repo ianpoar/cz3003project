@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// UI Boundary Class for the Game scene.
+/// </summary>
 public class GameScreen : Screen
 {
     public GameMgr GameManager;

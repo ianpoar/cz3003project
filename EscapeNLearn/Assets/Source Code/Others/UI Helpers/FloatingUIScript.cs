@@ -3,6 +3,9 @@ using System.Collections;
 
 using UnityEngine.UI;
 
+/// <summary>
+/// A UI helper class that provides floating UI animations.
+/// </summary>
 public class FloatingUIScript : MonoBehaviour
 {
     /* ADJUSTABLE VARIABLES */

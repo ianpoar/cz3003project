@@ -14,8 +14,6 @@ var dir_0daa044bcc7bbf4077ea107a355f5134 =
       [ "QuestionList", "class_question_list.html", "class_question_list" ]
     ] ],
     [ "Report.cs", "_report_8cs.html", [
-      [ "Answer", "class_answer.html", "class_answer" ],
-      [ "AnswerList", "class_answer_list.html", "class_answer_list" ],
       [ "Report", "class_report.html", "class_report" ]
     ] ],
     [ "Session.cs", "_session_8cs.html", [
