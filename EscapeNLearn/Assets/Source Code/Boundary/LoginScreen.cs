@@ -135,13 +135,27 @@ public class LoginScreen : Screen
                 NotificationMgr.Instance.StopLoad();
                 NotificationMgr.Instance.Notify(failmsg);
             });
-          
+
         },
         delegate (string failmsg) // failed
         {
             NotificationMgr.Instance.StopLoad();
             NotificationMgr.Instance.Notify(failmsg);
         });
+    }
+
+
+    // GoogleLogin button pressed
+    public void Btn_GoogleLogin()
+    {
+      GoogleAuthHandler.GetAuthCode();
+      Debug.Log("Ye kya hai");
+    }
+    public void onClickGoogle()
+    {
+      GoogleAuthHandler.ExchangeAuthCodeWithIdToken(input_loginEmail.text, idToken =>
+      {
+        FirebaseAuthHandler.SignInWithToken(idToken, "google.com");});
     }
 
     // Transit to menu screen
