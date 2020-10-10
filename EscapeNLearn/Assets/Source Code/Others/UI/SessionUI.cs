@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Facebook.MiniJSON;
+using System.Linq;
 
 public class SessionUI : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class SessionUI : MonoBehaviour
     public Dropdown dropdown_l3q;
 
     string tempstr = null;
+    string questionlists = null;
+
+    List<Dictionary<string, QuestionList>> qllist = new List<Dictionary<string, QuestionList>>();
 
     List<GameObject> list = new List<GameObject>();
     private void OnEnable()
@@ -69,7 +73,48 @@ public class SessionUI : MonoBehaviour
     public void Btn_ShowNewSessionWindow(bool flag)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+
+        this.getQuestionPools();
+        dropdown_l1q.options.Clear();
+        dropdown_l2q.options.Clear();
+        dropdown_l3q.options.Clear();
+        this.qllist.Clear();
+
+        Dictionary<string, object> questionlists_dict = Json.Deserialize(questionlists) as Dictionary<string, object>;
+        foreach (KeyValuePair<string, object> pair in questionlists_dict)
+        {
+            string questionlistdata = Json.Serialize(pair.Value);
+            QuestionList questionlist = JsonUtility.FromJson<QuestionList>(questionlistdata);
+            Dictionary<string, QuestionList> item = new Dictionary<string, QuestionList>(){
+                { pair.Key, questionlist}
+            };
+            this.qllist.Add(item);
+            dropdown_l1q.options.Add(new Dropdown.OptionData(questionlist.name));
+            dropdown_l2q.options.Add(new Dropdown.OptionData(questionlist.name));
+            dropdown_l3q.options.Add(new Dropdown.OptionData(questionlist.name));
+
+        }
         NewSessionWindow.SetActive(flag);
+    }
+
+    private void getQuestionPools()
+    {
+        NotificationMgr.Instance.NotifyLoad("Loading Question List");
+        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_QUESTIONLISTS,
+            "id_owner",
+            ProfileMgr.Instance.localProfile.id_account,
+            100,
+        delegate (string result)
+        {
+            NotificationMgr.Instance.StopLoad();
+            questionlists = result;
+        },
+        delegate (string failmsg)
+        {
+            NotificationMgr.Instance.StopLoad();
+            NotificationMgr.Instance.Notify(failmsg);
+            questionlists = null;
+        });
     }
 
     void HideNewSessionWindow()
@@ -121,9 +166,9 @@ public class SessionUI : MonoBehaviour
         Session s = new Session();
         s.session_name = sessName;
         s.id_owner = ProfileMgr.Instance.localProfile.id_account;
-        s.id_l1queslist = l1q.ToString();
-        s.id_l2queslist = l2q.ToString();
-        s.id_l3queslist = l3q.ToString();
+        s.id_l1queslist = this.qllist[l1q].Keys.First();
+        s.id_l2queslist = this.qllist[l2q].Keys.First();
+        s.id_l3queslist = this.qllist[l3q].Keys.First();
 
         DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_SESSIONS + "/", s,
         delegate (string key)

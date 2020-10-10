@@ -12,9 +12,11 @@ public class QuestionUIItem : MonoBehaviour
     string correctanswer;
     Question q;
     QuestionUI qui;
+    string key;
 
-    public void Init(string correctanswer, string name, Question ql, QuestionUI qui)
+    public void Init(string key, string correctanswer, string name, Question q, QuestionUI qui)
     {
+        this.key = key;
         txt_name.text = name;
         this.q = q;
         this.correctanswer = correctanswer;
@@ -25,6 +27,9 @@ public class QuestionUIItem : MonoBehaviour
     // Onclick event
     public void OnClick()
     {
-
+        if (qui != null)
+        {
+            qui.EditQuestion(q, key);
+        }
     }
 }
