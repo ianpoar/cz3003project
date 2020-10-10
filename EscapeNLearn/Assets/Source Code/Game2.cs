@@ -28,11 +28,7 @@ public class Game2 : GameMgr
 
         if (finalQuesList)
         {
-            NotificationMgr.Instance.Notify("You have cleared the level!",
-            delegate ()
-            {
-                GameEnd();
-            });
+             GameClear();
         }
         else
         {

@@ -14,8 +14,8 @@ public class Game1 : GameMgr
 
     public override void StartGame(GameScreen reference)
     {
+        GameLevel = 1;
         base.StartGame(reference);
-
         // Play BGM
         AudioMgr.Instance.PlayBGM(AudioConstants.BGM_CLEARDAY);
 
@@ -29,11 +29,7 @@ public class Game1 : GameMgr
 
         if (finalQuesList)
         {
-            NotificationMgr.Instance.Notify("You have cleared the level!",
-            delegate ()
-            {
-                GameEnd();
-            });
+            GameClear();
         }
         else
         {

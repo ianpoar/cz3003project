@@ -1205,6 +1205,7 @@ GameObject:
   - component: {fileID: 1468053612}
   - component: {fileID: 1006773473609682320}
   - component: {fileID: 3348076636462669322}
+  - component: {fileID: 1551459622689391458}
   m_Layer: 0
   m_Name: StaticObjects
   m_TagString: Untagged
@@ -1273,6 +1274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39cf9b69e1adcc9409c117ff4143bea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connectionID: 
 --- !u!114 &1006773473609682320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1307,6 +1309,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 09aba68ec162bec40a56fca7dacca0e0, type: 3}
   sfxClips:
   - {fileID: 8300000, guid: 5a5737b581050904984c65b7cf314bbd, type: 3}
+--- !u!114 &1551459622689391458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6634165717265058048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8d59441c1d487408356edcdb2cbfc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6770217455206043788
 GameObject:
   m_ObjectHideFlags: 0

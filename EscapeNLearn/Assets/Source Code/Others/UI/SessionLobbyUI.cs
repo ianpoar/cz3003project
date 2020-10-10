@@ -105,7 +105,7 @@ public class SessionLobbyUI : MonoBehaviour
         list.Clear();
     }
 
-    public void JoinSession(string sessionid)
+    public void JoinSession(string sessionid, string ownerid, string sessionname)
     {
         Debug.Log("Join session " + sessionid);
         NotificationMgr.Instance.NotifyLoad("Joining session");
@@ -113,6 +113,9 @@ public class SessionLobbyUI : MonoBehaviour
 
         c.id_player = ProfileMgr.Instance.localProfile.id_account;
         c.id_session = sessionid;
+        c.id_owner = ownerid;
+        c.session_name = sessionname;
+        c.level_cleared = 0;
 
         DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_CONNECTIONS,
         c,
@@ -151,15 +154,9 @@ public class SessionLobbyUI : MonoBehaviour
             SessionUIItem script = obj.GetComponent<SessionUIItem>();
             script.transform.SetParent(Panel);
             script.transform.localScale = SessionUIItem.transform.localScale;
-            script.Init(pair.Key, session.session_name, null, this);
+            script.Init(pair.Key, session, null, this);
 
             list.Add(obj);
         }
     }
-}
-
-public class Connection
-{
-    public string id_session;
-    public string id_player;
 }
