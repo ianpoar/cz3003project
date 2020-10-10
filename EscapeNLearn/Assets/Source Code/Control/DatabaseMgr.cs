@@ -82,6 +82,9 @@ public class DatabaseMgr : MonoBehaviour
             case LoginTypeConstants.FACEBOOK:
                 _apiLinker = new FBAPILinker();
                 break;
+            case LoginTypeConstants.GOOGLE:
+                _apiLinker = new GoogleAPILinker();
+                break;
             default:
                 failCallback?.Invoke("Provider error: " + provider);
                 return;

@@ -19,6 +19,7 @@ public static class LoginTypeConstants
 {
     public const string FACEBOOK = "facebook.com";
     public const string EMAIL = "password";
+    public const string GOOGLE = "google.com";
 }
 
 // PlayerPref constants

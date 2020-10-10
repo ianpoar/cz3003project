@@ -148,14 +148,30 @@ public class LoginScreen : Screen
     // GoogleLogin button pressed
     public void Btn_GoogleLogin()
     {
-      GoogleAuthHandler.GetAuthCode();
-      Debug.Log("Ye kya hai");
-    }
-    public void onClickGoogle()
-    {
-      GoogleAuthHandler.ExchangeAuthCodeWithIdToken(input_loginEmail.text, idToken =>
-      {
-        FirebaseAuthHandler.SignInWithToken(idToken, "google.com");});
+        // call api login and get credential
+        DatabaseMgr.Instance.SNSRequestCredential(
+        LoginTypeConstants.GOOGLE,
+        delegate (Firebase.Auth.Credential cred) // success
+        {
+            // with credential, login via firebase db
+            DatabaseMgr.Instance.SNSLoginWithCredential(cred,
+            delegate () // successful login to db
+            {
+                NotificationMgr.Instance.StopLoad();
+                VerifyAndTransitToMenu(false); // don't verify email
+            },
+            delegate (string failmsg) // failed
+            {
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify(failmsg);
+            });
+
+        },
+        delegate (string failmsg) // failed
+        {
+            NotificationMgr.Instance.StopLoad();
+            NotificationMgr.Instance.Notify(failmsg);
+        });
     }
 
     // Transit to menu screen
