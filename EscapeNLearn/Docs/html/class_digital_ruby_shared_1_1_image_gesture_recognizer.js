@@ -1,0 +1,26 @@
+var class_digital_ruby_shared_1_1_image_gesture_recognizer =
+[
+    [ "ImageGestureRecognizer", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#aa859e1867bdf2195c86356fb21786022", null ],
+    [ "Reset", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#a39670dbb3afe0cba2363fd4c40a67927", null ],
+    [ "TouchesBegan", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#ab7dc78bf0dd633975e0d9a9bc6460fca", null ],
+    [ "TouchesEnded", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#a1ca1dcf6c45e1c7b78c096b5184f28d4", null ],
+    [ "TouchesMoved", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#ad99d8deb7cfc0119a112522ac13324d2", null ],
+    [ "ImageColumns", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#a42bc38bd28eed936c0a9369ba9f85a40", null ],
+    [ "ImageRows", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#a31915e0ccce9b726fb1ea266b2ba275e", null ],
+    [ "ImageSize", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#a9a71a3aecbe186d13a83d36c3b33a412", null ],
+    [ "LinePadding", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#abbb627a5d00f4ab4a945560706ee5677", null ],
+    [ "RowBitmask", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#a71e36cbbd9625e55fa420e0c8a81dcaa", null ],
+    [ "RowBitMasks", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#ab5643b90f2ca3621e44720af955d3dad", null ],
+    [ "DirectionTolerance", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#aa5b6c6ed7d2efaee9929d93913376eef", null ],
+    [ "GestureImages", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#a998720f8bb8b9f2bb180bc50e18f2132", null ],
+    [ "Image", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#adc30b63ae694447078c6c683b82202ad", null ],
+    [ "MatchedGestureCalculationTimeMilliseconds", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#ac03b74b93648834e285bb8da11a2b34b", null ],
+    [ "MatchedGestureImage", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#ac5acf0998677dffd0d3133062c059e60", null ],
+    [ "MaximumPathCount", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#a80bf99f924f72f31e9ca926c8fa49275", null ],
+    [ "MinimumDistanceBetweenPointsUnits", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#a7cf1c01c34ed9d8beb7a4e2422a9ac90", null ],
+    [ "MinimumPointsToRecognize", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#a1c881c2739b9a11657aa918a6a70d057", null ],
+    [ "ResetOnEnd", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#aaa6e72e696ead47f21c9ce44d13f2c0f", null ],
+    [ "SimilarityMinimum", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#ade6f9548aa04ae47699d67d81338a869", null ],
+    [ "ThresholdUnits", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#a1949f5157dac835447ba869d77b5a6a4", null ],
+    [ "MaximumPathCountExceeded", "class_digital_ruby_shared_1_1_image_gesture_recognizer.html#ae4d716fdeeb35409e857dd974428b267", null ]
+];

@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['scalefocusmovethresholdunits_2771',['ScaleFocusMoveThresholdUnits',['../class_digital_ruby_shared_1_1_scale_gesture_recognizer.html#ac2f009671d214d004e4c08f13bea4bb5',1,'DigitalRubyShared::ScaleGestureRecognizer']]],
+  ['scalegesture_2772',['ScaleGesture',['../class_digital_ruby_shared_1_1_fingers_pan_rotate_scale_script.html#a18111d6e6537c60c9548c2f7d94119e3',1,'DigitalRubyShared::FingersPanRotateScaleScript']]],
+  ['scalemultiplier_2773',['ScaleMultiplier',['../class_digital_ruby_shared_1_1_one_touch_scale_gesture_recognizer.html#a7c95b663b6a129cd250a1e4760e0bc78',1,'DigitalRubyShared.OneTouchScaleGestureRecognizer.ScaleMultiplier()'],['../class_digital_ruby_shared_1_1_scale_gesture_recognizer.html#ac3d0223a2dc46a3b7491d891ce2235b6',1,'DigitalRubyShared.ScaleGestureRecognizer.ScaleMultiplier()']]],
+  ['scalethresholdpercent_2774',['ScaleThresholdPercent',['../class_digital_ruby_shared_1_1_scale_gesture_recognizer.html#a002c51f3d484a63bc6766024b8ca3a4e',1,'DigitalRubyShared::ScaleGestureRecognizer']]],
+  ['score_2775',['Score',['../class_digital_ruby_shared_1_1_image_gesture_image.html#a2efb5e8f304859f42e5532794f924c66',1,'DigitalRubyShared::ImageGestureImage']]],
+  ['screenx_2776',['ScreenX',['../struct_digital_ruby_shared_1_1_gesture_touch.html#afd0abe401ae02e161a869437258491c2',1,'DigitalRubyShared::GestureTouch']]],
+  ['screeny_2777',['ScreenY',['../struct_digital_ruby_shared_1_1_gesture_touch.html#a2851a898daf5c32b2a8763ac2594bc45',1,'DigitalRubyShared::GestureTouch']]],
+  ['sendbeginstate_2778',['SendBeginState',['../class_digital_ruby_shared_1_1_tap_gesture_recognizer.html#a4785060ba863d68bb6d56c1b8602356b',1,'DigitalRubyShared::TapGestureRecognizer']]],
+  ['servermessage_2779',['ServerMessage',['../class_proyecto26_1_1_request_exception.html#a3ba95f2a3186d8e15dedde0bada5dbe9',1,'Proyecto26::RequestException']]],
+  ['sharedialogmode_2780',['shareDialogMode',['../interface_f_b_unity_interface.html#ad367ca94b1e8817100d55c176415f141',1,'FBUnityInterface']]],
+  ['similarityminimum_2781',['SimilarityMinimum',['../class_digital_ruby_shared_1_1_image_gesture_recognizer.html#ade6f9548aa04ae47699d67d81338a869',1,'DigitalRubyShared::ImageGestureRecognizer']]],
+  ['similaritypadding_2782',['SimilarityPadding',['../class_digital_ruby_shared_1_1_image_gesture_image.html#acc9727d53a00460b2cec58f5fcb6e096',1,'DigitalRubyShared::ImageGestureImage']]],
+  ['simpleform_2783',['SimpleForm',['../class_proyecto26_1_1_request_helper.html#a4d8b7a15eb6165795ce553159d806088',1,'Proyecto26::RequestHelper']]],
+  ['size_2784',['Size',['../class_digital_ruby_shared_1_1_image_gesture_image.html#a05789f2c06a64f2d6957b8575b1d7343',1,'DigitalRubyShared::ImageGestureImage']]],
+  ['speed_2785',['Speed',['../class_digital_ruby_shared_1_1_gesture_velocity_tracker.html#a7c3e41dbfdd753be91473edd6ba00517',1,'DigitalRubyShared.GestureVelocityTracker.Speed()'],['../class_digital_ruby_shared_1_1_gesture_recognizer.html#a4577f46f2c0d10b587a77e265d523287',1,'DigitalRubyShared.GestureRecognizer.Speed()']]],
+  ['startfocusx_2786',['StartFocusX',['../class_digital_ruby_shared_1_1_gesture_recognizer.html#acfe01f093ec12bc56aae592dcfb61d1f',1,'DigitalRubyShared::GestureRecognizer']]],
+  ['startfocusy_2787',['StartFocusY',['../class_digital_ruby_shared_1_1_gesture_recognizer.html#ace8cfcf3dad5445f88dee241f36f8441',1,'DigitalRubyShared::GestureRecognizer']]],
+  ['state_2788',['State',['../class_digital_ruby_shared_1_1_gesture_recognizer.html#a86fe5f914a419ba8435a1c4f6cd541c1',1,'DigitalRubyShared::GestureRecognizer']]],
+  ['status_2789',['Status',['../class_google_1_1_google_sign_in_1_1_sign_in_exception.html#a58ec8942071a73b48c809b4230518f66',1,'Google::GoogleSignIn::SignInException']]],
+  ['statuscode_2790',['StatusCode',['../class_proyecto26_1_1_request_exception.html#a40ca502507fbb7004a816f868cd13536',1,'Proyecto26.RequestException.StatusCode()'],['../class_proyecto26_1_1_response_helper.html#a0e0ce56936141e5161675c241a450583',1,'Proyecto26.ResponseHelper.StatusCode()']]],
+  ['storagetype_2791',['StorageType',['../class_full_serializer_1_1_internal_1_1fs_meta_property.html#a5476e7a183ff2ccee14d5dce5d990f3a',1,'FullSerializer::Internal::fsMetaProperty']]],
+  ['succeeded_2792',['Succeeded',['../struct_full_serializer_1_1fs_result.html#a09d500a429685b79bec14453423af551',1,'FullSerializer::fsResult']]]
+];
