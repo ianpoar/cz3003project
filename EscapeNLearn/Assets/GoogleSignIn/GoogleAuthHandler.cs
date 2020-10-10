@@ -24,12 +24,23 @@ public class GoogleAuthHandler
     /// </summary>
     /// <param name="code"> Auth Code </param>
     /// <param name="callback"> What to do after this is successfully executed </param>
-    public static void ExchangeAuthCodeWithIdToken(string code, Action<string> callback)
+    public static void ExchangeAuthCodeWithIdToken(string code, Action<CombinedGoogleResponse> callback)
     {
         RestClient.Post($"https://oauth2.googleapis.com/token?code={code}&client_id={ClientId}&client_secret={ClientSecret}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&grant_type=authorization_code", null).Then(
             response => {
+                //Debug.Log(response.Text);
                 var data = StringSerializationAPI.Deserialize(typeof(GoogleIdTokenResponse), response.Text) as GoogleIdTokenResponse;
-                callback(data.id_token);
+
+                RestClient.Post($"https://oauth2.googleapis.com/tokeninfo?id_token=" + data.id_token, null).Then(
+                        response2 => {
+                            //Debug.Log(response2.Text);
+                            var data2 = StringSerializationAPI.Deserialize(typeof(GoogleUniqueIdResponse), response2.Text) as GoogleUniqueIdResponse;
+                            CombinedGoogleResponse final = new CombinedGoogleResponse();
+                            final.id_token = data.id_token;
+                            final.uniqueid = data2.sub;
+                            final.access_token = data.access_token;
+                            callback(final);
+                        }).Catch(Debug.Log);
             }).Catch(Debug.Log);
     }
 }

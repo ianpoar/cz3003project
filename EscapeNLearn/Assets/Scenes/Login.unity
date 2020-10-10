@@ -2543,7 +2543,6 @@ GameObject:
   - component: {fileID: 1680996884}
   - component: {fileID: 1680996883}
   - component: {fileID: 1680996882}
-  - component: {fileID: 1680996885}
   m_Layer: 5
   m_Name: Btn_Google
   m_TagString: Untagged
@@ -2661,24 +2660,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680996880}
   m_CullTransparentMesh: 0
---- !u!114 &1680996885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1680996880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f96d4091ae6367243a0eed19e42575a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panel_signup: {fileID: 0}
-  input_signUpEmail: {fileID: 0}
-  input_password1: {fileID: 0}
-  input_password2: {fileID: 0}
-  input_loginEmail: {fileID: 0}
-  input_loginPassword: {fileID: 0}
 --- !u!1 &1808960859
 GameObject:
   m_ObjectHideFlags: 0

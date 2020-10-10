@@ -51,6 +51,10 @@ public abstract class Screen : MonoBehaviour
             {
                 DatabaseMgr.Instance.SNSRequestCredential(LoginTypeConstants.FACEBOOK, null, null, true); // perform soft login
             }
+            else if (DatabaseMgr.Instance.LoginTypes.Contains(LoginTypeConstants.GOOGLE)) // if google login
+            {
+                DatabaseMgr.Instance.SNSRequestCredential(LoginTypeConstants.GOOGLE, null, null, true); // perform soft login
+            }
 
             // Auto fetch data
             Debug.Log("AutoFetchData run");

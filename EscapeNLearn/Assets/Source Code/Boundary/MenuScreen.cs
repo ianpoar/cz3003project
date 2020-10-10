@@ -31,6 +31,10 @@ public class MenuScreen : Screen
     private GameObject FBLinkButton;
     [SerializeField]
     private GameObject FBUnLinkButton;
+    [SerializeField]
+    private GameObject GoogleLinkButton;
+    [SerializeField]
+    private GameObject GoogleUnLinkButton;
 
     // Start of menu screen
     protected override void Start()
@@ -147,6 +151,89 @@ public class MenuScreen : Screen
             });
     }
 
+    public void Btn_GoogleUnlink()
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        NotificationMgr.Instance.NotifyLoad("Unlinking");
+        DatabaseMgr.Instance.UnlinkCredentials(LoginTypeConstants.GOOGLE,
+            delegate ()
+            {
+                ProfileMgr.Instance.localProfile.id_google = "Unknown"; // unlinked, reset id_google
+
+                DatabaseMgr.Instance.DBLightUpdate(
+                DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
+                nameof(ProfileMgr.Instance.localProfile.id_google),
+                ProfileMgr.Instance.localProfile.id_google,
+                delegate () // write success
+                {
+                    NotificationMgr.Instance.StopLoad();
+                    NotificationMgr.Instance.Notify("Unlink successful");
+                    // refresh new data locally
+                    RefreshProfileInfo();
+                },
+                delegate (string failmsg) // write failed
+                {
+                    NotificationMgr.Instance.StopLoad();
+                    NotificationMgr.Instance.Notify(failmsg);
+                });
+            },
+            delegate (string failmsg) {
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify(failmsg);
+            });
+    }
+
+    public void Btn_GoogleLink()
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        DatabaseMgr.Instance.SNSRequestCredential(
+        LoginTypeConstants.GOOGLE,
+        delegate (Firebase.Auth.Credential cred) // success
+        {
+            NotificationMgr.Instance.NotifyLoad("Linking Google");
+            DatabaseMgr.Instance.LinkCredentials(
+                cred,
+                delegate () // successfully linked, update facebook id
+                {
+                    DatabaseMgr.Instance.DBLightUpdate(
+                       DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
+                       nameof(ProfileMgr.Instance.localProfile.id_google),
+                       ProfileMgr.Instance.localProfile.id_google,
+                       delegate () // write success
+                       {
+                           DatabaseMgr.Instance.Logout();
+                           NotificationMgr.Instance.StopLoad();
+                           NotificationMgr.Instance.Notify("Link successful. Please relogin.",
+                           delegate ()
+                           {
+                               TransitMgr.Instance.FadeToScene("Login");
+                           });
+                           // refresh new data locally
+                           RefreshProfileInfo();
+                       },
+                       delegate (string failmsg) // write failed
+                       {
+                           NotificationMgr.Instance.StopLoad();
+                           NotificationMgr.Instance.Notify(failmsg);
+                       }
+                   );
+                },
+                delegate (string failmsg)
+                {
+                    NotificationMgr.Instance.StopLoad();
+                    NotificationMgr.Instance.Notify(failmsg);
+                }
+            );
+        },
+        delegate (string failmsg) // failed
+        {
+            NotificationMgr.Instance.StopLoad();
+            NotificationMgr.Instance.Notify(failmsg);
+        });
+
+    }
+
+
     public void Btn_FBLink()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -231,11 +318,14 @@ public class MenuScreen : Screen
     {
         FBUnLinkButton.SetActive(false);
         FBLinkButton.SetActive(false);
+        GoogleUnLinkButton.SetActive(false);
+        GoogleLinkButton.SetActive(false);
         txt_info.text = ""; // reset
 
         if (DatabaseMgr.Instance.IsLoggedIn)
         {
             FBLinkButton.SetActive(true);
+            GoogleLinkButton.SetActive(true);
 
             txt_info.text +=
                 "Firebase UID: " + DatabaseMgr.Instance.Id +
@@ -245,13 +335,24 @@ public class MenuScreen : Screen
 
             txt_info.text +=
                 "\nLogin Types: ";
-            foreach (string str in DatabaseMgr.Instance.LoginTypes)
+
+            List<string> loginTypes = DatabaseMgr.Instance.LoginTypes;
+            int count = loginTypes.Count;
+
+            foreach (string str in loginTypes)
             {
                 txt_info.text += str + " | ";
                 if (str == LoginTypeConstants.FACEBOOK)
                 {
-                    FBUnLinkButton.SetActive(true);
                     FBLinkButton.SetActive(false);
+                    if (count > 1) // only allow unlinking if there are other login types
+                        FBUnLinkButton.SetActive(true);
+                }
+                if (str == LoginTypeConstants.GOOGLE)
+                {
+                    GoogleLinkButton.SetActive(false);
+                    if (count > 1) // only allow unlinking if there are other login types
+                        GoogleUnLinkButton.SetActive(true);
                 }
             }
 

@@ -21,15 +21,11 @@ public class LoginScreen : Screen
     // Start of login screen
     protected override void Start()
     {
-        // no base.start() - don't refresh profile into here as there's autologin
+        // base.Start(); don't fetch data, use autologin
         AudioMgr.Instance.PlayBGM(AudioConstants.BGM_CLEARDAY);
+        StartCoroutine(Autologin());
     }
 
-    protected override void StartAfterDataFetched()
-    {
-        // Run autologin
-        Autologin();
-    }
 
     // Button to show sign up panel pressed
     public void Btn_ShowSignUp(bool flag)
@@ -153,6 +149,7 @@ public class LoginScreen : Screen
         LoginTypeConstants.GOOGLE,
         delegate (Firebase.Auth.Credential cred) // success
         {
+            NotificationMgr.Instance.NotifyLoad("Logging in via Google...");
             // with credential, login via firebase db
             DatabaseMgr.Instance.SNSLoginWithCredential(cred,
             delegate () // successful login to db
@@ -310,22 +307,32 @@ public class LoginScreen : Screen
                 });
     }
 
-    private void Autologin()
+    IEnumerator Autologin()
     {
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("autologin");
         // If user has already logged in before
         if (DatabaseMgr.Instance.IsLoggedIn)
         {
+            Debug.Log("logged in");
             bool verify = true;
 
             // Check login types
             foreach (string str in DatabaseMgr.Instance.LoginTypes)
             {
+                Debug.Log("Providerid: " + str);
                 if (str == LoginTypeConstants.FACEBOOK) // If user was authenticated by Facebook
                 {
                     verify = false; // Don't check for a verified email
                     DatabaseMgr.Instance.SNSRequestCredential(LoginTypeConstants.FACEBOOK, null, null, true); // sns login to facebook without actually going through auth
+                    break;
                 }
-                Debug.Log("Providerid: " + str);
+                if (str == LoginTypeConstants.GOOGLE)
+                {
+                    verify = false; // Don't check for a verified email
+                    DatabaseMgr.Instance.SNSRequestCredential(LoginTypeConstants.GOOGLE, null, null, true); // sns login to google without actually going through auth
+                    break;
+                }
             }
 
             // Transit to menu
