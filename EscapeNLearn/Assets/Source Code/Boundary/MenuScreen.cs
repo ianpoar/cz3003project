@@ -36,6 +36,10 @@ public class MenuScreen : Screen
     [SerializeField]
     private GameObject GoogleUnLinkButton;
 
+
+    [SerializeField]
+    private GameObject Panel;
+
     // Start of menu screen
     protected override void Start()
     {
@@ -145,7 +149,8 @@ public class MenuScreen : Screen
                     NotificationMgr.Instance.Notify(failmsg);
                 });
             },
-            delegate (string failmsg) {
+            delegate (string failmsg)
+            {
                 NotificationMgr.Instance.StopLoad();
                 NotificationMgr.Instance.Notify(failmsg);
             });
@@ -177,7 +182,8 @@ public class MenuScreen : Screen
                     NotificationMgr.Instance.Notify(failmsg);
                 });
             },
-            delegate (string failmsg) {
+            delegate (string failmsg)
+            {
                 NotificationMgr.Instance.StopLoad();
                 NotificationMgr.Instance.Notify(failmsg);
             });
@@ -252,21 +258,21 @@ public class MenuScreen : Screen
                        ProfileMgr.Instance.localProfile.id_facebook,
                        delegate () // write success
                         {
-                           DatabaseMgr.Instance.Logout();
-                           NotificationMgr.Instance.StopLoad();
-                           NotificationMgr.Instance.Notify("Link successful. Please relogin.",
-                           delegate()
-                           {
-                               TransitMgr.Instance.FadeToScene("Login");
-                           });
+                            DatabaseMgr.Instance.Logout();
+                            NotificationMgr.Instance.StopLoad();
+                            NotificationMgr.Instance.Notify("Link successful. Please relogin.",
+                            delegate ()
+                            {
+                                TransitMgr.Instance.FadeToScene("Login");
+                            });
                             // refresh new data locally
                             RefreshProfileInfo();
                         },
                        delegate (string failmsg) // write failed
                         {
-                           NotificationMgr.Instance.StopLoad();
-                           NotificationMgr.Instance.Notify(failmsg);
-                       }
+                            NotificationMgr.Instance.StopLoad();
+                            NotificationMgr.Instance.Notify(failmsg);
+                        }
                    );
                 },
                 delegate (string failmsg)
@@ -409,6 +415,20 @@ public class MenuScreen : Screen
                     null);
             }
         }
+
+    }
+
+
+    //show friends list
+
+
+    public void Btn_ShowFriendsList(bool show)
+    {
+
+        Panel.SetActive(show);
+
+
+
 
     }
 }
