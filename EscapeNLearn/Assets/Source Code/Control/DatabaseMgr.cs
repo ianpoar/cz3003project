@@ -115,9 +115,9 @@ public class DatabaseMgr : MonoBehaviour
         StartCoroutine(Sequence_DBFetch(query, successCallback, failCallback));
     }
 
-    public void DBFetchMulti(string query, string orderbyID, string id, int first, MessageCallback successCallback = null, MessageCallback failCallback = null)
+    public void DBFetchMulti(string query, string targetKey, string targetValue, int first, MessageCallback successCallback = null, MessageCallback failCallback = null)
     {
-        StartCoroutine(Sequence_DBFetchMulti(query, orderbyID, id, first, successCallback, failCallback));
+        StartCoroutine(Sequence_DBFetchMulti(query, targetKey, targetValue, first, successCallback, failCallback));
     }
 
     // Updates an entire document to db. Can be directly called from other classes, pass in success and failure delegate methods to specify your desired action for each case

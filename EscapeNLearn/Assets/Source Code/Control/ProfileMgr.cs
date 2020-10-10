@@ -19,6 +19,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
     public Connection currentConnection = null;
     public string connectionID = null;
 
+
     // Save player data to firebase db
     // Can be directly called from UI classes, pass in success and failure delegate methods to specify your desired action for each case
     public void SavePlayerProfile(SimpleCallback successCallback = null, MessageCallback failCallback = null)
@@ -57,7 +58,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
                    
                     if (c != null)
                     {
-                        Debug.Log("ConnectionID: " + pair.Key + ", SessionID: " + c.id_session + ", PlayerID: " + c.id_player);
+                        Debug.Log("ConnectionID: " + pair.Key + ", SessionID: " + c.id_session + ", PlayerID: " + c.id_player + ", Level: " + c.level_cleared);
                         connectionID = pair.Key;
                         currentConnection = c;
                     }

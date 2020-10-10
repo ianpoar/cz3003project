@@ -85,7 +85,7 @@ public class MenuScreen : Screen
         TransitMgr.Instance.FadeToScene("Login");
     }
 
-    // Play Normal button pressed, to be implemented
+    // Play Normal button pressed
     public void Btn_PlayNormal(bool playsound)
     {
         if (playsound)
@@ -99,6 +99,13 @@ public class MenuScreen : Screen
         {
             panel_sessionlobby.SetActive(true); // show session lobby
         }
+    }
+
+    // Play challenge button pressed
+    public void Btn_PlayChallenge()
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        NotificationMgr.Instance.Notify("This feature has not been implemented yet.");
     }
 
     public void Btn_QuestionList(bool show)

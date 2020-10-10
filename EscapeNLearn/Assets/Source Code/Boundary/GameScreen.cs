@@ -69,11 +69,31 @@ public class GameScreen : Screen
     }
 
     // used by gamemgr
-    public void ShowResultsScreen()
+    public void ShowResultsScreen(Report report)
     {
         pauseButton.SetActive(false);
         JSInput.PauseInput(true);
-        TransitMgr.Instance.FadeToScene("Menu");
+
+        NotificationMgr.Instance.Notify("You have cleared the level!",
+         delegate ()
+         {
+             SessionMgr.Instance.LoadLevelReport(report);
+             TransitMgr.Instance.FadeToScene("Report");
+         });
+    }
+
+    // used by gamemgr
+    public void ShowGameFailed(Report report)
+    {
+        pauseButton.SetActive(false);
+        JSInput.PauseInput(true);
+        NotificationMgr.Instance.Notify("You have failed the level!",
+        delegate ()
+        {
+            SessionMgr.Instance.LoadLevelReport(report);
+            TransitMgr.Instance.FadeToScene("Report");
+        });
+
     }
 
     // used by gamemgr
@@ -107,7 +127,7 @@ public class GameScreen : Screen
     public void Btn_LeaveGame()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-
+        GameManager.SendReportToDB(); // even when leave game, send report to db
         TransitMgr.Instance.FadeToScene("Menu");
     }
 

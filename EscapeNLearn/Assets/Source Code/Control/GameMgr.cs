@@ -14,6 +14,7 @@ public abstract class GameMgr : MonoBehaviour
     protected int PlayerMaxHP = 100;
     protected int PlayerHP = 100;
     protected GameScreen ScreenRef;
+    protected int GameLevel = 0; // change in derived classes
 
     // private
     private int secondsElapsed = 0;
@@ -23,11 +24,13 @@ public abstract class GameMgr : MonoBehaviour
     private int currQuesIterator = 0;
     string currNPCName;
     private int currNoOfQues = 0;
+    private Report report = new Report();
 
     public virtual void StartGame(GameScreen reference)
     {
         ScreenRef = reference;
 
+        // populate questions
         Question q1 = new Question();
         q1.question = "1 + 2 = ?";
         q1.answer1 = "1";
@@ -65,6 +68,12 @@ public abstract class GameMgr : MonoBehaviour
         QuestionList.Add(q3);
         QuestionList.Add(q4);
 
+        // init report
+        report.game_level = GameLevel;
+        report.id_session = ProfileMgr.Instance.currentConnection.id_session;
+        report.id_account = ProfileMgr.Instance.localProfile.id_account;
+
+        // start timer
         StartCoroutine(Timer());
 
     }
@@ -114,6 +123,21 @@ public abstract class GameMgr : MonoBehaviour
     {
         Question ques = QuestionList[currQuesIterator];
 
+        // Save answered question to report
+        if (ques != null)
+        {
+            Answer a = new Answer();
+            a.question = ques.question;
+            a.answer = choice;
+            a.answer1 = ques.answer1;
+            a.answer2 = ques.answer2;
+            a.answer3 = ques.answer3;
+            a.answer4 = ques.answer4;
+            a.correctanswer = ques.correctanswer;
+            report.answers.list.Add(a);
+            report.answer_count++;
+        }
+
         if (choice == ques.correctanswer)
         {
             currQuesIterator++;
@@ -153,10 +177,38 @@ public abstract class GameMgr : MonoBehaviour
         }
     }
 
-    protected void GameEnd()
+    protected void GameClear()
     {
         PauseGame(true);
         StopAllCoroutines();
-        ScreenRef.ShowResultsScreen();
+
+        // send report to database
+        SendReportToDB();
+
+        // update connection game level
+        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_CONNECTIONS + "/" + ProfileMgr.Instance.connectionID, nameof(Connection.level_cleared), GameLevel);
+        ProfileMgr.Instance.currentConnection.level_cleared = GameLevel;
+
+        // show results screen
+        ScreenRef.ShowResultsScreen(report);
+    }
+
+    protected void GameFailed()
+    {
+        PauseGame(true);
+        StopAllCoroutines();
+
+        // send report to database
+        SendReportToDB();
+
+        // show results screen
+        ScreenRef.ShowGameFailed(report);
+    }
+
+    public void SendReportToDB()
+    {
+        report.time_elapsed = secondsElapsed;
+        report.score = score;
+        DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_REPORTS, report);
     }
 }

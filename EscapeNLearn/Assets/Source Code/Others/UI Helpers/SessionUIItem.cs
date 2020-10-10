@@ -10,22 +10,24 @@ public class SessionUIItem : MonoBehaviour
 
     SessionUI _ref;
     SessionLobbyUI _ref2;
+    Session _session;
     string _id;
 
-    public void Init(string id, string name, SessionUI sessionUI, SessionLobbyUI sessionLobbyUI)
+    public void Init(string id, Session session, SessionUI sessionUI, SessionLobbyUI sessionLobbyUI)
     {
         _ref = sessionUI;
         _ref2 = sessionLobbyUI;
         _id = id;
+        _session = session;
         txt_id.text = "ID: " + id;
-        txt_name.text = name;
+        txt_name.text = session.session_name;
     }
 
     public void OnClick()
     {
         if (_ref != null)
-            _ref.EditSession(_id);
+            _ref.ViewSessionReport(_id);
         if (_ref2 != null)
-            _ref2.JoinSession(_id);
+            _ref2.JoinSession(_id, _session.id_owner, _session.session_name);
     }
 }

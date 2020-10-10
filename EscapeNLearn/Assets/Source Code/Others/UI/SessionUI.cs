@@ -17,6 +17,8 @@ public class SessionUI : MonoBehaviour
     string tempstr = null;
 
     List<GameObject> list = new List<GameObject>();
+    Dictionary<string, Session> session_dic = new Dictionary<string, Session>();
+
     private void OnEnable()
     {
         tempstr = null;
@@ -64,6 +66,7 @@ public class SessionUI : MonoBehaviour
             Destroy(obj);
         }
         list.Clear();
+        session_dic.Clear();
     }
 
     public void Btn_ShowNewSessionWindow(bool flag)
@@ -77,10 +80,30 @@ public class SessionUI : MonoBehaviour
         NewSessionWindow.SetActive(false);
     }
 
-    public void EditSession(string id)
+    public void ViewSessionReport(string id)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        Debug.Log("Edit session " + id);
+        Debug.Log("Get session " + id);
+        Session s = null;
+        if (session_dic.TryGetValue(id, out s))
+        {
+            NotificationMgr.Instance.NotifyLoad("Fetching session reports");
+            SessionMgr.Instance.LoadAllSessionReports(id, s,
+                delegate ()
+                {
+                    NotificationMgr.Instance.StopLoad();
+                    TransitMgr.Instance.FadeToScene("Report");
+                },
+                delegate (string failmsg)
+                {
+                    NotificationMgr.Instance.StopLoad();
+                    NotificationMgr.Instance.Notify(failmsg);
+                });
+        }
+        else
+        {
+            Debug.Log("failed");
+        }
     }
 
     void SpawnSessionObjects(string result)
@@ -101,9 +124,10 @@ public class SessionUI : MonoBehaviour
             SessionUIItem script = obj.GetComponent<SessionUIItem>();
             script.transform.SetParent(Panel);
             script.transform.localScale = SessionUIItem.transform.localScale;
-            script.Init(pair.Key, session.session_name, this, null);
+            script.Init(pair.Key, session, this, null);
 
             list.Add(obj);
+            session_dic.Add(pair.Key, session);
         }
     }
 
