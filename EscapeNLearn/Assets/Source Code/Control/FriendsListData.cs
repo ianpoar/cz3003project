@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-public class FriendsListData
+
+public class FriendsListData : MonoBehaviour
 {
     public string Name;
 

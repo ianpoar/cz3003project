@@ -6,6 +6,6 @@ public class Friends_ListItemController : MonoBehaviour
 {
 
 
-    public Text Name;
+    public Text Name = null;
 
 }

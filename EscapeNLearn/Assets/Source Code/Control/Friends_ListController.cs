@@ -14,8 +14,21 @@ public class Friends_ListController : MonoBehaviour
 
         // 1. Get the data to be displayed
         friends_list = new ArrayList() {
-            new FriendsListData("Ron"), new FriendsListData("Tom"), new FriendsListData("stacy"), new FriendsListData("mon"), new FriendsListData("Ton"), new FriendsListData("stac"), new FriendsListData("Ron"), new FriendsListData("Tom"), new FriendsListData("stacy"), new FriendsListData("mon"), new FriendsListData("Ton"), new FriendsListData("stac")
-
+            new FriendsListData("Ron"),
+            new FriendsListData("Tom"),
+            new FriendsListData("stacy"),
+            new FriendsListData("mon"),
+            new FriendsListData("Ton"),
+            new FriendsListData("stac"),
+            new FriendsListData("Ron"),
+            new FriendsListData("Tom"),
+            new FriendsListData("stacy"),
+            new FriendsListData("mon"),
+            new FriendsListData("Ton"),
+            new FriendsListData("stac"),
+            new FriendsListData("mond"),
+            new FriendsListData("Tonds"),
+            new FriendsListData("stacs")
         };
 
         foreach (FriendsListData friend in friends_list)
@@ -28,5 +41,3 @@ public class Friends_ListController : MonoBehaviour
         }
     }
 }
-
-
