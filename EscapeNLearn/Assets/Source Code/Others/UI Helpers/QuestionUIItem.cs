@@ -11,7 +11,6 @@ public class QuestionUIItem : MonoBehaviour
     public Text txt_name;
     public Text txt_correctanswer;
 
-    string name;
     string correctanswer;
     Question q;
     QuestionUI qui;

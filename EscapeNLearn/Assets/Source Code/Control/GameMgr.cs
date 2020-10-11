@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Game Manager Subsystem Interface, a Control Class that handles all gameplay related processes.
+/// Game Subsystem Interface, a Control Class that handles all gameplay related processes.
 /// </summary>
 public abstract class GameMgr : MonoBehaviour
 {
@@ -36,47 +36,15 @@ public abstract class GameMgr : MonoBehaviour
     {
         ScreenRef = reference;
 
-        // populate questions
-        Question q1 = new Question();
-        q1.question = "1 + 2 = ?";
-        q1.answer1 = "1";
-        q1.answer2 = "2";
-        q1.answer3 = "3";
-        q1.answer4 = "4";
-        q1.correctanswer = 3;
-
-        Question q2 = new Question();
-        q2.question = "2 + 2 = ?";
-        q2.answer1 = "1";
-        q2.answer2 = "2";
-        q2.answer3 = "3";
-        q2.answer4 = "4";
-        q2.correctanswer = 4;
-
-        Question q3 = new Question();
-        q3.question = "20 + 2 = ?";
-        q3.answer1 = "1";
-        q3.answer2 = "22";
-        q3.answer3 = "3";
-        q3.answer4 = "4";
-        q3.correctanswer = 2;
-
-        Question q4 = new Question();
-        q4.question = "22 - 11 = ?";
-        q4.answer1 = "11";
-        q4.answer2 = "2";
-        q4.answer3 = "3";
-        q4.answer4 = "4";
-        q4.correctanswer = 1;
-
-        QuestionList.Add(q1);
-        QuestionList.Add(q2);
-        QuestionList.Add(q3);
-        QuestionList.Add(q4);
+        QuestionList.Clear();
+        foreach (Question q in SessionMgr.Instance.passedInQuestionList)
+        {
+            QuestionList.Add(q);
+        }
 
         // init report
         report.game_level = GameLevel;
-        report.id_session = ProfileMgr.Instance.currentConnection.id_session;
+        report.id_session = SessionMgr.Instance.currentConnection.id_session;
         report.id_player = ProfileMgr.Instance.localProfile.id_player;
 
         // start timer
@@ -211,8 +179,8 @@ public abstract class GameMgr : MonoBehaviour
         SendReportToDB();
 
         // update connection game level
-        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_CONNECTIONS + "/" + ProfileMgr.Instance.connectionID, nameof(Connection.level_cleared), GameLevel);
-        ProfileMgr.Instance.currentConnection.level_cleared = GameLevel;
+        DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_CONNECTIONS + "/" + SessionMgr.Instance.connectionID, nameof(Connection.level_cleared), GameLevel);
+        SessionMgr.Instance.currentConnection.level_cleared = GameLevel;
 
         // show results screen
         ScreenRef.ShowResultsScreen(report);

@@ -1,17 +1,16 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
 public class Friends_ListController : MonoBehaviour
 {
-
     public GameObject PanelChild;
     public GameObject ListItem;
 
     ArrayList friends_list;
+    List<GameObject> spawnedObjList = new List<GameObject>();
 
-    void Start()
+    void OnEnable()
     {
-
         // 1. Get the data to be displayed
         friends_list = new ArrayList() {
             new FriendsListData("Ron"),
@@ -38,6 +37,17 @@ public class Friends_ListController : MonoBehaviour
             controller.Name.text = friend.Name;
             newFriend.transform.parent = PanelChild.transform;
             newFriend.transform.localScale = Vector3.one;
+            spawnedObjList.Add(newFriend);
         }
+    }
+
+    private void OnDisable()
+    {
+        foreach (GameObject obj in spawnedObjList)
+        {
+            Destroy(obj);
+        }
+
+        spawnedObjList.Clear();
     }
 }

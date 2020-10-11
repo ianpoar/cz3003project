@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('class_session_mgr.html',''); initResiz
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="class_session.html" title="A session Entity Class.">Session</a> Manager Subsystem Interface, a Control Class that handles all report related processes.  
+<p><a class="el" href="class_session.html" title="A session Entity Class.">Session</a> Subsystem Interface, a Control Class that handles all report related processes.  
  <a href="class_session_mgr.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for SessionMgr:</div>
@@ -104,9 +104,27 @@ Inheritance diagram for SessionMgr:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3aa74ca002667f18cfac8c8a0a8e6a48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#a3aa74ca002667f18cfac8c8a0a8e6a48">LoadIndividualSessionReports</a> (<a class="el" href="class_connection.html">Connection</a> c, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback=null, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback=null)</td></tr>
-<tr class="memdesc:a3aa74ca002667f18cfac8c8a0a8e6a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads all reports based on the individual.  <a href="class_session_mgr.html#a3aa74ca002667f18cfac8c8a0a8e6a48">More...</a><br /></td></tr>
-<tr class="separator:a3aa74ca002667f18cfac8c8a0a8e6a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a814892365b3875a084ec21c46078c1b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#a814892365b3875a084ec21c46078c1b5">JoinSession</a> (<a class="el" href="class_connection.html">Connection</a> c, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:a814892365b3875a084ec21c46078c1b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joins a session.  <a href="class_session_mgr.html#a814892365b3875a084ec21c46078c1b5">More...</a><br /></td></tr>
+<tr class="separator:a814892365b3875a084ec21c46078c1b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a488cc83b38f3653c586aeaca81a34bc1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#a488cc83b38f3653c586aeaca81a34bc1">LeaveSession</a> (<a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:a488cc83b38f3653c586aeaca81a34bc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leaves the current connected session.  <a href="class_session_mgr.html#a488cc83b38f3653c586aeaca81a34bc1">More...</a><br /></td></tr>
+<tr class="separator:a488cc83b38f3653c586aeaca81a34bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0fbe0427b8c6b41a74c13c290790c10"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#ae0fbe0427b8c6b41a74c13c290790c10">CreateSession</a> (<a class="el" href="class_session.html">Session</a> s, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:ae0fbe0427b8c6b41a74c13c290790c10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new session.  <a href="class_session_mgr.html#ae0fbe0427b8c6b41a74c13c290790c10">More...</a><br /></td></tr>
+<tr class="separator:ae0fbe0427b8c6b41a74c13c290790c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf405a503c34d15d12e906e81990b9e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#acf405a503c34d15d12e906e81990b9e4">FetchSingleSession</a> (string id, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:acf405a503c34d15d12e906e81990b9e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches a single session from the database and return the result in the callback.  <a href="class_session_mgr.html#acf405a503c34d15d12e906e81990b9e4">More...</a><br /></td></tr>
+<tr class="separator:acf405a503c34d15d12e906e81990b9e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a836b8db31637509c9aae29bd4694b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#a0a836b8db31637509c9aae29bd4694b3">FetchSessions</a> (<a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback, string searchid=null, int max=100)</td></tr>
+<tr class="memdesc:a0a836b8db31637509c9aae29bd4694b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches multiple sessions from the database and return the result in the callback.  <a href="class_session_mgr.html#a0a836b8db31637509c9aae29bd4694b3">More...</a><br /></td></tr>
+<tr class="separator:a0a836b8db31637509c9aae29bd4694b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3fc0b11cf05aebd83a4da626b85b796"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#ac3fc0b11cf05aebd83a4da626b85b796">FetchQuestionsForGame</a> (string sessionid, int game_level, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:ac3fc0b11cf05aebd83a4da626b85b796"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches all questions for the game level of the session.  <a href="class_session_mgr.html#ac3fc0b11cf05aebd83a4da626b85b796">More...</a><br /></td></tr>
+<tr class="separator:ac3fc0b11cf05aebd83a4da626b85b796"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6293b879a1ba00948f943acfe4e7966"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#aa6293b879a1ba00948f943acfe4e7966">LoadIndividualSessionReports</a> (<a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback=null, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback=null)</td></tr>
+<tr class="memdesc:aa6293b879a1ba00948f943acfe4e7966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads all reports based on the individual.  <a href="class_session_mgr.html#aa6293b879a1ba00948f943acfe4e7966">More...</a><br /></td></tr>
+<tr class="separator:aa6293b879a1ba00948f943acfe4e7966"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99cff0d4df0debfd38d6044fef083c6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#a99cff0d4df0debfd38d6044fef083c6f">LoadAllSessionReports</a> (string id_session, <a class="el" href="class_session.html">Session</a> session, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback=null, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback=null)</td></tr>
 <tr class="memdesc:a99cff0d4df0debfd38d6044fef083c6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads all reports based on the session.  <a href="class_session_mgr.html#a99cff0d4df0debfd38d6044fef083c6f">More...</a><br /></td></tr>
 <tr class="separator:a99cff0d4df0debfd38d6044fef083c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,10 +142,14 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a09d88676230bac93dc7e2694101290dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa91fd3996ee94f9c75d57fcff84c2f78"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#aa91fd3996ee94f9c75d57fcff84c2f78">passedInSessionID</a></td></tr>
 <tr class="separator:aa91fd3996ee94f9c75d57fcff84c2f78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67eaee16f59d04b9e041117c822b8879"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_connection.html">Connection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#a67eaee16f59d04b9e041117c822b8879">passedInConnection</a> = null</td></tr>
-<tr class="separator:a67eaee16f59d04b9e041117c822b8879"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f78fe46c381b94df957db6b265794b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_session_mgr_8cs.html#ae4f179a72db5cca021a37ec4c6fe4c68">ReportType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#a8f78fe46c381b94df957db6b265794b9">CurrentReportType</a> = ReportType.INDIVIDUAL</td></tr>
 <tr class="separator:a8f78fe46c381b94df957db6b265794b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dc804f7294fead7a6ff03d565f43e04"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="class_question.html">Question</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#a5dc804f7294fead7a6ff03d565f43e04">passedInQuestionList</a> = new List&lt;<a class="el" href="class_question.html">Question</a>&gt;()</td></tr>
+<tr class="separator:a5dc804f7294fead7a6ff03d565f43e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8553a0d282522083437de7f995d0b49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_connection.html">Connection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#ae8553a0d282522083437de7f995d0b49">currentConnection</a> = null</td></tr>
+<tr class="separator:ae8553a0d282522083437de7f995d0b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a577f072f507b01a720b7915224716653"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_mgr.html#a577f072f507b01a720b7915224716653">connectionID</a> = null</td></tr>
+<tr class="separator:a577f072f507b01a720b7915224716653"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -136,8 +158,230 @@ Properties</h2></td></tr>
 <tr class="separator:a89d1ba83601cd998b8d211fb3d2b0f8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="class_session.html" title="A session Entity Class.">Session</a> Manager Subsystem Interface, a Control Class that handles all report related processes. </p>
+<div class="textblock"><p><a class="el" href="class_session.html" title="A session Entity Class.">Session</a> Subsystem Interface, a Control Class that handles all report related processes. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae0fbe0427b8c6b41a74c13c290790c10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0fbe0427b8c6b41a74c13c290790c10">&#9670;&nbsp;</a></span>CreateSession()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionMgr.CreateSession </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_session.html">Session</a>&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new session. </p>
+
+</div>
+</div>
+<a id="ac3fc0b11cf05aebd83a4da626b85b796"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3fc0b11cf05aebd83a4da626b85b796">&#9670;&nbsp;</a></span>FetchQuestionsForGame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionMgr.FetchQuestionsForGame </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>sessionid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>game_level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fetches all questions for the game level of the session. </p>
+
+</div>
+</div>
+<a id="a0a836b8db31637509c9aae29bd4694b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a836b8db31637509c9aae29bd4694b3">&#9670;&nbsp;</a></span>FetchSessions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionMgr.FetchSessions </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>searchid</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max</em> = <code>100</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fetches multiple sessions from the database and return the result in the callback. </p>
+
+</div>
+</div>
+<a id="acf405a503c34d15d12e906e81990b9e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf405a503c34d15d12e906e81990b9e4">&#9670;&nbsp;</a></span>FetchSingleSession()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionMgr.FetchSingleSession </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fetches a single session from the database and return the result in the callback. </p>
+
+</div>
+</div>
+<a id="a814892365b3875a084ec21c46078c1b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a814892365b3875a084ec21c46078c1b5">&#9670;&nbsp;</a></span>JoinSession()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionMgr.JoinSession </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_connection.html">Connection</a>&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Joins a session. </p>
+
+</div>
+</div>
+<a id="a488cc83b38f3653c586aeaca81a34bc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a488cc83b38f3653c586aeaca81a34bc1">&#9670;&nbsp;</a></span>LeaveSession()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionMgr.LeaveSession </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Leaves the current connected session. </p>
+
+</div>
+</div>
 <a id="a99cff0d4df0debfd38d6044fef083c6f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a99cff0d4df0debfd38d6044fef083c6f">&#9670;&nbsp;</a></span>LoadAllSessionReports()</h2>
 
@@ -180,8 +424,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="a3aa74ca002667f18cfac8c8a0a8e6a48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3aa74ca002667f18cfac8c8a0a8e6a48">&#9670;&nbsp;</a></span>LoadIndividualSessionReports()</h2>
+<a id="aa6293b879a1ba00948f943acfe4e7966"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6293b879a1ba00948f943acfe4e7966">&#9670;&nbsp;</a></span>LoadIndividualSessionReports()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -189,12 +433,6 @@ Properties</h2></td></tr>
         <tr>
           <td class="memname">void SessionMgr.LoadIndividualSessionReports </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_connection.html">Connection</a>&#160;</td>
-          <td class="paramname"><em>c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"><a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a>&#160;</td>
           <td class="paramname"><em>successCallback</em> = <code>null</code>, </td>
         </tr>
@@ -237,6 +475,34 @@ Properties</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a577f072f507b01a720b7915224716653"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a577f072f507b01a720b7915224716653">&#9670;&nbsp;</a></span>connectionID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string SessionMgr.connectionID = null</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae8553a0d282522083437de7f995d0b49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8553a0d282522083437de7f995d0b49">&#9670;&nbsp;</a></span>currentConnection</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_connection.html">Connection</a> SessionMgr.currentConnection = null</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a8f78fe46c381b94df957db6b265794b9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8f78fe46c381b94df957db6b265794b9">&#9670;&nbsp;</a></span>CurrentReportType</h2>
 
@@ -265,14 +531,14 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="a67eaee16f59d04b9e041117c822b8879"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67eaee16f59d04b9e041117c822b8879">&#9670;&nbsp;</a></span>passedInConnection</h2>
+<a id="a5dc804f7294fead7a6ff03d565f43e04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dc804f7294fead7a6ff03d565f43e04">&#9670;&nbsp;</a></span>passedInQuestionList</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_connection.html">Connection</a> SessionMgr.passedInConnection = null</td>
+          <td class="memname">List&lt;<a class="el" href="class_question.html">Question</a>&gt; SessionMgr.passedInQuestionList = new List&lt;<a class="el" href="class_question.html">Question</a>&gt;()</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -355,7 +621,7 @@ Properties</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_session_mgr.html">SessionMgr</a></li>
-    <li class="footer">Generated on Sun Oct 11 2020 03:38:43 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sun Oct 11 2020 18:37:48 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

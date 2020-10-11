@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('class_profile_mgr.html',''); initResiz
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="class_profile.html" title="A profile Entity Class.">Profile</a> Manager Subsystem Interface, a Control Class that handles all profile and session-connection related processes.  
+<p><a class="el" href="class_profile.html" title="A profile Entity Class.">Profile</a> Subsystem Interface, a Control Class that handles all profile and session-connection related processes.  
  <a href="class_profile_mgr.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for ProfileMgr:</div>
@@ -110,15 +110,29 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7f6a7d79fc3ed6f0ea2c3b11ff4a284b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_mgr.html#a7f6a7d79fc3ed6f0ea2c3b11ff4a284b">LoadPlayerProfile</a> (<a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback=null, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback=null)</td></tr>
 <tr class="memdesc:a7f6a7d79fc3ed6f0ea2c3b11ff4a284b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads player profile and connection information from the database.  <a href="class_profile_mgr.html#a7f6a7d79fc3ed6f0ea2c3b11ff4a284b">More...</a><br /></td></tr>
 <tr class="separator:a7f6a7d79fc3ed6f0ea2c3b11ff4a284b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26bb3f87d093dd660e309644686cead4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_mgr.html#a26bb3f87d093dd660e309644686cead4">FetchMyQuestionLists</a> (<a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback, int max=100)</td></tr>
+<tr class="memdesc:a26bb3f87d093dd660e309644686cead4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the player (instructor)'s question lists from the database and returns the result in a callback.  <a href="class_profile_mgr.html#a26bb3f87d093dd660e309644686cead4">More...</a><br /></td></tr>
+<tr class="separator:a26bb3f87d093dd660e309644686cead4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac31288634ada64408290672ab4f4153e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_mgr.html#ac31288634ada64408290672ab4f4153e">CreateNewQuestionList</a> (<a class="el" href="class_question_list.html">QuestionList</a> ql, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:ac31288634ada64408290672ab4f4153e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new question list for the player (instructor).  <a href="class_profile_mgr.html#ac31288634ada64408290672ab4f4153e">More...</a><br /></td></tr>
+<tr class="separator:ac31288634ada64408290672ab4f4153e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d8a23a5f69c5de4fa3aa9d37b20f369"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_mgr.html#a2d8a23a5f69c5de4fa3aa9d37b20f369">UpdateMyQuestionList</a> (string qlkey, <a class="el" href="class_question_list.html">QuestionList</a> ql, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:a2d8a23a5f69c5de4fa3aa9d37b20f369"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates an existing question list belonging to the player (instructor).  <a href="class_profile_mgr.html#a2d8a23a5f69c5de4fa3aa9d37b20f369">More...</a><br /></td></tr>
+<tr class="separator:a2d8a23a5f69c5de4fa3aa9d37b20f369"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ffc97d631710b33e04a21157b6394c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_mgr.html#a7ffc97d631710b33e04a21157b6394c0">CreateNewQuestion</a> (<a class="el" href="class_question.html">Question</a> q, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:a7ffc97d631710b33e04a21157b6394c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new question for the player (instructor) and returns its key in a callback.  <a href="class_profile_mgr.html#a7ffc97d631710b33e04a21157b6394c0">More...</a><br /></td></tr>
+<tr class="separator:a7ffc97d631710b33e04a21157b6394c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9f73eddc27bbeaddca0d60f57eb154d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_mgr.html#ab9f73eddc27bbeaddca0d60f57eb154d">UpdateMyQuestion</a> (string qkey, <a class="el" href="class_question.html">Question</a> q, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:ab9f73eddc27bbeaddca0d60f57eb154d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates an existing question belonging to the player (instructor).  <a href="class_profile_mgr.html#ab9f73eddc27bbeaddca0d60f57eb154d">More...</a><br /></td></tr>
+<tr class="separator:ab9f73eddc27bbeaddca0d60f57eb154d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dbcfb44559eabab52eefea6e3546b2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_mgr.html#a2dbcfb44559eabab52eefea6e3546b2e">DeleteMyQuestion</a> (string qkey, <a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a> successCallback, <a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a> failCallback)</td></tr>
+<tr class="memdesc:a2dbcfb44559eabab52eefea6e3546b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes an existing question belonging to the player (instructor).  <a href="class_profile_mgr.html#a2dbcfb44559eabab52eefea6e3546b2e">More...</a><br /></td></tr>
+<tr class="separator:a2dbcfb44559eabab52eefea6e3546b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a45194dcef41a2210754f47d0fda0f477"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_profile.html">Profile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_mgr.html#a45194dcef41a2210754f47d0fda0f477">localProfile</a> = new <a class="el" href="class_profile.html">Profile</a>()</td></tr>
 <tr class="separator:a45194dcef41a2210754f47d0fda0f477"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ef3de405e5f265c795f6ac2c19cc1ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_connection.html">Connection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_mgr.html#a1ef3de405e5f265c795f6ac2c19cc1ef">currentConnection</a> = null</td></tr>
-<tr class="separator:a1ef3de405e5f265c795f6ac2c19cc1ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a238e5057b35fd77030544a1b6d2bf643"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_mgr.html#a238e5057b35fd77030544a1b6d2bf643">connectionID</a> = null</td></tr>
-<tr class="separator:a238e5057b35fd77030544a1b6d2bf643"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -127,8 +141,152 @@ Properties</h2></td></tr>
 <tr class="separator:a0cfe46804889e0c3d0b6852f91593a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="class_profile.html" title="A profile Entity Class.">Profile</a> Manager Subsystem Interface, a Control Class that handles all profile and session-connection related processes. </p>
+<div class="textblock"><p><a class="el" href="class_profile.html" title="A profile Entity Class.">Profile</a> Subsystem Interface, a Control Class that handles all profile and session-connection related processes. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7ffc97d631710b33e04a21157b6394c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ffc97d631710b33e04a21157b6394c0">&#9670;&nbsp;</a></span>CreateNewQuestion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProfileMgr.CreateNewQuestion </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_question.html">Question</a>&#160;</td>
+          <td class="paramname"><em>q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new question for the player (instructor) and returns its key in a callback. </p>
+
+</div>
+</div>
+<a id="ac31288634ada64408290672ab4f4153e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac31288634ada64408290672ab4f4153e">&#9670;&nbsp;</a></span>CreateNewQuestionList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProfileMgr.CreateNewQuestionList </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_question_list.html">QuestionList</a>&#160;</td>
+          <td class="paramname"><em>ql</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new question list for the player (instructor). </p>
+
+</div>
+</div>
+<a id="a2dbcfb44559eabab52eefea6e3546b2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dbcfb44559eabab52eefea6e3546b2e">&#9670;&nbsp;</a></span>DeleteMyQuestion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProfileMgr.DeleteMyQuestion </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>qkey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deletes an existing question belonging to the player (instructor). </p>
+
+</div>
+</div>
+<a id="a26bb3f87d093dd660e309644686cead4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26bb3f87d093dd660e309644686cead4">&#9670;&nbsp;</a></span>FetchMyQuestionLists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProfileMgr.FetchMyQuestionLists </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max</em> = <code>100</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fetches the player (instructor)'s question lists from the database and returns the result in a callback. </p>
+
+</div>
+</div>
 <a id="a7f6a7d79fc3ed6f0ea2c3b11ff4a284b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7f6a7d79fc3ed6f0ea2c3b11ff4a284b">&#9670;&nbsp;</a></span>LoadPlayerProfile()</h2>
 
@@ -189,35 +347,91 @@ Properties</h2></td></tr>
 
 </div>
 </div>
+<a id="ab9f73eddc27bbeaddca0d60f57eb154d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9f73eddc27bbeaddca0d60f57eb154d">&#9670;&nbsp;</a></span>UpdateMyQuestion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProfileMgr.UpdateMyQuestion </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>qkey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_question.html">Question</a>&#160;</td>
+          <td class="paramname"><em>q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates an existing question belonging to the player (instructor). </p>
+
+</div>
+</div>
+<a id="a2d8a23a5f69c5de4fa3aa9d37b20f369"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d8a23a5f69c5de4fa3aa9d37b20f369">&#9670;&nbsp;</a></span>UpdateMyQuestionList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProfileMgr.UpdateMyQuestionList </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>qlkey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_question_list.html">QuestionList</a>&#160;</td>
+          <td class="paramname"><em>ql</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a4e079228d71c2a91492eab0e8ad1ef0d">SimpleCallback</a>&#160;</td>
+          <td class="paramname"><em>successCallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_global_8cs.html#a89270f0191a226e10ffea95bfc9cdffc">MessageCallback</a>&#160;</td>
+          <td class="paramname"><em>failCallback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates an existing question list belonging to the player (instructor). </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a238e5057b35fd77030544a1b6d2bf643"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a238e5057b35fd77030544a1b6d2bf643">&#9670;&nbsp;</a></span>connectionID</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">string ProfileMgr.connectionID = null</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1ef3de405e5f265c795f6ac2c19cc1ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ef3de405e5f265c795f6ac2c19cc1ef">&#9670;&nbsp;</a></span>currentConnection</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_connection.html">Connection</a> ProfileMgr.currentConnection = null</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a45194dcef41a2210754f47d0fda0f477"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a45194dcef41a2210754f47d0fda0f477">&#9670;&nbsp;</a></span>localProfile</h2>
 
@@ -266,7 +480,7 @@ Properties</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_profile_mgr.html">ProfileMgr</a></li>
-    <li class="footer">Generated on Sun Oct 11 2020 03:38:43 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sun Oct 11 2020 18:37:48 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

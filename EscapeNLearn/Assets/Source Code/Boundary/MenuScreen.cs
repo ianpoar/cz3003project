@@ -38,9 +38,8 @@ public class MenuScreen : Screen
     [SerializeField]
     private GameObject GoogleUnLinkButton;
 
-
     [SerializeField]
-    private GameObject Panel;
+    private GameObject panel_friends;
 
     // Start of menu screen
     protected override void Start()
@@ -101,7 +100,7 @@ public class MenuScreen : Screen
         if (playsound)
             AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
 
-        if (ProfileMgr.Instance.currentConnection != null)
+        if (SessionMgr.Instance.currentConnection != null)
         {
             panel_levelselect.SetActive(true); // show level select
         }
@@ -422,15 +421,9 @@ public class MenuScreen : Screen
 
 
     //show friends list
-
-
     public void Btn_ShowFriendsList(bool show)
     {
-
-        Panel.SetActive(show);
-
-
-
-
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        panel_friends.SetActive(show);
     }
 }

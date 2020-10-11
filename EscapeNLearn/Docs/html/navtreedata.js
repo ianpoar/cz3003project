@@ -62,14 +62,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_a_p_i_linker_8cs.html",
-"_rest_client_promise_8cs.html",
-"class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a81d2a70f4032b59fdf0416734329de95",
-"class_full_serializer_1_1_internal_1_1_direct_converters_1_1_bounds___direct_converter.html#acdba107944e59d9620b06e224c51baf0",
-"class_full_serializer_1_1fs_data.html#a47a5cdaefdb6afc7f2bdaa026befdc00",
-"class_menu_screen.html#a1c342ca83d6c64416e08ac477d1b9476",
-"class_r_s_g_1_1_promise.html#a07234bbd560aa0e185960be78701c8c0",
-"fs_data_8cs.html#a6eee33d63b94e40fdfcfc59af9fcfc82ad909d38d705ce75386dd86e611a82f5b",
-"namespace_digital_ruby_shared.html"
+"_request_helper_extension_8cs.html",
+"class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a43544e21f5a3dd98bd8668a9646047ac",
+"class_friends___list_item_controller.html#aa011c70e71611b4d8805de498960a6df",
+"class_full_serializer_1_1fs_converter_registrar.html#afc9cb33054876efd305dc172af2ee085",
+"class_login_screen.html#a9e817b502d42f819c064e3b196f8a11a",
+"class_question_u_i.html#a9d837f7146dec55e6553ec30f631bc6f",
+"dir_a222b1c2edd0f7a7492f02b9598427b1.html",
+"interface_r_s_g_1_1_i_promise.html#a87efda7fb3e1ee9832a7cf4a46fdce02"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

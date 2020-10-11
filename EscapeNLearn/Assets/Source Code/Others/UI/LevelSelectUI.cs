@@ -16,7 +16,7 @@ public class LevelSelectUI : MonoBehaviour
         foreach (GameObject obj in lockedUI)
             obj.SetActive(true);
 
-        Connection s = ProfileMgr.Instance.currentConnection;
+        Connection s = SessionMgr.Instance.currentConnection;
         Txt_SessionID.text = s.session_name + "\nOwner: " + s.id_owner + "\nID: " + s.id_session;
 
         // unlock levels based on progress
@@ -33,9 +33,8 @@ public class LevelSelectUI : MonoBehaviour
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
 
         NotificationMgr.Instance.NotifyLoad("Leaving");
-        DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_CONNECTIONS + "/" + ProfileMgr.Instance.connectionID, null,
+        SessionMgr.Instance.LeaveSession(
             delegate () {
-                ProfileMgr.Instance.currentConnection = null;
                 NotificationMgr.Instance.StopLoad();
                 NotificationMgr.Instance.Notify("Left the session.", delegate () { Btn_CloseLevelSelect(false); });
             },
@@ -50,10 +49,8 @@ public class LevelSelectUI : MonoBehaviour
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
 
-        Connection c = ProfileMgr.Instance.currentConnection;
-   
-        NotificationMgr.Instance.NotifyLoad("Fetching session reports");
-        SessionMgr.Instance.LoadIndividualSessionReports(c,
+        NotificationMgr.Instance.NotifyLoad("Fetching Student Report");
+        SessionMgr.Instance.LoadIndividualSessionReports(
             delegate ()
             {
                 NotificationMgr.Instance.StopLoad();
@@ -64,7 +61,6 @@ public class LevelSelectUI : MonoBehaviour
                 NotificationMgr.Instance.StopLoad();
                 NotificationMgr.Instance.Notify(failmsg);
             });
-   
     }
 
     public void Btn_CloseLevelSelect(bool playsound)
@@ -82,6 +78,24 @@ public class LevelSelectUI : MonoBehaviour
         {
             Debug.Log("invalid level");
         }
-        else TransitMgr.Instance.FadeToScene("Game_" + level);
+        else
+        {
+            NotificationMgr.Instance.NotifyLoad("Loading Game Questions");
+            string sessionid = SessionMgr.Instance.currentConnection.id_session;
+
+            // fetch questions
+            SessionMgr.Instance.FetchQuestionsForGame(sessionid, level,
+            delegate () // success
+            {
+                NotificationMgr.Instance.StopLoad();
+                TransitMgr.Instance.FadeToScene("Game_" + level);
+            },
+            delegate (string failmsg) // failed
+            {
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify(failmsg);
+            });
+
+        }
     }
 }

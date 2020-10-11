@@ -14,12 +14,9 @@ public class SessionLobbyUI : MonoBehaviour
     public InputField input_InstructorName;
     public GameObject panel_LevelSelect;
 
-    string tempstr = null;
-
     List<GameObject> list = new List<GameObject>();
     private void OnEnable()
     {
-        tempstr = null;
         GenerateAllSessionObjects();
     }
 
@@ -28,15 +25,6 @@ public class SessionLobbyUI : MonoBehaviour
         ClearSessionObjects();
     }
 
-    private void Update()
-    {
-        // To address bug of Instantiate not working in delegates...
-        if (tempstr != null)
-        {
-            SpawnSessionObjects(tempstr);
-            tempstr = null;
-        }
-    }
 
     public void Btn_HideSessionLobby(bool playsound)
     {
@@ -65,37 +53,33 @@ public class SessionLobbyUI : MonoBehaviour
     void GenerateAllSessionObjects()
     {
         NotificationMgr.Instance.NotifyLoad("Fetching sessions");
-        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_SESSIONS,
-            null, null,
-            100,
-        delegate (string result)
-        {
-            NotificationMgr.Instance.StopLoad();
-            tempstr = result;
-        },
-        delegate (string failmsg)
-        {
-            NotificationMgr.Instance.StopLoad();
-            NotificationMgr.Instance.Notify(failmsg);
-        });
+        SessionMgr.Instance.FetchSessions(
+         delegate (string result)
+         {
+             NotificationMgr.Instance.StopLoad();
+             SpawnSessionObjects(result);
+         },
+         delegate (string failmsg)
+         {
+             NotificationMgr.Instance.StopLoad();
+             NotificationMgr.Instance.Notify(failmsg);
+         });
     }
 
     void GenerateSearchSessionObjects(string id)
     {
         NotificationMgr.Instance.NotifyLoad("Fetching sessions");
-        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_SESSIONS,
-            nameof(Session.id_owner), id,
-            100,
+        SessionMgr.Instance.FetchSessions(
         delegate (string result)
         {
             NotificationMgr.Instance.StopLoad();
-            tempstr = result;
+            SpawnSessionObjects(result);
         },
         delegate (string failmsg)
         {
             NotificationMgr.Instance.StopLoad();
             NotificationMgr.Instance.Notify(failmsg);
-        });
+        }, id);
     }
 
 
@@ -120,12 +104,9 @@ public class SessionLobbyUI : MonoBehaviour
         c.session_name = sessionname;
         c.level_cleared = 0;
 
-        DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_CONNECTIONS,
-        c,
-        delegate (string key)
+        SessionMgr.Instance.JoinSession(c,
+        delegate () // success
         {
-            ProfileMgr.Instance.currentConnection = c;
-            ProfileMgr.Instance.connectionID = key;
             NotificationMgr.Instance.StopLoad();
             NotificationMgr.Instance.Notify("Joined session successfully.",
             delegate
@@ -143,9 +124,7 @@ public class SessionLobbyUI : MonoBehaviour
 
     void SpawnSessionObjects(string result)
     {
-        Debug.Log(result);
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
-        Debug.Log(results.Count);
 
         foreach (KeyValuePair<string, object> pair in results)
         {

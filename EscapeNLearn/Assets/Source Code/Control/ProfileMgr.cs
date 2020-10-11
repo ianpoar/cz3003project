@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Facebook.MiniJSON;
 
 /// <summary>
-/// Profile Manager Subsystem Interface, a Control Class that handles all profile and session-connection related processes. 
+/// Profile Subsystem Interface, a Control Class that handles all profile and session-connection related processes. 
 /// </summary>
 public class ProfileMgr : MonoBehaviour // Singleton class
 {
@@ -21,8 +21,6 @@ public class ProfileMgr : MonoBehaviour // Singleton class
 
     // Public variables
     public Profile localProfile = new Profile();
-    public Connection currentConnection = null;
-    public string connectionID = null;
 
     /// <summary>
     /// Saves player profile to the database.
@@ -65,8 +63,8 @@ public class ProfileMgr : MonoBehaviour // Singleton class
                     if (c != null)
                     {
                         Debug.Log("ConnectionID: " + pair.Key + ", SessionID: " + c.id_session + ", PlayerID: " + c.id_player + ", Level: " + c.level_cleared);
-                        connectionID = pair.Key;
-                        currentConnection = c;
+                        SessionMgr.Instance.connectionID = pair.Key;
+                        SessionMgr.Instance.currentConnection = c;
                     }
                 }
 
@@ -77,6 +75,106 @@ public class ProfileMgr : MonoBehaviour // Singleton class
                 successCallback?.Invoke();
             });
 
+        },
+        delegate (string failmsg) // failed
+        {
+            failCallback?.Invoke(failmsg);
+        });
+    }
+
+    /// <summary>
+    /// Fetches the player (instructor)'s question lists from the database and returns the result in a callback.
+    /// </summary>
+    public void FetchMyQuestionLists(MessageCallback successCallback, MessageCallback failCallback, int max=100)
+    {
+        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_QUESTIONLISTS,
+                nameof(QuestionList.id_owner),
+                localProfile.id_player,
+                max,
+            delegate (string result)
+            {
+                successCallback?.Invoke(result);
+            },
+            delegate (string failmsg)
+            {
+                failCallback?.Invoke(failmsg);
+            });
+    }
+
+    /// <summary>
+    /// Creates a new question list for the player (instructor).
+    /// </summary>
+    public void CreateNewQuestionList(QuestionList ql, SimpleCallback successCallback, MessageCallback failCallback)
+    {
+        DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_QUESTIONLISTS + "/", ql,
+           delegate (string key)
+           {
+               successCallback?.Invoke();
+           },
+           delegate (string failmsg) // failed
+            {
+                failCallback?.Invoke(failmsg);
+           });
+    }
+
+    /// <summary>
+    /// Updates an existing question list belonging to the player (instructor).
+    /// </summary>
+    public void UpdateMyQuestionList(string qlkey, QuestionList ql, SimpleCallback successCallback, MessageCallback failCallback)
+    {
+        DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_QUESTIONLISTS + "/" + qlkey, ql,
+           delegate ()
+           {
+               successCallback?.Invoke();
+           },
+           delegate (string failmsg) // failed
+            {
+                failCallback?.Invoke(failmsg);
+           });
+    }
+
+    /// <summary>
+    /// Creates a new question for the player (instructor) and returns its key in a callback.
+    /// </summary>
+    public void CreateNewQuestion(Question q, MessageCallback successCallback, MessageCallback failCallback)
+    {
+        DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_QUESTIONS + "/", q,
+           delegate (string key)
+           {
+               successCallback?.Invoke(key);
+           },
+           delegate (string failmsg) // failed
+            {
+                failCallback?.Invoke(failmsg);
+           });
+    }
+
+    /// <summary>
+    /// Updates an existing question belonging to the player (instructor).
+    /// </summary>
+    public void UpdateMyQuestion(string qkey, Question q, SimpleCallback successCallback, MessageCallback failCallback)
+    {
+        DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_QUESTIONS + "/" + qkey, q,
+            delegate ()
+            {
+                successCallback?.Invoke();
+
+            },
+            delegate (string failmsg) // failed
+            {
+                failCallback?.Invoke(failmsg);
+            });
+    }
+
+    /// <summary>
+    /// Deletes an existing question belonging to the player (instructor).
+    /// </summary>
+    public void DeleteMyQuestion(string qkey, SimpleCallback successCallback, MessageCallback failCallback)
+    {
+        DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_QUESTIONS + "/" + qkey, null,
+        delegate ()
+        {
+            successCallback?.Invoke();
         },
         delegate (string failmsg) // failed
         {

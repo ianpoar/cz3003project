@@ -60,7 +60,7 @@ public class ReportScreen : Screen
         int totalElapsedTime = 0;
 
         List<Report> SessionReports = SessionMgr.Instance.SessionReports;
-        Connection c = SessionMgr.Instance.passedInConnection;
+        Connection c = SessionMgr.Instance.currentConnection;
 
         Dictionary<string, int> wrongAnswers = new Dictionary<string, int>(); // to keep track of wrong answers
 
@@ -97,14 +97,14 @@ public class ReportScreen : Screen
 
         foreach (KeyValuePair<string, int> item in wrongAnswers.OrderByDescending(key => key.Value).Take(5))
         {
-            txt_info2.text += "\n" + item.Key + " (" + item.Value + " Times)";
+            txt_info2.text += "\n" + item.Key + " (Count: " + item.Value + ")";
         }
     }
     
     void GenerateLevelReport()
     {
         // Gather Data
-        Connection c = ProfileMgr.Instance.currentConnection;
+        Connection c = SessionMgr.Instance.currentConnection;
         Report r = SessionMgr.Instance.LevelReport;
 
         int correctAnswerCount = 0;
@@ -137,7 +137,7 @@ public class ReportScreen : Screen
 
         foreach (KeyValuePair<string, int> item in wrongAnswers.OrderByDescending(key => key.Value).Take(3))
         {
-            txt_info2.text += "\n" + item.Key + " (" + item.Value + " Times)";
+            txt_info2.text += "\n" + item.Key + " (Count: " + item.Value + ")";
         }
     }
 
@@ -188,7 +188,7 @@ public class ReportScreen : Screen
 
         foreach (KeyValuePair<string, int> item in wrongAnswers.OrderByDescending(key => key.Value).Take(10))
         {
-            txt_info2.text += "\n" + item.Key + " (" + item.Value + " Times)";
+            txt_info2.text += "\n" + item.Key + " (Count: " + item.Value + ")";
         }
     }
 

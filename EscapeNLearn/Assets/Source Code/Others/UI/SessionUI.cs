@@ -37,11 +37,8 @@ public class SessionUI : MonoBehaviour
 
     void GenerateSessionObjects()
     {
-        NotificationMgr.Instance.NotifyLoad("Fetching sessions");
-        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_SESSIONS,
-            nameof(Session.id_owner),
-            ProfileMgr.Instance.localProfile.id_player,
-            100,
+        NotificationMgr.Instance.NotifyLoad("Fetching Sessions");
+        SessionMgr.Instance.FetchSessions(
         delegate (string result)
         {
             NotificationMgr.Instance.StopLoad();
@@ -51,7 +48,7 @@ public class SessionUI : MonoBehaviour
         {
             NotificationMgr.Instance.StopLoad();
             NotificationMgr.Instance.Notify(failmsg);
-        });
+        }, ProfileMgr.Instance.localProfile.id_player);
     }
 
     void ClearSessionObjects()
@@ -75,11 +72,8 @@ public class SessionUI : MonoBehaviour
             dropdown_l3q.options.Clear();
             this.qllist.Clear();
 
-            NotificationMgr.Instance.NotifyLoad("Loading Question List");
-            DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_QUESTIONLISTS,
-                nameof(QuestionList.id_owner),
-                ProfileMgr.Instance.localProfile.id_player,
-                100,
+            NotificationMgr.Instance.NotifyLoad("Loading Question Lists");
+            ProfileMgr.Instance.FetchMyQuestionLists(
             delegate (string result)
             {
                 NotificationMgr.Instance.StopLoad();
@@ -89,9 +83,10 @@ public class SessionUI : MonoBehaviour
                 {
                     string questionlistdata = Json.Serialize(pair.Value);
                     QuestionList questionlist = JsonUtility.FromJson<QuestionList>(questionlistdata);
-                    Dictionary<string, QuestionList> item = new Dictionary<string, QuestionList>(){
-                { pair.Key, questionlist}
-                };
+                    Dictionary<string, QuestionList> item = new Dictionary<string, QuestionList>()
+                    {
+                        { pair.Key, questionlist}
+                    };
                     this.qllist.Add(item);
                     dropdown_l1q.options.Add(new Dropdown.OptionData(questionlist.name));
                     dropdown_l2q.options.Add(new Dropdown.OptionData(questionlist.name));
@@ -126,7 +121,7 @@ public class SessionUI : MonoBehaviour
         Session s = null;
         if (session_dic.TryGetValue(id, out s))
         {
-            NotificationMgr.Instance.NotifyLoad("Fetching session reports");
+            NotificationMgr.Instance.NotifyLoad("Fetching Session Report");
             SessionMgr.Instance.LoadAllSessionReports(id, s,
                 delegate ()
                 {
@@ -175,8 +170,6 @@ public class SessionUI : MonoBehaviour
         int l2q = dropdown_l2q.value;
         int l3q = dropdown_l3q.value;
 
-        NotificationMgr.Instance.NotifyLoad("Creating session");
-
         Session s = new Session();
         s.session_name = sessName;
         s.id_owner = ProfileMgr.Instance.localProfile.id_player;
@@ -184,23 +177,23 @@ public class SessionUI : MonoBehaviour
         s.id_l2queslist = this.qllist[l2q].Keys.First();
         s.id_l3queslist = this.qllist[l3q].Keys.First();
 
-        DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_SESSIONS + "/", s,
-        delegate (string key)
+        NotificationMgr.Instance.NotifyLoad("Creating Session");
+        SessionMgr.Instance.CreateSession(s,
+        delegate ()
         {
             NotificationMgr.Instance.StopLoad();
             NotificationMgr.Instance.Notify("Session created.",
-                delegate ()
-                {
-                    HideNewSessionWindow();
-                    ClearSessionObjects();
-                    GenerateSessionObjects();
-                });
-
+            delegate ()
+            {
+                HideNewSessionWindow();
+                ClearSessionObjects();
+                GenerateSessionObjects();
+            });
         },
-        delegate (string failmsg2) // failed
-                {
+        delegate (string failmsg) // failed
+        {
             NotificationMgr.Instance.StopLoad();
-            NotificationMgr.Instance.Notify(failmsg2);
+            NotificationMgr.Instance.Notify(failmsg);
         });
     }
 }

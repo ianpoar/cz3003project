@@ -73,6 +73,7 @@ public class QuestionUI : MonoBehaviour
 
     List<GameObject> list = new List<GameObject>();
     List<GameObject> q_list = new List<GameObject>();
+    int questionsLoaded = 0;
 
     private void OnEnable()
     {
@@ -82,6 +83,282 @@ public class QuestionUI : MonoBehaviour
     private void OnDisable()
     {
         ClearQuestionListObjects();
+    }
+
+    public void Btn_ShowNewQuestionListWindow(bool flag)
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        NewQuestionListWindow.SetActive(flag);
+    }
+
+    public void Btn_CreateQuestion(bool show)
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        questionField.text = "";
+        answer1Field.text = "";
+        answer2Field.text = "";
+        answer3Field.text = "";
+        answer4Field.text = "";
+        correctAnswerDD.value = 0;
+
+        if (this.ql != null)
+        {
+            createquestion_questionlistname.text = ql.name;
+        }
+        toggleCreateQuestionPanel();
+    }
+
+    public void Btn_CloseEdit(bool show)
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        editquestionField.text = "";
+        editanswer1Field.text = "";
+        editanswer2Field.text = "";
+        editanswer3Field.text = "";
+        editanswer4Field.text = "";
+        editcorrectAnswerDD.value = 0;
+
+        toggleEditQuestionPanel();
+    }
+
+    public void EditQuestion(Question q, string key)
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        this.q = q;
+        this.q_key = key;
+        editquestionField.text = q.question;
+        editanswer1Field.text = q.answer1;
+        editanswer2Field.text = q.answer2;
+        editanswer3Field.text = q.answer3;
+        editanswer4Field.text = q.answer4;
+        editcorrectAnswerDD.value = q.correctanswer;
+
+        toggleEditQuestionPanel();
+    }
+
+    public void Btn_DeleteQuestion()
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        if (this.q_key != null)
+        {
+            NotificationMgr.Instance.NotifyLoad("Deleting Question");
+            ProfileMgr.Instance.DeleteMyQuestion(this.q_key,
+            delegate () // success
+            {
+                this.ql.list.Remove(this.q_key);
+                this.ql.size -= 1;
+                this.q = null;
+                this.q_key = null;
+
+                // update questionlist
+                ProfileMgr.Instance.UpdateMyQuestionList(this.ql_key, this.ql,
+                delegate ()
+                {
+                    ClearQuestionObjects();
+                    NotificationMgr.Instance.StopLoad();
+                    NotificationMgr.Instance.Notify("Question deleted and removed from Question List.",
+                    delegate ()
+                    {
+                        panel_editquestion.SetActive(false);
+                        ViewQuestionList(this.ql, this.ql_key, false);
+                    });
+                },
+                delegate (string failmsg) // failed
+                {
+                    NotificationMgr.Instance.StopLoad();
+                    NotificationMgr.Instance.Notify(failmsg);
+                });
+            },
+            delegate (string failmsg) // failed
+            {
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify(failmsg);
+            });
+        }
+        toggleEditQuestionPanel();
+    }
+
+    public void Btn_SaveEditQuestion()
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        if (this.q != null)
+        {
+            Question q = new Question();
+            q.id_owner = ProfileMgr.Instance.localProfile.id_player;
+            q.question = editquestionField.text;
+            q.answer1 = editanswer1Field.text;
+            q.answer2 = editanswer2Field.text;
+            q.answer3 = editanswer3Field.text;
+            q.answer4 = editanswer4Field.text;
+            q.correctanswer = editcorrectAnswerDD.value;
+
+            // Maybe can compare the values in this.q and q before deciding to update db
+
+            if (q.question == "" || q.answer1 == "" || q.answer2 == "" || q.answer3 == "" || q.answer4 == "")
+            {
+                NotificationMgr.Instance.Notify("Question field and answer fields cannot be empty.");
+                return;
+            }
+
+            if (q.correctanswer == 0)
+            {
+                NotificationMgr.Instance.Notify("Please select the correct answer.");
+                return;
+            }
+
+            NotificationMgr.Instance.NotifyLoad("Updating Question");     
+            ProfileMgr.Instance.UpdateMyQuestion(this.q_key, q,
+            delegate ()
+            {
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify("Question updated.",
+                delegate ()
+                {
+                    panel_editquestion.SetActive(false);
+                    ClearQuestionObjects();
+                    ViewQuestionList(this.ql, this.ql_key, false);
+                });
+
+            },
+            delegate (string failmsg) // failed
+            {
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify(failmsg);
+            });
+            this.q = null;
+            this.q_key = null;
+        }
+        else
+        {
+            NotificationMgr.Instance.Notify("Please retry again. The server is busy.");
+        }
+        toggleEditQuestionPanel();
+    }
+
+
+    public void BtnBackToUI()
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        // May change if need be
+        SetupQuestionListView();
+    }
+
+    public void BtnCreateNewQuestion() {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        if (this.ql != null)
+        {
+            Question q = new Question();
+            q.id_owner = ProfileMgr.Instance.localProfile.id_player;
+            q.question = questionField.text;
+            q.answer1 = answer1Field.text;
+            q.answer2 = answer2Field.text;
+            q.answer3 = answer3Field.text;
+            q.answer4 = answer4Field.text;
+            q.correctanswer = correctAnswerDD.value;
+            
+            
+            if (q.question == "" || q.answer1 == "" || q.answer2 == "" || q.answer3 == "" || q.answer4 == "")
+            {
+                NotificationMgr.Instance.Notify("Question field and answer fields cannot be empty.");
+                return;
+            }
+
+            if (q.correctanswer == 0)
+            {
+                NotificationMgr.Instance.Notify("Please select the correct answer.");
+                return;
+            }
+
+            NotificationMgr.Instance.NotifyLoad("Creating question.");
+            ProfileMgr.Instance.CreateNewQuestion(q,
+            delegate (string key)
+            {
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify("Question created.",
+                delegate ()
+                {
+                    panel_createquestion.SetActive(false);
+                    updateQuestionListDB(key); ;
+                });
+
+            },
+            delegate (string failmsg) // failed
+            {
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify(failmsg);
+            });
+            
+        }
+        else
+        {
+            NotificationMgr.Instance.Notify("Please retry again. The server is busy.");
+        }
+        toggleCreateQuestionPanel();
+    }
+
+    public void ViewQuestionList(QuestionList ql, string key, bool playsound)
+    {
+        if (playsound)
+            AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+
+        questionsLoaded = 0;
+        List<string> questions_keys = ql.list;
+        SetupDisplayQuestionListDetailView(ql);
+        this.ql = ql;
+        this.ql_key = key;
+        int count = questions_keys.Count;
+        if (count > 0){
+            NotificationMgr.Instance.NotifyLoad("Fetching questions in question list '" + this.ql.name + "'");
+            foreach (string qkey in questions_keys)
+            {
+                DatabaseMgr.Instance.DBFetch(DBQueryConstants.QUERY_QUESTIONS + '/' + qkey,
+                    delegate(string result)
+                {
+                    this.questionsLoaded++;
+                    SpawnQuestions(result, qkey);
+
+                    if (this.questionsLoaded == count)
+                    {
+                        NotificationMgr.Instance.StopLoad();
+                    }
+                });
+
+            }
+        }
+        else
+        {
+            NotificationMgr.Instance.Notify("There are no questions in this list.");
+        }
+    }
+
+
+    public void CreateQuestionList()
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        QuestionList ql = new QuestionList();
+        ql.id_owner = ProfileMgr.Instance.localProfile.id_player;
+        ql.name = questionlistname.text;
+        ql.size = 0;
+
+        if (ql.name == "")
+        {
+            NotificationMgr.Instance.Notify("Name of Question List cannot be empty.");
+            return;
+        }
+
+        NotificationMgr.Instance.NotifyLoad("Creating Question List");
+        ProfileMgr.Instance.CreateNewQuestionList(ql,
+            delegate ()
+            {
+                NewQuestionListWindow.SetActive(false);
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify("Question List created.");
+            },
+            delegate (string failmsg) // failed
+            {
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify(failmsg);
+            });
     }
 
     private void SetupQuestionListView()
@@ -123,42 +400,6 @@ public class QuestionUI : MonoBehaviour
         list.Clear();
     }
 
-    public void Btn_ShowNewQuestionListWindow(bool flag)
-    {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        NewQuestionListWindow.SetActive(flag);
-    }
-
-    public void Btn_CreateQuestion(bool show)
-    {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        questionField.text = "";
-        answer1Field.text = "";
-        answer2Field.text = "";
-        answer3Field.text = "";
-        answer4Field.text = "";
-        correctAnswerDD.value = 0;
-
-        if (this.ql != null)
-        {
-            createquestion_questionlistname.text = ql.name;
-        }
-        toggleCreateQuestionPanel();
-    }
-
-    public void Btn_CloseEdit(bool show)
-    {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        editquestionField.text = "";
-        editanswer1Field.text = "";
-        editanswer2Field.text = "";
-        editanswer3Field.text = "";
-        editanswer4Field.text = "";
-        editcorrectAnswerDD.value = 0;
-
-        toggleEditQuestionPanel();
-    }
-
     private void toggleEditQuestionPanel()
     {
         bool state = !panel_editquestion.activeSelf;
@@ -173,250 +414,8 @@ public class QuestionUI : MonoBehaviour
         panel_createquestion.SetActive(state);
     }
 
-    public void EditQuestion(Question q, string key)
+    private void SpawnQuestions(string result, string key)
     {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        this.q = q;
-        this.q_key = key;
-        editquestionField.text = q.question;
-        editanswer1Field.text = q.answer1;
-        editanswer2Field.text = q.answer2;
-        editanswer3Field.text = q.answer3;
-        editanswer4Field.text = q.answer4;
-        editcorrectAnswerDD.value = q.correctanswer;
-
-        toggleEditQuestionPanel();
-    }
-
-    public void Btn_DeleteQuestion()
-    {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        if (this.q_key != null)
-        {
-            DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_QUESTIONS + "/" + this.q_key, null,
-            delegate ()
-            {
-                NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify("Question deleted.",
-                delegate ()
-                {
-                    panel_editquestion.SetActive(false);
-                });
-
-            },
-            delegate (string failmsg2) // failed
-            {
-                NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify(failmsg2);
-            });
-            this.ql.list.Remove(this.q_key);
-            this.ql.size -= 1;
-            this.q = null;
-            this.q_key = null;
-
-
-            DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_QUESTIONLISTS + "/" + this.ql_key, this.ql,
-            delegate ()
-            {
-                NotificationMgr.Instance.StopLoad();
-                ClearQuestionObjects();
-                ViewQuestionList(this.ql, this.ql_key, false);
-            },
-            delegate (string failmsg2) // failed
-            {
-                NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify(failmsg2);
-                // Suppose to delete the question if unable to add it in
-            });
-        }
-        toggleEditQuestionPanel();
-    }
-
-    public void Btn_SaveEditQuestion()
-    {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        if (this.q != null)
-        {
-            Question q = new Question();
-            q.id_owner = ProfileMgr.Instance.localProfile.id_player;
-            q.question = editquestionField.text;
-            q.answer1 = editanswer1Field.text;
-            q.answer2 = editanswer2Field.text;
-            q.answer3 = editanswer3Field.text;
-            q.answer4 = editanswer4Field.text;
-            q.correctanswer = editcorrectAnswerDD.value;
-
-            // Maybe can compare the values in this.q and q before deciding to update db
-
-            if (q.question == "" || q.answer1 == "" || q.answer2 == "" || q.answer3 == "" || q.answer4 == "")
-            {
-                NotificationMgr.Instance.Notify("Question field and answer fields cannot be empty.");
-                return;
-            }
-
-            if (q.correctanswer == 0)
-            {
-                NotificationMgr.Instance.Notify("Please select the correct answer.");
-                return;
-            }
-
-            NotificationMgr.Instance.NotifyLoad("Updating question.");
-
-            DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_QUESTIONS + "/" + this.q_key, q,
-            delegate ()
-            {
-                NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify("Question updated.",
-                delegate ()
-                {
-                    panel_editquestion.SetActive(false);
-                    ClearQuestionObjects();
-                    ViewQuestionList(this.ql, this.ql_key, false);
-                });
-
-            },
-            delegate (string failmsg2) // failed
-            {
-                NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify(failmsg2);
-            });
-            this.q = null;
-            this.q_key = null;
-        }
-        else
-        {
-            NotificationMgr.Instance.Notify("Please retry again. The server is busy.");
-        }
-        toggleEditQuestionPanel();
-    }
-
-
-    public void BtnBackToUI()
-    {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        // May change if need be
-        SetupQuestionListView();
-    }
-
-    private void updateQuestionListDB(string question_id)
-    {
-        if (question_id != null)
-        {
-            if (this.ql.list == null)
-            {
-                this.ql.list = new List<string>();
-            }
-            this.ql.list.Add(question_id);
-            this.ql.size += 1;
-
-            DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_QUESTIONLISTS + "/" + this.ql_key, this.ql,
-            delegate ()
-            {
-                NotificationMgr.Instance.StopLoad();
-                ClearQuestionObjects();
-                ViewQuestionList(this.ql, this.ql_key, false);
-            },
-            delegate (string failmsg2) // failed
-                {
-                NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify(failmsg2);
-                // Suppose to delete the question if unable to add it in
-                });
-        }
-    }
-
-    public void BtnCreateNewQuestion() {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        if (this.ql != null)
-        {
-            Question q = new Question();
-            q.id_owner = ProfileMgr.Instance.localProfile.id_player;
-            q.question = questionField.text;
-            q.answer1 = answer1Field.text;
-            q.answer2 = answer2Field.text;
-            q.answer3 = answer3Field.text;
-            q.answer4 = answer4Field.text;
-            q.correctanswer = correctAnswerDD.value;
-            
-            
-            if (q.question == "" || q.answer1 == "" || q.answer2 == "" || q.answer3 == "" || q.answer4 == "")
-            {
-                NotificationMgr.Instance.Notify("Question field and answer fields cannot be empty.");
-                return;
-            }
-
-            if (q.correctanswer == 0)
-            {
-                NotificationMgr.Instance.Notify("Please select the correct answer.");
-                return;
-            }
-
-            NotificationMgr.Instance.NotifyLoad("Creating question.");
-
-            DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_QUESTIONS + "/", q,
-            delegate (string key)
-            {
-                NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify("Question created.",
-                delegate ()
-                {
-                    panel_createquestion.SetActive(false);
-                    updateQuestionListDB(key); ;
-                });
-
-            },
-            delegate (string failmsg2) // failed
-            {
-                NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify(failmsg2);
-            });
-            
-        }
-        else
-        {
-            NotificationMgr.Instance.Notify("Please retry again. The server is busy.");
-        }
-        toggleCreateQuestionPanel();
-    }
-
-    public void ViewQuestionList(QuestionList ql, string key, bool playsound)
-    {
-        if (playsound)
-            AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        List<string> questions_keys = ql.list;
-        SetupDisplayQuestionListDetailView(ql);
-        this.ql = ql;
-        this.ql_key = key;
-        if (questions_keys.Count > 0){
-            NotificationMgr.Instance.NotifyLoad("Fetching Questions in " + ql.name);
-            
-            foreach (string qkey in questions_keys)
-            {
-
-                DatabaseMgr.Instance.DBFetch(DBQueryConstants.QUERY_QUESTIONS + '/' + qkey,
-                    delegate(string result)
-                {
-                    NotificationMgr.Instance.StopLoad();
-                    SpawnQuestions(result, qkey);
-                },
-                    delegate (string failmsg)
-                    {
-                        NotificationMgr.Instance.StopLoad();
-                        NotificationMgr.Instance.Notify(failmsg);
-                    });
-
-            }
-            NotificationMgr.Instance.StopLoad();
-        }
-        else
-        {
-            NotificationMgr.Instance.Notify("There are no questions in this list.");
-        }
-    }
-
-    public void SpawnQuestions(string result, string key)
-    {
-
         Question question = JsonUtility.FromJson<Question>(result);
         GameObject obj = Instantiate(QuestionUIItem, Panel.transform.position, Quaternion.identity);
         QuestionUIItem script = obj.GetComponent<QuestionUIItem>();
@@ -427,13 +426,10 @@ public class QuestionUI : MonoBehaviour
         q_list.Add(obj);
     }
 
-    public void FetchQuestionList()
+    private void FetchQuestionList()
     {
-        NotificationMgr.Instance.NotifyLoad("Fetching Question List");
-        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_QUESTIONLISTS,
-            nameof(QuestionList.id_owner),
-            ProfileMgr.Instance.localProfile.id_player,
-            100,
+        NotificationMgr.Instance.NotifyLoad("Fetching Question Lists");
+        ProfileMgr.Instance.FetchMyQuestionLists(
         delegate (string result)
         {
             NotificationMgr.Instance.StopLoad();
@@ -446,7 +442,7 @@ public class QuestionUI : MonoBehaviour
         });
     }
 
-    public void SpawnQuestionList(string result)
+    private void SpawnQuestionList(string result)
     {
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
 
@@ -465,32 +461,30 @@ public class QuestionUI : MonoBehaviour
         }
     }
 
-    public void CreateQuestionList()
+    private void updateQuestionListDB(string question_id)
     {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        QuestionList ql = new QuestionList();
-        ql.id_owner = ProfileMgr.Instance.localProfile.id_player;
-        ql.name = questionlistname.text;
-        ql.size = 0;
-
-        if (ql.name == ""){
-            NotificationMgr.Instance.Notify("Name of Question List cannot be empty.");
-            return;
-        }
-
-        NotificationMgr.Instance.NotifyLoad("Creating Question List");
-
-        DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_QUESTIONLISTS + "/", ql,
-            delegate (string key)
+        if (question_id != null)
+        {
+            if (this.ql.list == null)
             {
-                NewQuestionListWindow.SetActive(false);
+                this.ql.list = new List<string>();
+            }
+            this.ql.list.Add(question_id);
+            this.ql.size += 1;
+
+            NotificationMgr.Instance.NotifyLoad("Updating Question List");
+            ProfileMgr.Instance.UpdateMyQuestionList(this.ql_key, this.ql,
+            delegate ()
+            {
                 NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify("Question List created.");
+                ClearQuestionObjects();
+                ViewQuestionList(this.ql, this.ql_key, false);
             },
-            delegate (string failmsg2) // failed
-                    {
+            delegate (string failmsg) // failed
+            {
                 NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify(failmsg2);
+                NotificationMgr.Instance.Notify(failmsg);
             });
+        }
     }
 }

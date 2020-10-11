@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using Facebook.Unity;
 
 /// <summary>
-/// Database Manager Subsystem Interface, a Control Class that handles all communication with the database in the game, implemented with the data access object pattern in mind.
+/// Database Subsystem Interface, a Control Class that handles all communication with the database in the game, implemented with the data access object pattern in mind.
 /// </summary>
 public class DatabaseMgr : MonoBehaviour
 {
