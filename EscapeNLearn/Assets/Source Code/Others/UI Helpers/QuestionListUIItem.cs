@@ -31,7 +31,7 @@ public class QuestionListUIItem : MonoBehaviour
     {
         if (qui != null)
         {
-            qui.ViewQuestionList(ql, key);
+            qui.ViewQuestionList(ql, key, true);
         }
     }
 }

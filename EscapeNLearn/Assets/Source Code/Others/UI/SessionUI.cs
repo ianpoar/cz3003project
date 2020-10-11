@@ -18,7 +18,6 @@ public class SessionUI : MonoBehaviour
     public Dropdown dropdown_l2q;
     public Dropdown dropdown_l3q;
 
-    string tempstr = null;
     string questionlists = null;
 
     List<Dictionary<string, QuestionList>> qllist = new List<Dictionary<string, QuestionList>>();
@@ -28,7 +27,6 @@ public class SessionUI : MonoBehaviour
 
     private void OnEnable()
     {
-        tempstr = null;
         GenerateSessionObjects();
     }
 
@@ -37,27 +35,17 @@ public class SessionUI : MonoBehaviour
         ClearSessionObjects();
     }
 
-    private void Update()
-    {
-        // To address bug of Instantiate not working in delegates...
-        if (tempstr != null)
-        {
-            SpawnSessionObjects(tempstr);
-            tempstr = null;
-        }
-    }
-
     void GenerateSessionObjects()
     {
         NotificationMgr.Instance.NotifyLoad("Fetching sessions");
         DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_SESSIONS,
-            "id_owner",
-            ProfileMgr.Instance.localProfile.id_account,
+            nameof(Session.id_owner),
+            ProfileMgr.Instance.localProfile.id_player,
             100,
         delegate (string result)
         {
             NotificationMgr.Instance.StopLoad();
-            tempstr = result;
+            SpawnSessionObjects(result);
         },
         delegate (string failmsg)
         {
@@ -80,47 +68,50 @@ public class SessionUI : MonoBehaviour
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
 
-        this.getQuestionPools();
-        dropdown_l1q.options.Clear();
-        dropdown_l2q.options.Clear();
-        dropdown_l3q.options.Clear();
-        this.qllist.Clear();
-
-        Dictionary<string, object> questionlists_dict = Json.Deserialize(questionlists) as Dictionary<string, object>;
-        foreach (KeyValuePair<string, object> pair in questionlists_dict)
+        if (flag) // if show new session window, load question list first.
         {
-            string questionlistdata = Json.Serialize(pair.Value);
-            QuestionList questionlist = JsonUtility.FromJson<QuestionList>(questionlistdata);
-            Dictionary<string, QuestionList> item = new Dictionary<string, QuestionList>(){
+            dropdown_l1q.options.Clear();
+            dropdown_l2q.options.Clear();
+            dropdown_l3q.options.Clear();
+            this.qllist.Clear();
+
+            NotificationMgr.Instance.NotifyLoad("Loading Question List");
+            DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_QUESTIONLISTS,
+                nameof(QuestionList.id_owner),
+                ProfileMgr.Instance.localProfile.id_player,
+                100,
+            delegate (string result)
+            {
+                NotificationMgr.Instance.StopLoad();
+                questionlists = result;
+                Dictionary<string, object> questionlists_dict = Json.Deserialize(questionlists) as Dictionary<string, object>;
+                foreach (KeyValuePair<string, object> pair in questionlists_dict)
+                {
+                    string questionlistdata = Json.Serialize(pair.Value);
+                    QuestionList questionlist = JsonUtility.FromJson<QuestionList>(questionlistdata);
+                    Dictionary<string, QuestionList> item = new Dictionary<string, QuestionList>(){
                 { pair.Key, questionlist}
-            };
-            this.qllist.Add(item);
-            dropdown_l1q.options.Add(new Dropdown.OptionData(questionlist.name));
-            dropdown_l2q.options.Add(new Dropdown.OptionData(questionlist.name));
-            dropdown_l3q.options.Add(new Dropdown.OptionData(questionlist.name));
+                };
+                    this.qllist.Add(item);
+                    dropdown_l1q.options.Add(new Dropdown.OptionData(questionlist.name));
+                    dropdown_l2q.options.Add(new Dropdown.OptionData(questionlist.name));
+                    dropdown_l3q.options.Add(new Dropdown.OptionData(questionlist.name));
 
+                }
+
+                NewSessionWindow.SetActive(true);
+            },
+            delegate (string failmsg)
+            {
+                NotificationMgr.Instance.StopLoad();
+                NotificationMgr.Instance.Notify(failmsg + "\nIf you have not created a question list, please do so first.");
+                questionlists = null;
+            });
         }
-        NewSessionWindow.SetActive(flag);
-    }
-
-    private void getQuestionPools()
-    {
-        NotificationMgr.Instance.NotifyLoad("Loading Question List");
-        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_QUESTIONLISTS,
-            "id_owner",
-            ProfileMgr.Instance.localProfile.id_account,
-            100,
-        delegate (string result)
+        else
         {
-            NotificationMgr.Instance.StopLoad();
-            questionlists = result;
-        },
-        delegate (string failmsg)
-        {
-            NotificationMgr.Instance.StopLoad();
-            NotificationMgr.Instance.Notify(failmsg);
-            questionlists = null;
-        });
+            NewSessionWindow.SetActive(false);
+        }
     }
 
     void HideNewSessionWindow()
@@ -156,11 +147,7 @@ public class SessionUI : MonoBehaviour
 
     void SpawnSessionObjects(string result)
     {
-        Debug.Log(result);
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
-        Debug.Log(results.Count);
-
-        // Todo - get name and other details of session
 
         foreach (KeyValuePair<string, object> pair in results)
         {
@@ -192,7 +179,7 @@ public class SessionUI : MonoBehaviour
 
         Session s = new Session();
         s.session_name = sessName;
-        s.id_owner = ProfileMgr.Instance.localProfile.id_account;
+        s.id_owner = ProfileMgr.Instance.localProfile.id_player;
         s.id_l1queslist = this.qllist[l1q].Keys.First();
         s.id_l2queslist = this.qllist[l2q].Keys.First();
         s.id_l3queslist = this.qllist[l3q].Keys.First();

@@ -54,7 +54,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
             localProfile = JsonUtility.FromJson<Profile>(result);
             // load connections
             DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_CONNECTIONS,
-            "id_player", localProfile.id_account, 1,
+           nameof(Connection.id_player), localProfile.id_player, 1,
             delegate (string result2)
             {
                 Dictionary<string, object> dic = Json.Deserialize(result2) as Dictionary<string, object>;

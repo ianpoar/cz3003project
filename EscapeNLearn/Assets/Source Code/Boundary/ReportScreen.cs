@@ -160,8 +160,8 @@ public class ReportScreen : Screen
             List<Answer> answers = r.answers.list;
             totalAnsCount += answers.Count; // increment total answer count
 
-            if (!uniquePlayers.Contains(r.id_account))
-                uniquePlayers.Add(r.id_account);
+            if (!uniquePlayers.Contains(r.id_player))
+                uniquePlayers.Add(r.id_player);
 
             for (int j = 0; j < answers.Count; j++) // for each answer
             {

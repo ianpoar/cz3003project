@@ -77,7 +77,7 @@ public abstract class GameMgr : MonoBehaviour
         // init report
         report.game_level = GameLevel;
         report.id_session = ProfileMgr.Instance.currentConnection.id_session;
-        report.id_account = ProfileMgr.Instance.localProfile.id_account;
+        report.id_player = ProfileMgr.Instance.localProfile.id_player;
 
         // start timer
         StartCoroutine(Timer());

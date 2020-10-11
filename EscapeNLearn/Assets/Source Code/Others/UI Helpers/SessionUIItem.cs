@@ -22,7 +22,7 @@ public class SessionUIItem : MonoBehaviour
         _ref2 = sessionLobbyUI;
         _id = id;
         _session = session;
-        txt_id.text = "ID: " + id;
+        txt_id.text = "Instructor ID: " + _session.id_owner +  "\nSession ID:\n" + id;
         txt_name.text = session.session_name;
     }
 

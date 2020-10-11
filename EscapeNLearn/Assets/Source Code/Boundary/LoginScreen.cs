@@ -258,7 +258,7 @@ public class LoginScreen : Screen
                     {
                         NotificationMgr.Instance.NotifyLoad("Performing existing ID check");
                         // to be done
-                        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_PROFILES, "id_account", input, 1,
+                        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_PROFILES, nameof(Profile.id_player), input, 1,
                         delegate (string result) // exists
                         {
                             NotificationMgr.Instance.StopLoad();
@@ -276,7 +276,7 @@ public class LoginScreen : Screen
                                 delegate (string nameInput) // name entered
                                 {
                                     // create profile
-                                    ProfileMgr.Instance.localProfile.id_account = input; // set account id
+                                    ProfileMgr.Instance.localProfile.id_player = input; // set account id
                                     ProfileMgr.Instance.localProfile.name = nameInput; // set name
 
                                     NotificationMgr.Instance.NotifyLoad("Creating profile");

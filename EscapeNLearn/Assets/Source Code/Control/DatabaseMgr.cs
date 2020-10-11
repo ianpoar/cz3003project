@@ -55,7 +55,8 @@ public class DatabaseMgr : MonoBehaviour
             List<string> list = new List<string>();
             foreach (IUserInfo info in FirebaseAuth.DefaultInstance.CurrentUser.ProviderData)
             {
-                list.Add(info.ProviderId);
+                if (info.ProviderId != "firebase") // don't need to know this, since all accounts are firebase
+                    list.Add(info.ProviderId);
             }
             return list;
         }

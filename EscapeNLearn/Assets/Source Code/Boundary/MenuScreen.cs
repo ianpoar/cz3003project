@@ -132,7 +132,7 @@ public class MenuScreen : Screen
 
                 DatabaseMgr.Instance.DBLightUpdate(
                 DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
-                nameof(ProfileMgr.Instance.localProfile.id_facebook),
+                nameof(Profile.id_facebook),
                 ProfileMgr.Instance.localProfile.id_facebook,
                 delegate () // write success
                 {
@@ -164,7 +164,7 @@ public class MenuScreen : Screen
 
                 DatabaseMgr.Instance.DBLightUpdate(
                 DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
-                nameof(ProfileMgr.Instance.localProfile.id_google),
+                nameof(Profile.id_google),
                 ProfileMgr.Instance.localProfile.id_google,
                 delegate () // write success
                 {
@@ -199,7 +199,7 @@ public class MenuScreen : Screen
                 {
                     DatabaseMgr.Instance.DBLightUpdate(
                        DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
-                       nameof(ProfileMgr.Instance.localProfile.id_google),
+                       nameof(Profile.id_google),
                        ProfileMgr.Instance.localProfile.id_google,
                        delegate () // write success
                        {
@@ -250,7 +250,7 @@ public class MenuScreen : Screen
                 {
                     DatabaseMgr.Instance.DBLightUpdate(
                        DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id,
-                       nameof(ProfileMgr.Instance.localProfile.id_facebook),
+                       nameof(Profile.id_facebook),
                        ProfileMgr.Instance.localProfile.id_facebook,
                        delegate () // write success
                         {
@@ -361,7 +361,7 @@ public class MenuScreen : Screen
             Profile profile = ProfileMgr.Instance.localProfile;
             txt_info.text +=
                 "\nName: " + profile.name +
-                "\nAccount ID: " + profile.id_account +
+                "\nPlayer UID: " + profile.id_player +
                 "\nAccount Type: " + profile.accountType +
                 "\nAccount EXP: " + profile.accountExp +
                 "\nNormal Currency: " + profile.currency_normal +

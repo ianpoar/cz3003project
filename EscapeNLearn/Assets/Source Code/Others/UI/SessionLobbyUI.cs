@@ -84,7 +84,7 @@ public class SessionLobbyUI : MonoBehaviour
     {
         NotificationMgr.Instance.NotifyLoad("Fetching sessions");
         DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_SESSIONS,
-            "id_owner", id,
+            nameof(Session.id_owner), id,
             100,
         delegate (string result)
         {
@@ -114,7 +114,7 @@ public class SessionLobbyUI : MonoBehaviour
         NotificationMgr.Instance.NotifyLoad("Joining session");
         Connection c = new Connection();
 
-        c.id_player = ProfileMgr.Instance.localProfile.id_account;
+        c.id_player = ProfileMgr.Instance.localProfile.id_player;
         c.id_session = sessionid;
         c.id_owner = ownerid;
         c.session_name = sessionname;

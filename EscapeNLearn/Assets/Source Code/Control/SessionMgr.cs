@@ -45,7 +45,7 @@ public class SessionMgr : MonoBehaviour
         CurrentReportType = ReportType.INDIVIDUAL;
 
         // Fetch all session reports
-        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_REPORTS, "id_session", c.id_session, 100,
+        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_REPORTS, nameof(Report.id_session), c.id_session, 100,
          delegate (string result)
          {
              Dictionary<string, object> dic = Json.Deserialize(result) as Dictionary<string, object>;
@@ -55,7 +55,7 @@ public class SessionMgr : MonoBehaviour
 
                  if (r != null)
                  {
-                    if (r.id_account == c.id_player) // only add student's session reports
+                    if (r.id_player == c.id_player) // only add student's session reports
                     {
                         SessionReports.Add(r);
                     }
@@ -81,7 +81,7 @@ public class SessionMgr : MonoBehaviour
         CurrentReportType = ReportType.SESSION;
 
         // Fetch all session reports
-        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_REPORTS, "id_session", id_session, 100,
+        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_REPORTS, nameof(Report.id_session), id_session, 100,
          delegate (string result)
          {
              Dictionary<string, object> dic = Json.Deserialize(result) as Dictionary<string, object>;

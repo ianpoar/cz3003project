@@ -71,8 +71,6 @@ public class QuestionUI : MonoBehaviour
     Question q = null;
     string q_key = null;
 
-    string tempstr = null;
-
     List<GameObject> list = new List<GameObject>();
     List<GameObject> q_list = new List<GameObject>();
 
@@ -86,16 +84,6 @@ public class QuestionUI : MonoBehaviour
         ClearQuestionListObjects();
     }
 
-    private void Update()
-    {
-        // To address bug of Instantiate not working in delegates...
-        if (tempstr != null)
-        {
-            SpawnQuestionList(tempstr);
-            tempstr = null;
-        }
-    }
-
     private void SetupQuestionListView()
     {
         title.text = "Your Question List";
@@ -105,7 +93,6 @@ public class QuestionUI : MonoBehaviour
         createquestionlistButton.SetActive(true);
         createquestionButton.SetActive(false);
         btn_backbutton.SetActive(false);
-        tempstr = null;
         FetchQuestionList();
     }
 
@@ -115,7 +102,6 @@ public class QuestionUI : MonoBehaviour
         btn_backbutton.SetActive(true);
         createquestionlistButton.SetActive(false);
         createquestionButton.SetActive(true);
-        tempstr = null;
         ClearQuestionListObjects();
     }
 
@@ -204,13 +190,13 @@ public class QuestionUI : MonoBehaviour
 
     public void Btn_DeleteQuestion()
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         if (this.q_key != null)
         {
             DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_QUESTIONS + "/" + this.q_key, null,
             delegate ()
             {
                 NotificationMgr.Instance.StopLoad();
-                tempstr = null;
                 NotificationMgr.Instance.Notify("Question deleted.",
                 delegate ()
                 {
@@ -234,7 +220,7 @@ public class QuestionUI : MonoBehaviour
             {
                 NotificationMgr.Instance.StopLoad();
                 ClearQuestionObjects();
-                ViewQuestionList(this.ql, this.ql_key);
+                ViewQuestionList(this.ql, this.ql_key, false);
             },
             delegate (string failmsg2) // failed
             {
@@ -248,10 +234,11 @@ public class QuestionUI : MonoBehaviour
 
     public void Btn_SaveEditQuestion()
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         if (this.q != null)
         {
             Question q = new Question();
-            q.id_owner = ProfileMgr.Instance.localProfile.id_account;
+            q.id_owner = ProfileMgr.Instance.localProfile.id_player;
             q.question = editquestionField.text;
             q.answer1 = editanswer1Field.text;
             q.answer2 = editanswer2Field.text;
@@ -279,13 +266,12 @@ public class QuestionUI : MonoBehaviour
             delegate ()
             {
                 NotificationMgr.Instance.StopLoad();
-                tempstr = null;
                 NotificationMgr.Instance.Notify("Question updated.",
                 delegate ()
                 {
                     panel_editquestion.SetActive(false);
                     ClearQuestionObjects();
-                    ViewQuestionList(this.ql, this.ql_key);
+                    ViewQuestionList(this.ql, this.ql_key, false);
                 });
 
             },
@@ -307,6 +293,7 @@ public class QuestionUI : MonoBehaviour
 
     public void BtnBackToUI()
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         // May change if need be
         SetupQuestionListView();
     }
@@ -327,7 +314,7 @@ public class QuestionUI : MonoBehaviour
             {
                 NotificationMgr.Instance.StopLoad();
                 ClearQuestionObjects();
-                ViewQuestionList(this.ql, this.ql_key);
+                ViewQuestionList(this.ql, this.ql_key, false);
             },
             delegate (string failmsg2) // failed
                 {
@@ -339,10 +326,11 @@ public class QuestionUI : MonoBehaviour
     }
 
     public void BtnCreateNewQuestion() {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         if (this.ql != null)
         {
             Question q = new Question();
-            q.id_owner = ProfileMgr.Instance.localProfile.id_account;
+            q.id_owner = ProfileMgr.Instance.localProfile.id_player;
             q.question = questionField.text;
             q.answer1 = answer1Field.text;
             q.answer2 = answer2Field.text;
@@ -369,7 +357,6 @@ public class QuestionUI : MonoBehaviour
             delegate (string key)
             {
                 NotificationMgr.Instance.StopLoad();
-                tempstr = null;
                 NotificationMgr.Instance.Notify("Question created.",
                 delegate ()
                 {
@@ -392,8 +379,10 @@ public class QuestionUI : MonoBehaviour
         toggleCreateQuestionPanel();
     }
 
-    public void ViewQuestionList(QuestionList ql, string key)
+    public void ViewQuestionList(QuestionList ql, string key, bool playsound)
     {
+        if (playsound)
+            AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         List<string> questions_keys = ql.list;
         SetupDisplayQuestionListDetailView(ql);
         this.ql = ql;
@@ -421,7 +410,7 @@ public class QuestionUI : MonoBehaviour
         }
         else
         {
-            NotificationMgr.Instance.Notify("There is no question in this list.");
+            NotificationMgr.Instance.Notify("There are no questions in this list.");
         }
     }
 
@@ -442,29 +431,24 @@ public class QuestionUI : MonoBehaviour
     {
         NotificationMgr.Instance.NotifyLoad("Fetching Question List");
         DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_QUESTIONLISTS,
-            "id_owner",
-            ProfileMgr.Instance.localProfile.id_account,
+            nameof(QuestionList.id_owner),
+            ProfileMgr.Instance.localProfile.id_player,
             100,
         delegate (string result)
         {
             NotificationMgr.Instance.StopLoad();
-            tempstr = result;
+            SpawnQuestionList(result);
         },
         delegate (string failmsg)
         {
             NotificationMgr.Instance.StopLoad();
             NotificationMgr.Instance.Notify(failmsg);
-            tempstr = null;
         });
     }
 
     public void SpawnQuestionList(string result)
     {
-        Debug.Log(result);
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
-        Debug.Log(results.Count);
-
-        // Todo - get name and other details of session
 
         foreach (KeyValuePair<string, object> pair in results)
         {
@@ -483,8 +467,9 @@ public class QuestionUI : MonoBehaviour
 
     public void CreateQuestionList()
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         QuestionList ql = new QuestionList();
-        ql.id_owner = ProfileMgr.Instance.localProfile.id_account;
+        ql.id_owner = ProfileMgr.Instance.localProfile.id_player;
         ql.name = questionlistname.text;
         ql.size = 0;
 
