@@ -13,21 +13,25 @@ public class QuestionListUIItem : MonoBehaviour
     public Text txt_size;
     string name;
     string size;
+    string key;
     QuestionList ql;
     QuestionUI qui;
 
-    public void Init(string size, string name, QuestionList ql, QuestionUI qui)
+    public void Init(string key, string size, string name, QuestionList ql, QuestionUI qui)
     {
+        this.key = key;
         txt_name.text = name;
         this.ql = ql;
         this.size = size;
         txt_size.text = "Number of questions: " + size;
-        
         this.qui = qui;
     }
     // Onclick event
     public void OnClick()
     {
-
+        if (qui != null)
+        {
+            qui.ViewQuestionList(ql, key);
+        }
     }
 }
