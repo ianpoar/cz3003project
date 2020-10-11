@@ -352,7 +352,12 @@ public class QuestionUI : MonoBehaviour
             {
                 NewQuestionListWindow.SetActive(false);
                 NotificationMgr.Instance.StopLoad();
-                NotificationMgr.Instance.Notify("Question List created.");
+                NotificationMgr.Instance.Notify("Question List created.",
+                 delegate()
+                 {
+                     ClearQuestionListObjects();
+                     FetchQuestionList();
+                 });
             },
             delegate (string failmsg) // failed
             {

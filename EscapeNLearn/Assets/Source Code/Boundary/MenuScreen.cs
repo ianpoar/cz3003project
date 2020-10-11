@@ -405,7 +405,8 @@ public class MenuScreen : Screen
             }
 
             // if user has facebook linked
-            if (DatabaseMgr.Instance.LoginTypes.Contains(LoginTypeConstants.FACEBOOK))
+            List<string> loginTypes = DatabaseMgr.Instance.LoginTypes;
+            if (loginTypes.Contains(LoginTypeConstants.FACEBOOK) && !loginTypes.Contains(LoginTypeConstants.GOOGLE)) // if facebook only, no google
             {
                 // fetch profile pic
                 DatabaseMgr.Instance.FetchProfilePic(ProfileMgr.Instance.localProfile.id_facebook,
