@@ -859,7 +859,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -2, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &127275240
 MonoBehaviour:
@@ -1708,14 +1708,8 @@ MonoBehaviour:
   panel_sessions: {fileID: 456469962}
   panel_sessionlobby: {fileID: 1185325467}
   panel_levelselect: {fileID: 127275238}
-  txt_info: {fileID: 1994836165}
-  btn_logout: {fileID: 694185840}
   profilePic: {fileID: 503373102}
   panel_questionlist: {fileID: 2010284902585058980}
-  FBLinkButton: {fileID: 1873799022}
-  FBUnLinkButton: {fileID: 1058225740}
-  GoogleLinkButton: {fileID: 271079852}
-  GoogleUnLinkButton: {fileID: 1114459517}
   panel_friends: {fileID: 5869914022075384989}
 --- !u!4 &223974228
 Transform:
@@ -3374,7 +3368,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -2, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &456469964
 MonoBehaviour:
@@ -7302,7 +7296,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -2, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1185325470
 MonoBehaviour:
@@ -8437,7 +8431,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -2, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1318007300
 MonoBehaviour:
@@ -12015,6 +12009,7 @@ GameObject:
   - component: {fileID: 1936576200}
   - component: {fileID: 1936576202}
   - component: {fileID: 1936576201}
+  - component: {fileID: 1936576203}
   m_Layer: 5
   m_Name: panel_profileinfo(x)
   m_TagString: Untagged
@@ -12049,7 +12044,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -2, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1936576201
 MonoBehaviour:
@@ -12088,6 +12083,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936576199}
   m_CullTransparentMesh: 0
+--- !u!114 &1936576203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936576199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8285b2b89308245adcf6c81d84489e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txt_profileinfo: {fileID: 1994836165}
+  FBLinkButton: {fileID: 1873799022}
+  FBUnLinkButton: {fileID: 1058225740}
+  GoogleLinkButton: {fileID: 271079852}
+  GoogleUnLinkButton: {fileID: 1114459517}
+  btn_logout: {fileID: 694185840}
 --- !u!1 &1949000530
 GameObject:
   m_ObjectHideFlags: 0
@@ -22388,7 +22401,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -2, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2010284902585059002
 MonoBehaviour:
@@ -28598,7 +28611,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -2, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5869914022075384978
 MonoBehaviour:

@@ -69,22 +69,34 @@ public class QuestionUI : MonoBehaviour
     List<GameObject> q_list = new List<GameObject>();
     int questionsLoaded = 0;
 
+    /// <summary>
+    /// This method executes when the questions panel is displayed.
+    /// </summary>
     private void OnEnable()
     {
         SetupQuestionListView();
     }
 
+    /// <summary>
+    /// This method executes when the questions panel is hidden.
+    /// </summary>
     private void OnDisable()
     {
         ClearQuestionListObjects();
     }
 
+    /// <summary>
+    /// A handler for when the new question list button is pressed.
+    /// </summary>
     public void Btn_ShowNewQuestionListWindow(bool flag)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         NewQuestionListWindow.SetActive(flag);
     }
 
+    /// <summary>
+    /// A handler for when the new question button is pressed.
+    /// </summary>
     public void Btn_CreateQuestion(bool show)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -102,6 +114,9 @@ public class QuestionUI : MonoBehaviour
         toggleCreateQuestionPanel();
     }
 
+    /// <summary>
+    /// A handler for when the close button on the edit question panel is pressed.
+    /// </summary>
     public void Btn_CloseEdit(bool show)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -115,6 +130,9 @@ public class QuestionUI : MonoBehaviour
         toggleEditQuestionPanel();
     }
 
+    /// <summary>
+    /// A handler for when the edit question button is pressed.
+    /// </summary>
     public void EditQuestion(Question q, string key)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -130,6 +148,9 @@ public class QuestionUI : MonoBehaviour
         toggleEditQuestionPanel();
     }
 
+    /// <summary>
+    /// A handler for when the delete question button is pressed.
+    /// </summary>
     public void Btn_DeleteQuestion()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -172,6 +193,9 @@ public class QuestionUI : MonoBehaviour
         toggleEditQuestionPanel();
     }
 
+    /// <summary>
+    /// A handler for when the save question button at the edit question panel is pressed.
+    /// </summary>
     public void Btn_SaveEditQuestion()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -229,7 +253,9 @@ public class QuestionUI : MonoBehaviour
         toggleEditQuestionPanel();
     }
 
-
+    /// <summary>
+    /// A handler for when back button at the view questions panel is pressed.
+    /// </summary>
     public void BtnBackToUI()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -237,6 +263,9 @@ public class QuestionUI : MonoBehaviour
         SetupQuestionListView();
     }
 
+    /// <summary>
+    /// A handler for when create button at create question panel is pressed.
+    /// </summary>
     public void BtnCreateNewQuestion() {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         if (this.ql != null)
@@ -290,6 +319,9 @@ public class QuestionUI : MonoBehaviour
         toggleCreateQuestionPanel();
     }
 
+    /// <summary>
+    /// A handler for when a question list object is pressed, proceeds to fetch all questions contained in the list.
+    /// </summary>
     public void ViewQuestionList(QuestionList ql, string key, bool playsound)
     {
         if (playsound)
@@ -325,7 +357,9 @@ public class QuestionUI : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// A handler for when the create button at the create question list panel is pressed.
+    /// </summary>
     public void CreateQuestionList()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -360,6 +394,9 @@ public class QuestionUI : MonoBehaviour
             });
     }
 
+    /// <summary>
+    /// A method that sets the UI for the view containing all question lists.
+    /// </summary>
     private void SetupQuestionListView()
     {
         title.text = "Your Question List";
@@ -372,6 +409,9 @@ public class QuestionUI : MonoBehaviour
         FetchQuestionList();
     }
 
+    /// <summary>
+    /// A method that sets the UI for the view containing all questions in a question list.
+    /// </summary>
     private void SetupDisplayQuestionListDetailView(QuestionList ql)
     {
         title.text = ql.name;
@@ -381,6 +421,9 @@ public class QuestionUI : MonoBehaviour
         ClearQuestionListObjects();
     }
 
+    /// <summary>
+    /// A method that clears all displayed question list objects.
+    /// </summary>
     void ClearQuestionListObjects()
     {
         foreach (GameObject obj in list)
@@ -390,6 +433,9 @@ public class QuestionUI : MonoBehaviour
         list.Clear();
     }
 
+    /// <summary>
+    /// A method that clears all displayed question objects.
+    /// </summary>
     void ClearQuestionObjects()
     {
         foreach (GameObject obj in q_list)
@@ -399,6 +445,9 @@ public class QuestionUI : MonoBehaviour
         list.Clear();
     }
 
+    /// <summary>
+    /// A method that shows/hides the edit question panel.
+    /// </summary>
     private void toggleEditQuestionPanel()
     {
         bool state = !panel_editquestion.activeSelf;
@@ -406,6 +455,9 @@ public class QuestionUI : MonoBehaviour
         panel_editquestion.SetActive(state);
     }
 
+    /// <summary>
+    /// A method that shows/hides the create question panel.
+    /// </summary>
     private void toggleCreateQuestionPanel()
     {
         bool state = !panel_createquestion.activeSelf;
@@ -413,6 +465,9 @@ public class QuestionUI : MonoBehaviour
         panel_createquestion.SetActive(state);
     }
 
+    /// <summary>
+    /// A method that spawns question objects and displays them.
+    /// </summary>
     private void SpawnQuestions(string result, string key)
     {
         Question question = JsonUtility.FromJson<Question>(result);
@@ -425,6 +480,9 @@ public class QuestionUI : MonoBehaviour
         q_list.Add(obj);
     }
 
+    /// <summary>
+    /// A method that requests for question list data from ProfileMgr.
+    /// </summary>
     private void FetchQuestionList()
     {
         NotificationMgr.Instance.NotifyLoad("Fetching Question Lists");
@@ -441,6 +499,9 @@ public class QuestionUI : MonoBehaviour
         });
     }
 
+    /// <summary>
+    /// A method that spawns question list objects and displays them.
+    /// </summary>
     private void SpawnQuestionList(string result)
     {
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
@@ -460,6 +521,9 @@ public class QuestionUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A method that adds a newly created question to a question list.
+    /// </summary>
     private void updateQuestionListDB(string question_id)
     {
         if (question_id != null)

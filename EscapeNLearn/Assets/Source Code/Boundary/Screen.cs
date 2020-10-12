@@ -18,6 +18,7 @@ public abstract class Screen : MonoBehaviour
             GameObject obj = GameObject.Instantiate(Resources.Load("LoadedPrefabs/StaticObjects") as GameObject);
             obj.name = "StaticObjects";
             GameObject.DontDestroyOnLoad(obj);
+            Application.targetFrameRate = 300; // highest frame rate possible
         }
     }
 

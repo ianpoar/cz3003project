@@ -8,7 +8,10 @@ public class LevelSelectUI : MonoBehaviour
 {
     public GameObject[] lockedUI;
     public Text Txt_SessionID;
-    // Start is called before the first frame update
+
+    /// <summary>
+    /// This method executes when the level select panel is displayed.
+    /// </summary>
     private void OnEnable()
     {
         foreach (GameObject obj in lockedUI)
@@ -26,6 +29,9 @@ public class LevelSelectUI : MonoBehaviour
             lockedUI[2].SetActive(false);
     }
 
+    /// <summary>
+    /// A handler for when the leave session button is pressed, allows the player to leave a session
+    /// </summary>
     public void Btn_LeaveSession()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -43,6 +49,9 @@ public class LevelSelectUI : MonoBehaviour
             });
     }
 
+    /// <summary>
+    /// A handler for when the view report button is pressed, proceeds to transit the player to view a report of his performance in the session.
+    /// </summary>
     public void Btn_ViewCurrentSessionReport()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -61,6 +70,9 @@ public class LevelSelectUI : MonoBehaviour
             });
     }
 
+    /// <summary>
+    /// A handler for when the close button on the level select panel is pressed.
+    /// </summary>
     public void Btn_CloseLevelSelect(bool playsound)
     {
         if (playsound)
@@ -69,6 +81,9 @@ public class LevelSelectUI : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// A handler for when a level is selected by the player, proceeds to request for game level questions from SessionMgr and transit the player to the game screen
+    /// </summary>
     public void SelectLevel(int level)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);

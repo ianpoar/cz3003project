@@ -13,6 +13,9 @@ public class SettingsUI : MonoBehaviour
     float BGMvol=1f;
     float SFXvol=1f;
 
+    /// <summary>
+    /// This method executes when the settings panel is displayed.
+    /// </summary>
     void OnEnable()
     {
         if (PlayerPrefs.HasKey(PPConstants.KEY_BGMVOL))
@@ -29,17 +32,27 @@ public class SettingsUI : MonoBehaviour
         BGMSlider.value = BGMvol;
     }
 
+    /// <summary>
+    /// This method executes when the settings panel is hidden.
+    /// </summary>
     void OnDisable()
     {
         PlayerPrefs.SetFloat(PPConstants.KEY_BGMVOL, BGMvol);
         PlayerPrefs.SetFloat(PPConstants.KEY_SFXVOL, SFXvol);
     }
 
+    /// <summary>
+    /// A handler for when the background music volume slider is adjusted.
+    /// </summary>
     public void SetBGMVol(float vol)
     {
         BGMvol=vol;
         AudioMgr.Instance.SetBGMVol(BGMvol);
     }
+
+    /// <summary>
+    /// A handler for when the sound effects volume slider is adjusted.
+    /// </summary>
     public void SetSFXVol(float vol)
     {
        SFXvol=vol;

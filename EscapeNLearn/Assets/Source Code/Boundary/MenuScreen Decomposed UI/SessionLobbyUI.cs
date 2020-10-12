@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Facebook.MiniJSON;
@@ -15,17 +14,26 @@ public class SessionLobbyUI : MonoBehaviour
     public GameObject panel_LevelSelect;
 
     List<GameObject> list = new List<GameObject>();
+
+    /// <summary>
+    /// This method executes when the session lobby panel is displayed.
+    /// </summary>
     private void OnEnable()
     {
         GenerateAllSessionObjects();
     }
 
+    /// <summary>
+    /// This method executes when the session lobby panel is hidden.
+    /// </summary>
     private void OnDisable()
     {
         ClearSessionObjects();
     }
 
-
+    /// <summary>
+    /// This method executes when the session lobby panel is hidden.
+    /// </summary>
     public void Btn_HideSessionLobby(bool playsound)
     {
         if (playsound)
@@ -34,7 +42,9 @@ public class SessionLobbyUI : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-
+    /// <summary>
+    /// A handler for when the search button is pressed.
+    /// </summary>
     public void Btn_Search()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -50,6 +60,9 @@ public class SessionLobbyUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A method that requests for all session data from SessionMgr.
+    /// </summary>
     void GenerateAllSessionObjects()
     {
         NotificationMgr.Instance.NotifyLoad("Fetching sessions");
@@ -66,6 +79,9 @@ public class SessionLobbyUI : MonoBehaviour
          });
     }
 
+    /// <summary>
+    /// A method that requests for session data that belongs to a specific instructor from SessionMgr.
+    /// </summary>
     void GenerateSearchSessionObjects(string id)
     {
         NotificationMgr.Instance.NotifyLoad("Fetching sessions");
@@ -82,7 +98,9 @@ public class SessionLobbyUI : MonoBehaviour
         }, id);
     }
 
-
+    /// <summary>
+    /// A method to clear displayed session objects.
+    /// </summary>
     void ClearSessionObjects()
     {
         foreach (GameObject obj in list)
@@ -92,6 +110,9 @@ public class SessionLobbyUI : MonoBehaviour
         list.Clear();
     }
 
+    /// <summary>
+    /// A method that allows the player to join a session when a session object is clicked.
+    /// </summary>
     public void JoinSession(string sessionid, string ownerid, string sessionname)
     {
         Debug.Log("Join session " + sessionid);
@@ -122,6 +143,9 @@ public class SessionLobbyUI : MonoBehaviour
         });
     }
 
+    /// <summary>
+    /// A method that spawns session objects to be displayed.
+    /// </summary>
     void SpawnSessionObjects(string result)
     {
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
