@@ -115,6 +115,7 @@ public class SessionLobbyUI : MonoBehaviour
     /// </summary>
     public void JoinSession(string sessionid, string ownerid, string sessionname)
     {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         Debug.Log("Join session " + sessionid);
         NotificationMgr.Instance.NotifyLoad("Joining session");
         Connection c = new Connection();

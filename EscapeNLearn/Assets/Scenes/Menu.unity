@@ -2093,7 +2093,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 223974227}
+      - m_Target: {fileID: 1936576203}
         m_MethodName: Btn_GoogleLink
         m_Mode: 1
         m_Arguments:
@@ -4788,7 +4788,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 223974227}
+      - m_Target: {fileID: 1936576203}
         m_MethodName: Btn_Logout
         m_Mode: 1
         m_Arguments:
@@ -6552,7 +6552,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 223974227}
+      - m_Target: {fileID: 1936576203}
         m_MethodName: Btn_FBUnlink
         m_Mode: 1
         m_Arguments:
@@ -6867,7 +6867,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 223974227}
+      - m_Target: {fileID: 1936576203}
         m_MethodName: Btn_GoogleUnlink
         m_Mode: 1
         m_Arguments:
@@ -11285,7 +11285,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 223974227}
+      - m_Target: {fileID: 1936576203}
         m_MethodName: Btn_FBLink
         m_Mode: 1
         m_Arguments:
@@ -13589,7 +13589,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 223974227}
+      - m_Target: {fileID: 1936576203}
         m_MethodName: Btn_TestAddEXP
         m_Mode: 1
         m_Arguments:
