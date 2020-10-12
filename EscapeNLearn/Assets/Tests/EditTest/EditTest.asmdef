@@ -1,9 +1,9 @@
 {
-    "name": "Tests",
+    "name": "EditTest",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "scripts"
+        "AllRef"
     ],
     "includePlatforms": [
         "Editor"
