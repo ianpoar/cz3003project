@@ -18,22 +18,29 @@ public class SessionUI : MonoBehaviour
     public Dropdown dropdown_l3q;
 
     string questionlists = null;
-
     List<Dictionary<string, QuestionList>> qllist = new List<Dictionary<string, QuestionList>>();
-
     List<GameObject> list = new List<GameObject>();
     Dictionary<string, Session> session_dic = new Dictionary<string, Session>();
 
+    /// <summary>
+    /// This method executes when the session panel is displayed.
+    /// </summary>
     private void OnEnable()
     {
         GenerateSessionObjects();
     }
 
+    /// <summary>
+    /// This method executes when the session panel is hidden.
+    /// </summary>
     private void OnDisable()
     {
         ClearSessionObjects();
     }
 
+    /// <summary>
+    /// A method that requests for session data from SessionMgr.
+    /// </summary>
     void GenerateSessionObjects()
     {
         NotificationMgr.Instance.NotifyLoad("Fetching Sessions");
@@ -50,6 +57,9 @@ public class SessionUI : MonoBehaviour
         }, ProfileMgr.Instance.localProfile.id_player);
     }
 
+    /// <summary>
+    /// A method to clear displayed session objects.
+    /// </summary>
     void ClearSessionObjects()
     {
         foreach (GameObject obj in list)
@@ -60,6 +70,9 @@ public class SessionUI : MonoBehaviour
         session_dic.Clear();
     }
 
+    /// <summary>
+    /// A handler for when the new session button is pressed.
+    /// </summary>
     public void Btn_ShowNewSessionWindow(bool flag)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -108,11 +121,9 @@ public class SessionUI : MonoBehaviour
         }
     }
 
-    void HideNewSessionWindow()
-    {
-        NewSessionWindow.SetActive(false);
-    }
-
+    /// <summary>
+    /// A handler for when a session object is clicked, proceeds to transit the player (instructor) to view a session report.
+    /// </summary>
     public void ViewSessionReport(string id)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -139,6 +150,9 @@ public class SessionUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A method that spawns session objects to be displayed.
+    /// </summary>
     void SpawnSessionObjects(string result)
     {
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
@@ -160,6 +174,9 @@ public class SessionUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A handler for when the create new button is pressed in the create new session panel.
+    /// </summary>
     public void Btn_CreateNewSession()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -184,7 +201,7 @@ public class SessionUI : MonoBehaviour
             NotificationMgr.Instance.Notify("Session created.",
             delegate ()
             {
-                HideNewSessionWindow();
+                NewSessionWindow.SetActive(false);
                 ClearSessionObjects();
                 GenerateSessionObjects();
             });

@@ -14,6 +14,9 @@ public class FriendsUI : MonoBehaviour
     ArrayList friends_list;
     List<GameObject> spawnedObjList = new List<GameObject>();
 
+    /// <summary>
+    /// This method executes when the friends panel is displayed.
+    /// </summary>
     void OnEnable()
     {
         // 1. Get the data to be displayed
@@ -46,6 +49,9 @@ public class FriendsUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method executes when the friends panel is hidden.
+    /// </summary>
     private void OnDisable()
     {
         foreach (GameObject obj in spawnedObjList)
