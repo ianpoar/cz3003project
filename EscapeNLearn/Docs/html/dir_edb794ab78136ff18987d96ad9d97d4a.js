@@ -6,6 +6,12 @@ var dir_edb794ab78136ff18987d96ad9d97d4a =
     [ "FloatingUIScript.cs", "_floating_u_i_script_8cs.html", [
       [ "FloatingUIScript", "class_floating_u_i_script.html", "class_floating_u_i_script" ]
     ] ],
+    [ "Friends_ListItemController.cs", "_friends___list_item_controller_8cs.html", [
+      [ "Friends_ListItemController", "class_friends___list_item_controller.html", "class_friends___list_item_controller" ]
+    ] ],
+    [ "FriendsListData.cs", "_friends_list_data_8cs.html", [
+      [ "FriendsListData", "class_friends_list_data.html", "class_friends_list_data" ]
+    ] ],
     [ "QuestionListUIItem.cs", "_question_list_u_i_item_8cs.html", [
       [ "QuestionListUIItem", "class_question_list_u_i_item.html", "class_question_list_u_i_item" ]
     ] ],

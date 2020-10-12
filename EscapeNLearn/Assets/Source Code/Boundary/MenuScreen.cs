@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// UI Boundary Class for the Menu scene.
+/// UI Boundary Class for the Menu scene, handles all UI-related events in the scene, encapsulates SessionUI, QuestionUI, LevelSelectUI, SessionLobbyUI, SettingsUI, FriendsUI.
 /// </summary>
 public class MenuScreen : Screen
 {
@@ -41,7 +40,9 @@ public class MenuScreen : Screen
     [SerializeField]
     private GameObject panel_friends;
 
-    // Start of menu screen
+    /// <summary>
+    /// Start of the Menu screen.
+    /// </summary>
     protected override void Start()
     {
         // Call parent start
@@ -51,12 +52,17 @@ public class MenuScreen : Screen
         AudioMgr.Instance.PlayBGM(AudioConstants.BGM_PERCEPTION);
     }
 
+    /// <summary>
+    /// An handler that executes actions only after profile data is fetched.
+    /// </summary>
     protected override void StartAfterDataFetched()
     {
         CheckLoginDetails();
     }
 
-    // Button to show profile pressed
+    /// <summary>
+    /// An handler for when the profile button is pressed, enables/disables the profile panel and its ProfileUI class.
+    /// </summary>
     public void Btn_ShowProfile(bool show)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -69,21 +75,27 @@ public class MenuScreen : Screen
         panel_profileinfo.SetActive(show);
     }
 
-    // Button to show settings pressed
+    /// <summary>
+    /// An handler for when the settings button is pressed, enables/disables the settings panel and its SettingsUI class.
+    /// </summary>
     public void Btn_ShowSettings(bool show)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         panel_settings.SetActive(show);
     }
 
-    // Button to show sessions pressed
+    /// <summary>
+    /// An handler for when the view sessions button is pressed by an instructor, enables/disables the sessions panel and its SessionUI class.
+    /// </summary>
     public void Btn_ShowSessions(bool show)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         panel_sessions.SetActive(show);
     }
 
-    // Logout button at settings panel pressed
+    /// <summary>
+    /// An handler for when the logout button is pressed, logs the current player out.
+    /// </summary>
     public void Btn_Logout()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -94,7 +106,9 @@ public class MenuScreen : Screen
         TransitMgr.Instance.FadeToScene("Login");
     }
 
-    // Play Normal button pressed
+    /// <summary>
+    /// An handler for when the play normal button is pressed, enables the session lobby panel and its SessionLobbyUI class, or the level select panel and its LevelSelectUI class, depending on whether the player has joined a session.
+    /// </summary>
     public void Btn_PlayNormal(bool playsound)
     {
         if (playsound)
@@ -110,13 +124,19 @@ public class MenuScreen : Screen
         }
     }
 
-    // Play challenge button pressed
+
+    /// <summary>
+    /// An handler for when the play challenge button is pressed.
+    /// </summary>
     public void Btn_PlayChallenge()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         NotificationMgr.Instance.Notify("This feature has not been implemented yet.");
     }
 
+    /// <summary>
+    /// An handler for when the view questions button is pressed by an instructor, enables/disables the questions panel and its QuestionUI class.
+    /// </summary>
     public void Btn_QuestionList(bool show)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -124,6 +144,9 @@ public class MenuScreen : Screen
         panel_questionlist.SetActive(!panel_questionlist.activeSelf); // show create question
     }
 
+    /// <summary>
+    /// An handler for when the unlink FB button is pressed, unlinks the player's Facebook profile from his game account.
+    /// </summary>
     public void Btn_FBUnlink()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -157,6 +180,9 @@ public class MenuScreen : Screen
             });
     }
 
+    /// <summary>
+    /// An handler for when the unlink Google button is pressed, unlinks the player's Google profile from his game account.
+    /// </summary>
     public void Btn_GoogleUnlink()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -190,6 +216,9 @@ public class MenuScreen : Screen
             });
     }
 
+    /// <summary>
+    /// An handler for when the link Google button is pressed, links the player's Google profile to his game account.
+    /// </summary>
     public void Btn_GoogleLink()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -240,7 +269,9 @@ public class MenuScreen : Screen
 
     }
 
-
+    /// <summary>
+    /// An handler for when the link Facebook button is pressed, links the player's Facebook profile to his game account.
+    /// </summary>
     public void Btn_FBLink()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -291,7 +322,9 @@ public class MenuScreen : Screen
 
     }
 
-    // Use this as a reference for modifying user data and saving it to db
+    /// <summary>
+    /// A demo method to demonstrate the ability to write data to a document in the database, using account exp as an example.
+    /// </summary>
     public void Btn_TestAddEXP()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -320,7 +353,9 @@ public class MenuScreen : Screen
         });
     }
 
-    // Use this as a reference for accessing user data such as login type etc.
+    /// <summary>
+    /// A method that refreshes the displayed profile information.
+    /// </summary>
     private void RefreshProfileInfo()
     {
         FBUnLinkButton.SetActive(false);
@@ -385,7 +420,9 @@ public class MenuScreen : Screen
         }
     }
 
-    // Checking login details and displaying appropriate UI
+    /// <summary>
+    /// A method that checks the current player's login details and displays the appropriate information and UI objects.
+    /// </summary>
     private void CheckLoginDetails()
     {
         // If user is logged in
@@ -420,8 +457,9 @@ public class MenuScreen : Screen
 
     }
 
-
-    //show friends list
+    /// <summary>
+    /// A handler for when the friends button is pressed, enables/disables the friends panel and its FriendsUI class.
+    /// </summary>
     public void Btn_ShowFriendsList(bool show)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);

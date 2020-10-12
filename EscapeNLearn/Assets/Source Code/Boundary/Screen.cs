@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -9,7 +8,9 @@ public abstract class Screen : MonoBehaviour
 {
     private bool run = false;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// The first method called when the application runs, instantiates static objects and Singleton classes.
+    /// </summary>
     protected virtual void Awake()
     {
         if (GameObject.Find("StaticObjects") == null)
@@ -20,12 +21,18 @@ public abstract class Screen : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The start of a screen, automatically fetches profile data if applicable, usually overriden by derived classes.
+    /// </summary>
     protected virtual void Start()
     {
         // Fetch data without displaying notifications
         StartCoroutine(AutoFetchData());
     }
 
+    /// <summary>
+    /// A update loop that executes StartAfterDataFetched once after profile data is fetched.
+    /// </summary>
     private void Update()
     {
         if (run)
@@ -35,8 +42,15 @@ public abstract class Screen : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A method that is executed only after profile data is fetched, usually overriden by derived classes to specify different actions to perform in different screens.
+    /// </summary>
     protected virtual void StartAfterDataFetched() { }
 
+
+    /// <summary>
+    /// A coroutine that fetches local and online profile data.
+    /// </summary>
     IEnumerator AutoFetchData()
     {
         yield return new WaitForSeconds(0.1f);

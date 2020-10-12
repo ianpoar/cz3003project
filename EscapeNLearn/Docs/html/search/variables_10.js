@@ -6,7 +6,7 @@ var searchData=
   ['panel_5feditquestion_2512',['panel_editquestion',['../class_question_u_i.html#a9f303536384d695d8f7f8691d2022ca0',1,'QuestionUI']]],
   ['panel_5flevelselect_2513',['panel_LevelSelect',['../class_session_lobby_u_i.html#ab2f1dc66cf1639995c170439f5c38adc',1,'SessionLobbyUI']]],
   ['panel_5fsessionlobby_2514',['panel_sessionlobby',['../class_menu_screen.html#afea617bab58c9b109eafaf0cf7e90e72',1,'MenuScreen']]],
-  ['panelchild_2515',['PanelChild',['../class_friends___list_controller.html#a6b3749763b754ca394a5d7e532e1202b',1,'Friends_ListController']]],
+  ['panelchild_2515',['PanelChild',['../class_friends_u_i.html#ac4a3b11412069e07feaa9e000f01426a',1,'FriendsUI']]],
   ['panminimumtouchcount_2516',['PanMinimumTouchCount',['../class_digital_ruby_shared_1_1_fingers_pan_rotate_scale_script.html#a7e9d5fa65776fdee42ca58c1a1f5b513',1,'DigitalRubyShared::FingersPanRotateScaleScript']]],
   ['passedinquestionlist_2517',['passedInQuestionList',['../class_session_mgr.html#a5dc804f7294fead7a6ff03d565f43e04',1,'SessionMgr']]],
   ['passedinsession_2518',['passedInSession',['../class_session_mgr.html#a09d88676230bac93dc7e2694101290dc',1,'SessionMgr']]],

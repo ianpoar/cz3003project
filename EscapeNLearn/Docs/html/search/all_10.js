@@ -7,7 +7,7 @@ var searchData=
   ['panel_5feditquestion_956',['panel_editquestion',['../class_question_u_i.html#a9f303536384d695d8f7f8691d2022ca0',1,'QuestionUI']]],
   ['panel_5flevelselect_957',['panel_LevelSelect',['../class_session_lobby_u_i.html#ab2f1dc66cf1639995c170439f5c38adc',1,'SessionLobbyUI']]],
   ['panel_5fsessionlobby_958',['panel_sessionlobby',['../class_menu_screen.html#afea617bab58c9b109eafaf0cf7e90e72',1,'MenuScreen']]],
-  ['panelchild_959',['PanelChild',['../class_friends___list_controller.html#a6b3749763b754ca394a5d7e532e1202b',1,'Friends_ListController']]],
+  ['panelchild_959',['PanelChild',['../class_friends_u_i.html#ac4a3b11412069e07feaa9e000f01426a',1,'FriendsUI']]],
   ['pangesture_960',['PanGesture',['../class_digital_ruby_shared_1_1_fingers_pan_rotate_scale_script.html#a5016ca077a27747dad40fcc6e64978f7',1,'DigitalRubyShared.FingersPanRotateScaleScript.PanGesture()'],['../class_digital_ruby_shared_1_1_fingers_d_pad_script.html#a87e4c95c1c724df46c8cb1833315bb6c',1,'DigitalRubyShared.FingersDPadScript.PanGesture()']]],
   ['pangesturerecognizer_961',['PanGestureRecognizer',['../class_digital_ruby_shared_1_1_pan_gesture_recognizer.html',1,'DigitalRubyShared.PanGestureRecognizer'],['../class_digital_ruby_shared_1_1_pan_gesture_recognizer.html#af40cb5db3bcbfd82af58aa20cd8fc6a9',1,'DigitalRubyShared.PanGestureRecognizer.PanGestureRecognizer()']]],
   ['pangesturerecognizer_2ecs_962',['PanGestureRecognizer.cs',['../_pan_gesture_recognizer_8cs.html',1,'']]],

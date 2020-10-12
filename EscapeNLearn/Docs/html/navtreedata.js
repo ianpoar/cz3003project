@@ -64,7 +64,7 @@ var NAVTREEINDEX =
 "_a_p_i_linker_8cs.html",
 "_request_helper_extension_8cs.html",
 "class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a43544e21f5a3dd98bd8668a9646047ac",
-"class_friends___list_item_controller.html#aa011c70e71611b4d8805de498960a6df",
+"class_friends_list_data.html#ac8297579fa966d24b4fc510a665810ab",
 "class_full_serializer_1_1fs_converter_registrar.html#afc9cb33054876efd305dc172af2ee085",
 "class_login_screen.html#a9e817b502d42f819c064e3b196f8a11a",
 "class_question_u_i.html#a9d837f7146dec55e6553ec30f631bc6f",

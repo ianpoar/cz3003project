@@ -5,5 +5,5 @@ var searchData=
   ['timedata_1616',['TimeData',['../struct_r_s_g_1_1_time_data.html',1,'RSG']]],
   ['transitmgr_1617',['TransitMgr',['../class_transit_mgr.html',1,'']]],
   ['trigger_1618',['Trigger',['../class_trigger.html',1,'']]],
-  ['tuple_1619',['Tuple',['../class_r_s_g_1_1_tuple.html',1,'RSG.Tuple&lt; T1, T2, T3, T4 &gt;'],['../class_r_s_g_1_1_tuple.html',1,'RSG.Tuple&lt; T1, T2, T3 &gt;'],['../class_r_s_g_1_1_tuple.html',1,'RSG.Tuple&lt; T1, T2 &gt;'],['../class_r_s_g_1_1_tuple.html',1,'RSG.Tuple']]]
+  ['tuple_1619',['Tuple',['../class_r_s_g_1_1_tuple.html',1,'RSG.Tuple&lt; T1, T2 &gt;'],['../class_r_s_g_1_1_tuple.html',1,'RSG.Tuple&lt; T1, T2, T3, T4 &gt;'],['../class_r_s_g_1_1_tuple.html',1,'RSG.Tuple&lt; T1, T2, T3 &gt;'],['../class_r_s_g_1_1_tuple.html',1,'RSG.Tuple']]]
 ];

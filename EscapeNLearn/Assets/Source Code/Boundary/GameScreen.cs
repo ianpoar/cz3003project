@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// UI Boundary Class for the Game scene.
+/// UI Boundary Class for the Game scene, handles all UI-related events in the scene.
 /// </summary>
 public class GameScreen : Screen
 {
@@ -25,19 +23,26 @@ public class GameScreen : Screen
     public Text txt_timer;
     public Text txt_tips;
 
+    /// <summary>
+    /// Start of the Game screen.
+    /// </summary>
     protected override void Start()
     {
         base.Start();
         GameManager.StartGame(this);
     }
 
-    // used by gamemgr
+    /// <summary>
+    /// A method that pauses and unpauses player controller input.
+    /// </summary>
     public void PauseInput(bool flag)
     {
         JSInput.PauseInput(flag);
     }
 
-    // used by gamemgr
+    /// <summary>
+    /// A method to display NPC questions.
+    /// </summary>
     public void ShowNPCQuestion(string npcname, Question ques)
     {
         PauseInput(true);
@@ -56,7 +61,9 @@ public class GameScreen : Screen
         }
     }
 
-    // used by gamemgr
+    /// <summary>
+    /// A method to give feedback on a wrong answer from the player.
+    /// </summary>
     public void ShowWrongAnswer()
     {
         txt_question.text = "Wrong answer! Please try again.";
@@ -66,12 +73,17 @@ public class GameScreen : Screen
         }
     }
 
+    /// <summary>
+    /// A method to set the in-game tip displayed.
+    /// </summary>
     public void SetTips(string tips)
     {
         txt_tips.text = tips;
     }
 
-    // used by gamemgr
+    /// <summary>
+    /// A method to display feedback on clearing the level to the player.
+    /// </summary>
     public void ShowResultsScreen(Report report)
     {
         pauseButton.SetActive(false);
@@ -85,7 +97,9 @@ public class GameScreen : Screen
          });
     }
 
-    // used by gamemgr
+    /// <summary>
+    /// A method to display feedback on failing the level to the player.
+    /// </summary>
     public void ShowGameFailed(Report report)
     {
         pauseButton.SetActive(false);
@@ -99,7 +113,9 @@ public class GameScreen : Screen
 
     }
 
-    // used by gamemgr
+    /// <summary>
+    /// A method to set the player's current health points display.
+    /// </summary>
     public void SetHP(int value, int maxhp)
     {
         float scale = (float)value / (float)maxhp;
@@ -107,13 +123,17 @@ public class GameScreen : Screen
         txt_HP.text = "" + value + " / " + maxhp;
     }
 
-    // called by gamemgr
+    /// <summary>
+    /// A method to display feedback on failing the level to the player.
+    /// </summary>
     public void SetTimer(int value)
     {
         txt_timer.text = "" + value;
     }
 
-    // called by UI
+    /// <summary>
+    /// A handler for when the pause or unpause button is pressed.
+    /// </summary>
     public void Btn_Pause(bool flag)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -127,6 +147,9 @@ public class GameScreen : Screen
         GameManager.PauseGame(flag);
     }
 
+    /// <summary>
+    /// A handler for when the leave game button is pressed.
+    /// </summary>
     public void Btn_LeaveGame()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -134,14 +157,18 @@ public class GameScreen : Screen
         TransitMgr.Instance.FadeToScene("Menu");
     }
 
-    // called by UI
+    /// <summary>
+    /// A handler for when the player answers a question.
+    /// </summary>
     public void AnswerQuestion(int choice)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         GameManager.AnswerQuestion(choice);
     }
 
-    // called by UI
+    /// <summary>
+    /// A handler for when the player cancels answering a question.
+    /// </summary>
     public void Btn_CancelQuestion(bool playsound)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);

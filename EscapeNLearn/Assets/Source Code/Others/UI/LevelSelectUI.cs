@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// A UI class that provides level selection functionalities, encapsulated in the menu scene in Unity.
+/// A UI class encapsulated in MenuScreen in the Unity scene, handles UI functionality of the level select panel.
 /// </summary>
 public class LevelSelectUI : MonoBehaviour
 {

@@ -1,7 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
-public class Friends_ListController : MonoBehaviour
+
+
+/// <summary>
+/// A UI class encapsulated in MenuScreen in the Unity scene, handles UI functionality of the friends panel.
+/// </summary>
+public class FriendsUI : MonoBehaviour
 {
     public GameObject PanelChild;
     public GameObject ListItem;

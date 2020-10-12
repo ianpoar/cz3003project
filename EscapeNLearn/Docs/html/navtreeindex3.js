@@ -1,9 +1,9 @@
 var NAVTREEINDEX3 =
 {
-"class_friends___list_item_controller.html#aa011c70e71611b4d8805de498960a6df":[1,0,29,0],
-"class_friends_list_data.html":[1,0,30],
-"class_friends_list_data.html#a8753ddd5b31916d63482cbb85a1526b6":[1,0,30,1],
-"class_friends_list_data.html#ac8297579fa966d24b4fc510a665810ab":[1,0,30,0],
+"class_friends_list_data.html#ac8297579fa966d24b4fc510a665810ab":[1,0,29,0],
+"class_friends_u_i.html":[1,0,30],
+"class_friends_u_i.html#a01b07b72c30809985caeb8478902bb05":[1,0,30,0],
+"class_friends_u_i.html#ac4a3b11412069e07feaa9e000f01426a":[1,0,30,1],
 "class_full_serializer_1_1_internal_1_1_direct_converters_1_1_animation_curve___direct_converter.html":[1,0,2,0,0,0],
 "class_full_serializer_1_1_internal_1_1_direct_converters_1_1_animation_curve___direct_converter.html#a1459e59a56a0729f37ec9cf9ced6cde9":[1,0,2,0,0,0,2],
 "class_full_serializer_1_1_internal_1_1_direct_converters_1_1_animation_curve___direct_converter.html#ade5d37cdc1d926982bc5523d3745cfb7":[1,0,2,0,0,0,0],

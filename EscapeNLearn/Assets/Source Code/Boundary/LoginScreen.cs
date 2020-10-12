@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// UI Boundary Class for the Login scene.
+/// UI Boundary Class for the Login scene, handles all UI-related events in the scene.
 /// </summary>
 public class LoginScreen : Screen
 {
@@ -20,7 +20,9 @@ public class LoginScreen : Screen
     [SerializeField]
     private InputField input_loginPassword;
 
-    // Start of login screen
+    /// <summary>
+    /// Start of the Login screen.
+    /// </summary>
     protected override void Start()
     {
         // base.Start(); don't fetch data, use autologin
@@ -29,7 +31,9 @@ public class LoginScreen : Screen
     }
 
 
-    // Button to show sign up panel pressed
+    /// <summary>
+    /// Handler for when the sign up button is pressed, shows/hides the email sign up panel.
+    /// </summary>
     public void Btn_ShowSignUp(bool flag)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -37,7 +41,9 @@ public class LoginScreen : Screen
         input_signUpEmail.text = input_password1.text = input_password2.text = "";
     }
 
-    // Login button pressed
+    /// <summary>
+    /// Handler for when the log in button is pressed, performs an email log in.
+    /// </summary>
     public void Btn_Login()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -69,7 +75,9 @@ public class LoginScreen : Screen
         });
     }
 
-    // Sign up button pressed
+    /// <summary>
+    /// Handler for when the sign up button in the sign up panel is pressed, performs an account registration via email.
+    /// </summary>
     public void Btn_SignUp()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
@@ -111,7 +119,9 @@ public class LoginScreen : Screen
         });
     }
 
-    // FBLogin button pressed
+    /// <summary>
+    /// Handler for when the Facebook login button is pressed, performs an account registration or sign in via Facebook.
+    /// </summary>
     public void Btn_FBLogin()
     {
         NotificationMgr.Instance.NotifyLoad("Logging in via Facebook...");
@@ -142,8 +152,9 @@ public class LoginScreen : Screen
         });
     }
 
-
-    // GoogleLogin button pressed
+    // <summary>
+    /// Handler for when the Google login button is pressed, performs an account registration or sign in via Google.
+    /// </summary>
     public void Btn_GoogleLogin()
     {
         // call api login and get credential
@@ -173,7 +184,9 @@ public class LoginScreen : Screen
         });
     }
 
-    // Transit to menu screen
+    // <summary>
+    /// A method that checks that the user's email is verified before continuing the login process and transiting to the menu screen.
+    /// </summary>
     private void VerifyAndTransitToMenu(bool checkEmailVerified = true)
     {
         // check for verified email
@@ -217,6 +230,9 @@ public class LoginScreen : Screen
 
     }
 
+    // <summary>
+    /// A method that checks for an alpha-numeric input, used for password requirements.
+    /// </summary>
     private bool IsAlphaNum(string str)
     {
         if (string.IsNullOrEmpty(str))
@@ -231,6 +247,9 @@ public class LoginScreen : Screen
         return true;
     }
 
+    // <summary>
+    /// A method creates a new profile for the player.
+    /// </summary>
     private void CreateProfileSequence()
     {
         NotificationMgr.Instance.RequestTextInput("Please enter a unique ID (min. 3, max 10 characters). Allowed characters are: [a-zA-Z0-9]",
@@ -309,6 +328,9 @@ public class LoginScreen : Screen
                 });
     }
 
+    // <summary>
+    /// A method that logs the player in automatically if the player has logged in before.
+    /// </summary>
     IEnumerator Autologin()
     {
         yield return new WaitForSeconds(0.5f);

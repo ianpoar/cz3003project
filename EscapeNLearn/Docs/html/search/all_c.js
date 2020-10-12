@@ -16,7 +16,7 @@ var searchData=
   ['linepadding_829',['LinePadding',['../class_digital_ruby_shared_1_1_image_gesture_recognizer.html#abbb627a5d00f4ab4a945560706ee5677',1,'DigitalRubyShared::ImageGestureRecognizer']]],
   ['linkcredentials_830',['LinkCredentials',['../class_database_mgr.html#a152054a3b2602a92ef7d5c0fa79912fd',1,'DatabaseMgr']]],
   ['list_831',['list',['../class_question_list.html#afb86987f89b06117992dfbe2fcf75d1f',1,'QuestionList.list()'],['../class_answer_list.html#a88255ffc9577fde877e6d37359a93b6a',1,'AnswerList.list()']]],
-  ['listitem_832',['ListItem',['../class_friends___list_controller.html#a0e581681c832e63d412115fab5daa66d',1,'Friends_ListController']]],
+  ['listitem_832',['ListItem',['../class_friends_u_i.html#a01b07b72c30809985caeb8478902bb05',1,'FriendsUI']]],
   ['load_833',['Load',['../_notification_8cs.html#addc4b6302e217e9dffab38d9dd5c02f8af19dbf2edb3a0bd74b0524d960ff21eb',1,'Notification.cs']]],
   ['loadallsessionreports_834',['LoadAllSessionReports',['../class_session_mgr.html#a99cff0d4df0debfd38d6044fef083c6f',1,'SessionMgr']]],
   ['loadindividualsessionreports_835',['LoadIndividualSessionReports',['../class_session_mgr.html#aa6293b879a1ba00948f943acfe4e7966',1,'SessionMgr']]],

@@ -12,15 +12,6 @@ var dir_06da06c9137774d7019d7f4241c15efa =
     [ "FBAPILinker.cs", "_f_b_a_p_i_linker_8cs.html", [
       [ "FBAPILinker", "class_f_b_a_p_i_linker.html", "class_f_b_a_p_i_linker" ]
     ] ],
-    [ "Friends_ListController.cs", "_friends___list_controller_8cs.html", [
-      [ "Friends_ListController", "class_friends___list_controller.html", "class_friends___list_controller" ]
-    ] ],
-    [ "Friends_ListItemController.cs", "_friends___list_item_controller_8cs.html", [
-      [ "Friends_ListItemController", "class_friends___list_item_controller.html", "class_friends___list_item_controller" ]
-    ] ],
-    [ "FriendsListData.cs", "_friends_list_data_8cs.html", [
-      [ "FriendsListData", "class_friends_list_data.html", "class_friends_list_data" ]
-    ] ],
     [ "GameMgr.cs", "_game_mgr_8cs.html", [
       [ "GameMgr", "class_game_mgr.html", "class_game_mgr" ]
     ] ],

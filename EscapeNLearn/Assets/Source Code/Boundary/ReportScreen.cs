@@ -1,18 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
 
 /// <summary>
-/// UI Boundary Class for the Report scene.
+/// UI Boundary Class for the Report scene, handles all UI-related events in the scene.
 /// </summary>
 public class ReportScreen : Screen
 {
    public Text txt_header;
    public Text txt_info;
     public Text txt_info2;
-   protected override void Start()
+
+    /// <summary>
+    /// Start of the Report screen.
+    /// </summary>
+    protected override void Start()
    {
         AudioMgr.Instance.PlayBGM(AudioConstants.BGM_RESULT);
 
@@ -35,7 +37,9 @@ public class ReportScreen : Screen
         }
    }
 
-    // helper function
+    /// <summary>
+    /// A helper function that records wrongly answered questions.
+    /// </summary>
     void AddWrongAnswer(Dictionary<string, int> dic, string question)
     {
         int output;
@@ -51,6 +55,9 @@ public class ReportScreen : Screen
         }
     }
 
+    /// <summary>
+    /// A method to generate and display the players's overall individual report for a session.
+    /// </summary>
     void GenerateIndividualReport()
     {
         // Gather data
@@ -100,7 +107,10 @@ public class ReportScreen : Screen
             txt_info2.text += "\n" + item.Key + " (Count: " + item.Value + ")";
         }
     }
-    
+
+    /// <summary>
+    /// A method to generate and display the player's level report for a level that was just played.
+    /// </summary>
     void GenerateLevelReport()
     {
         // Gather Data
@@ -141,6 +151,9 @@ public class ReportScreen : Screen
         }
     }
 
+    /// <summary>
+    /// A method used by instructors to generate and display an overall report of a session.
+    /// </summary>
     void GenerateSessionReport()
     {
         // Gather data
@@ -192,6 +205,9 @@ public class ReportScreen : Screen
         }
     }
 
+    /// <summary>
+    /// A handler for when the back button is pressed, performs a transition back to the menu screen.
+    /// </summary>
     public void Btn_BacktoMenu()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);

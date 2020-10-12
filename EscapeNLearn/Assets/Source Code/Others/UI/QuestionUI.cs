@@ -1,16 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Facebook.MiniJSON;
-using System.Net.Mail;
-using System.Linq;
-using System;
-using System.IO.Pipes;
 
 /// <summary>
-/// A UI class that provides question management functionalities, encapsulated in the menu scene in Unity.
+/// A UI class encapsulated in MenuScreen in the Unity scene, handles UI functionality of the questions panel.
 /// </summary>
 public class QuestionUI : MonoBehaviour
 {

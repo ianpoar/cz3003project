@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// A UI class that provides the settings functionality, encapsulated in the menu scene in Unity.
+/// A UI class encapsulated in MenuScreen in the Unity scene, handles UI functionality of the settings panel.
 /// </summary>
 public class SettingsUI : MonoBehaviour
 {

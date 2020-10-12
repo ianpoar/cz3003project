@@ -246,8 +246,8 @@ var NAVTREEINDEX2 =
 "class_floating_u_i_script.html#a73e9c5ed148f05737671b33e08daeb5e":[1,0,27,5],
 "class_floating_u_i_script.html#a8aaae9e50123313819ccbc05879ffa3a":[1,0,27,4],
 "class_floating_u_i_script.html#aa16cab0102ede31d12c01d21f7cae99b":[1,0,27,3],
-"class_friends___list_controller.html":[1,0,28],
-"class_friends___list_controller.html#a0e581681c832e63d412115fab5daa66d":[1,0,28,0],
-"class_friends___list_controller.html#a6b3749763b754ca394a5d7e532e1202b":[1,0,28,1],
-"class_friends___list_item_controller.html":[1,0,29]
+"class_friends___list_item_controller.html":[1,0,28],
+"class_friends___list_item_controller.html#aa011c70e71611b4d8805de498960a6df":[1,0,28,0],
+"class_friends_list_data.html":[1,0,29],
+"class_friends_list_data.html#a8753ddd5b31916d63482cbb85a1526b6":[1,0,29,1]
 };
