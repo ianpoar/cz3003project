@@ -230,22 +230,22 @@ public class DatabaseMgr : MonoBehaviour
                 .GetValueAsync();
             yield return new WaitUntil(predicate: () => task.IsCompleted);
             if (task.IsFaulted)
-                    {
-                        failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-                    }
-                    else if (task.IsCompleted)
-                    {
-                        DataSnapshot snapshot = task.Result;
-                        string result = snapshot.GetRawJsonValue();
-                        if (result == null || result == "{}")
-                        {
-                            failCallback?.Invoke("No data found.");
-                        }
-                        else
-                        {
-                            successCallback?.Invoke(result);
-                        }
-                    }
+            {
+                failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+            }
+            else if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                string result = snapshot.GetRawJsonValue();
+                if (result == null || result == "{}")
+                {
+                    failCallback?.Invoke("No data found.");
+                }
+                else
+                {
+                    successCallback?.Invoke(result);
+                }
+            }
         }
         else
         {
@@ -253,23 +253,23 @@ public class DatabaseMgr : MonoBehaviour
                 .GetReference(query).OrderByChild(orderbyID).EqualTo(id).LimitToFirst(first)
                 .GetValueAsync();
             yield return new WaitUntil(predicate: () => task.IsCompleted);
-                    if (task.IsFaulted)
-                    {
-                        failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-                    }
-                    else if (task.IsCompleted)
-                    {
-                        DataSnapshot snapshot = task.Result;
-                        string result = snapshot.GetRawJsonValue();
-                        if (result == null || result == "{}")
-                        {
-                            failCallback?.Invoke("No data found.");
-                        }
-                        else
-                        {
-                            successCallback?.Invoke(result);
-                        }
-                    }
+            if (task.IsFaulted)
+            {
+                failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+            }
+            else if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                string result = snapshot.GetRawJsonValue();
+                if (result == null || result == "{}")
+                {
+                    failCallback?.Invoke("No data found.");
+                }
+                else
+                {
+                    successCallback?.Invoke(result);
+                }
+            }
         }
     }
 
@@ -407,20 +407,20 @@ public class DatabaseMgr : MonoBehaviour
            .GetReference(query + "/" + key).SetRawJsonValueAsync(JsonUtility.ToJson(data));
         yield return new WaitUntil(predicate: () => task.IsCompleted);
         if (task.IsFaulted)
-               {
-                   failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-               }
-               else if (task.IsCompleted)
-               {
-                   if (task.Exception == null)
-                   {
-                       successCallback?.Invoke(key);
-                   }
-                   else
-                   {
-                       failCallback?.Invoke(task.Exception.GetBaseException().ToString());
-                   }
-               }
+        {
+            failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+        }
+        else if (task.IsCompleted)
+        {
+            if (task.Exception == null)
+            {
+                successCallback?.Invoke(key);
+            }
+            else
+            {
+                failCallback?.Invoke(task.Exception.GetBaseException().ToString());
+            }
+        }
     }
 
     /// <summary>
