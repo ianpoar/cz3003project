@@ -16406,7 +16406,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2010284901678530732}
   m_HandleRect: {fileID: 2010284901678530735}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -19246,7 +19246,7 @@ MonoBehaviour:
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 0
+    m_LineSpacing: 1
   m_Text: 
 --- !u!222 &2010284902201112291
 CanvasRenderer:
@@ -23276,14 +23276,14 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2010284902738766602}
   m_TextComponent: {fileID: 2010284902201112290}
   m_Placeholder: {fileID: 2010284902702141975}
-  m_ContentType: 0
+  m_ContentType: 9
   m_InputType: 0
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 1
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 120
+  m_CharacterLimit: 500
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
