@@ -11,7 +11,7 @@ var searchData=
   ['elapsedseconds_299',['ElapsedSeconds',['../class_digital_ruby_shared_1_1_gesture_velocity_tracker.html#aa8a9e372159180f6af0060a5ecee018d',1,'DigitalRubyShared::GestureVelocityTracker']]],
   ['elapsedtime_300',['elapsedTime',['../struct_r_s_g_1_1_time_data.html#a382272f3876dc7ed62cbc15670a62336',1,'RSG::TimeData']]],
   ['elapsedupdates_301',['elapsedUpdates',['../struct_r_s_g_1_1_time_data.html#ae841f879811550f8a566c8234244ca4a',1,'RSG::TimeData']]],
-  ['email_302',['Email',['../class_google_1_1_google_sign_in_user.html#a544410776e8eaf2ed53bf76a1b886fb6',1,'Google.GoogleSignInUser.Email()'],['../class_database_mgr.html#a7c8bb15e5cf89d1adad9f03028815146',1,'DatabaseMgr.Email()'],['../class_login_type_constants.html#a302529e075c30660d23ea18fdc8d53cf',1,'LoginTypeConstants.EMAIL()']]],
+  ['email_302',['EMAIL',['../class_login_type_constants.html#a302529e075c30660d23ea18fdc8d53cf',1,'LoginTypeConstants.EMAIL()'],['../class_google_1_1_google_sign_in_user.html#a544410776e8eaf2ed53bf76a1b886fb6',1,'Google.GoogleSignInUser.Email()'],['../class_database_mgr.html#a7c8bb15e5cf89d1adad9f03028815146',1,'DatabaseMgr.Email()']]],
   ['emaillogin_303',['EmailLogin',['../class_database_mgr.html#aae565229f400b1ab9fa8d0892835d4c6',1,'DatabaseMgr']]],
   ['emailregister_304',['EmailRegister',['../class_database_mgr.html#a24c17a6b14db7275cc23caee9c8b0dc3',1,'DatabaseMgr']]],
   ['emerge_305',['Emerge',['../class_transit_mgr.html#ab6ac03a5f94382e3a68e1f431f996f53',1,'TransitMgr']]],

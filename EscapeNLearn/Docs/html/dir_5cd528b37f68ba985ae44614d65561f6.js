@@ -1,10 +1,13 @@
-var dir_5d78267d5547a8cb8c3de6b4a55424e2 =
+var dir_5cd528b37f68ba985ae44614d65561f6 =
 [
     [ "FriendsUI.cs", "_friends_u_i_8cs.html", [
       [ "FriendsUI", "class_friends_u_i.html", "class_friends_u_i" ]
     ] ],
     [ "LevelSelectUI.cs", "_level_select_u_i_8cs.html", [
       [ "LevelSelectUI", "class_level_select_u_i.html", "class_level_select_u_i" ]
+    ] ],
+    [ "ProfileUI.cs", "_profile_u_i_8cs.html", [
+      [ "ProfileUI", "class_profile_u_i.html", "class_profile_u_i" ]
     ] ],
     [ "QuestionUI.cs", "_question_u_i_8cs.html", [
       [ "QuestionUI", "class_question_u_i.html", "class_question_u_i" ]

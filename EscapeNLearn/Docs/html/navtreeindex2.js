@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a3b6405cd5b2179cf498bed051ea895da":[1,0,0,10,1],
 "class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a43544e21f5a3dd98bd8668a9646047ac":[1,0,0,10,14],
 "class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a68302635991353605bb2168b8bb82d1c":[1,0,0,10,6],
 "class_digital_ruby_shared_1_1_gesture_recognizer_component_script.html#a6fa0991882bf55aaede92cdde71b03c1":[1,0,0,10,9],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "class_floating_u_i_script.html#aa16cab0102ede31d12c01d21f7cae99b":[1,0,27,3],
 "class_friends___list_item_controller.html":[1,0,28],
 "class_friends___list_item_controller.html#aa011c70e71611b4d8805de498960a6df":[1,0,28,0],
-"class_friends_list_data.html":[1,0,29],
-"class_friends_list_data.html#a8753ddd5b31916d63482cbb85a1526b6":[1,0,29,1]
+"class_friends_list_data.html":[1,0,29]
 };

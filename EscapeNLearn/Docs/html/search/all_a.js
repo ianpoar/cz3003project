@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['joinsession_785',['JoinSession',['../class_session_mgr.html#a814892365b3875a084ec21c46078c1b5',1,'SessionMgr.JoinSession()'],['../class_session_lobby_u_i.html#a2b333d07d8c8d12df074d99d5575bce3',1,'SessionLobbyUI.JoinSession()']]],
+  ['joinsession_785',['JoinSession',['../class_session_lobby_u_i.html#a2b333d07d8c8d12df074d99d5575bce3',1,'SessionLobbyUI.JoinSession()'],['../class_session_mgr.html#a814892365b3875a084ec21c46078c1b5',1,'SessionMgr.JoinSession()']]],
   ['joystickdisconnected_786',['JoystickDisconnected',['../class_joystick_input.html#a9c593a7d20475c5c1636de779f99d245',1,'JoystickInput']]],
   ['joystickexecuted_787',['JoystickExecuted',['../class_joystick_input.html#a3a25afb8c26bbfb5faf7441529f14058',1,'JoystickInput']]],
   ['joystickimage_788',['JoystickImage',['../class_joystick_script.html#aad687bc16cddaf6dfdc5d1fdcb49a57b',1,'JoystickScript']]],

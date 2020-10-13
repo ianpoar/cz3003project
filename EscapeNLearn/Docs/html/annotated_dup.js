@@ -55,6 +55,7 @@ var annotated_dup =
     [ "PPConstants", "class_p_p_constants.html", "class_p_p_constants" ],
     [ "Profile", "class_profile.html", "class_profile" ],
     [ "ProfileMgr", "class_profile_mgr.html", "class_profile_mgr" ],
+    [ "ProfileUI", "class_profile_u_i.html", "class_profile_u_i" ],
     [ "Projectile", "class_projectile.html", "class_projectile" ],
     [ "Question", "class_question.html", "class_question" ],
     [ "QuestionList", "class_question_list.html", "class_question_list" ],

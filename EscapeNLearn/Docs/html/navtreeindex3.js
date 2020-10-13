@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"class_friends_list_data.html#a8753ddd5b31916d63482cbb85a1526b6":[1,0,29,1],
 "class_friends_list_data.html#ac8297579fa966d24b4fc510a665810ab":[1,0,29,0],
 "class_friends_u_i.html":[1,0,30],
 "class_friends_u_i.html#a01b07b72c30809985caeb8478902bb05":[1,0,30,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "class_full_serializer_1_1fs_converter_registrar.html#ab6060b37eb73d927f8cef47115da8fbb":[1,0,2,9,9],
 "class_full_serializer_1_1fs_converter_registrar.html#abe9027e3fcd222955b36d41e409fd6f0":[1,0,2,9,0],
 "class_full_serializer_1_1fs_converter_registrar.html#ac022ba6fbcff285756dd22d1d87efe3c":[1,0,2,9,6],
-"class_full_serializer_1_1fs_converter_registrar.html#ad2678c0d4d05b63e7b6b52949914fc1c":[1,0,2,9,5],
-"class_full_serializer_1_1fs_converter_registrar.html#afa11e5e658aeec293b54117312b82bc6":[1,0,2,9,4]
+"class_full_serializer_1_1fs_converter_registrar.html#ad2678c0d4d05b63e7b6b52949914fc1c":[1,0,2,9,5]
 };
