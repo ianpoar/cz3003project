@@ -1,25 +1,38 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine;
+
 
 /// <summary>
 /// UI Boundary Class for the Report scene, handles all UI-related events in the scene.
 /// </summary>
 public class ReportScreen : Screen
 {
+   public PieGraph ob;
    public Text txt_header;
    public Text txt_info;
-    public Text txt_info2;
+   public Text txt_info2;
+   public Text txt_correct;
+   public Text txt_wrong;
 
-    /// <summary>
+   /// <summary>
     /// Start of the Report screen.
     /// </summary>
     protected override void Start()
    {
         AudioMgr.Instance.PlayBGM(AudioConstants.BGM_RESULT);
-
         txt_info.text = "";
         txt_info2.text = "";
+        txt_correct.text= "";
+        txt_wrong.text= "";
+
+        if (SessionMgr.Instance.currentConnection == null)
+          {
+            Debug.Log("no connection detected");
+            return;
+          }
+
         switch (SessionMgr.Instance.CurrentReportType)
         {
             case ReportType.INDIVIDUAL:
@@ -58,7 +71,7 @@ public class ReportScreen : Screen
     /// <summary>
     /// A method to generate and display the players's overall individual report for a session.
     /// </summary>
-    void GenerateIndividualReport()
+    public void GenerateIndividualReport()
     {
         // Gather data
         int totalAnsCount = 0;
@@ -68,10 +81,9 @@ public class ReportScreen : Screen
 
         List<Report> SessionReports = SessionMgr.Instance.SessionReports;
         Connection c = SessionMgr.Instance.currentConnection;
-
         Dictionary<string, int> wrongAnswers = new Dictionary<string, int>(); // to keep track of wrong answers
 
-        for (int i = 0; i < SessionReports.Count; i++) // for reach report
+        for (int i = 0; i < SessionReports.Count; i++) // for each report
         {
             Report r = SessionReports[i];
             List<Answer> answers = r.answers.list;
@@ -89,29 +101,33 @@ public class ReportScreen : Screen
                 else
                 {
                     totalRightCount++;
+
                 }
             }
         }
 
         // Format display
         txt_info.text += "Player ID: " + c.id_player;
-        txt_info.text += "\n\nSession Name:\n" + c.session_name;
-        txt_info.text += "\n\nSession ID:\n" + c.id_session;
-        txt_info.text += "\n\nHighest Game Level Cleared: " + c.level_cleared;
+        txt_info.text += "\n\nSession Name: " + c.session_name;
+        txt_info.text += "\n\nSession ID: " + c.id_session;
+        txt_info.text += "\n\nLevel Cleared: " + c.level_cleared;
         txt_info.text += "\n\nTotal Playtime (s): " + totalElapsedTime;
-        txt_info.text += "\n\nTotal No. of Answered Questions:\n" + totalAnsCount + " (" + totalRightCount + " correct, " + totalWrongCount + " wrong)";
-        txt_info2.text += "Top 5 Wronged Questions:";
-
-        foreach (KeyValuePair<string, int> item in wrongAnswers.OrderByDescending(key => key.Value).Take(5))
+        txt_info.text += "\n\nTotal Questions Answered: " + totalAnsCount;
+        //txt_info.text += "\n\nTotal No. of Answered Questions:\n" + totalAnsCount + " (" + totalRightCount + " correct, " + totalWrongCount + " wrong)";
+        txt_info2.text += "Top 3 Wrong Questions: ";
+        txt_correct.text += "Correct Answers: "+totalRightCount;
+        txt_wrong.text += "Wrong Answers: "+totalWrongCount;
+        foreach (KeyValuePair<string, int> item in wrongAnswers.OrderByDescending(key => key.Value).Take(3))
         {
             txt_info2.text += "\n" + item.Key + " (Count: " + item.Value + ")";
         }
+        ob.MakeGraph(totalAnsCount, totalWrongCount);
     }
 
     /// <summary>
     /// A method to generate and display the player's level report for a level that was just played.
     /// </summary>
-    void GenerateLevelReport()
+    public void GenerateLevelReport()
     {
         // Gather Data
         Connection c = SessionMgr.Instance.currentConnection;
@@ -138,17 +154,22 @@ public class ReportScreen : Screen
         }
 
         // Format display
-        txt_info.text += "Session Name:\n" + c.session_name;
-        txt_info.text += "\n\nSession ID:\n" + c.id_session;
+        txt_info.text += "Session Name: " + c.session_name;
+        txt_info.text += "\n\nSession ID: " + c.id_session;
         txt_info.text += "\n\nLevel: " + r.game_level;
         txt_info.text += "\n\nTime Elapsed (s): " + r.time_elapsed;
-        txt_info.text += "\n\nTotal No. of Answered Questions:\n" + r.answer_count + " (" + correctAnswerCount + " correct, " + wrongAnswerCount + " wrong)";
-        txt_info2.text += "Top 3 Wronged Questions:";
+        txt_info.text += "\n\nTotal Questions Answered: " + r.answer_count;
+        //txt_info.text += "\n\nTotal Questions Answered: " + r.answer_count + " (" + correctAnswerCount + " correct, " + wrongAnswerCount + " wrong)";
+        txt_info2.text += "Top 3 Wrong Questions: ";
+        txt_correct.text +="Correct Answers: " + correctAnswerCount;
+        txt_wrong.text +="Wrong Answers: "+wrongAnswerCount;
 
         foreach (KeyValuePair<string, int> item in wrongAnswers.OrderByDescending(key => key.Value).Take(3))
         {
             txt_info2.text += "\n" + item.Key + " (Count: " + item.Value + ")";
         }
+        int totalCount = correctAnswerCount+wrongAnswerCount;
+        ob.MakeGraph(totalCount, wrongAnswerCount);
     }
 
     /// <summary>
@@ -192,17 +213,19 @@ public class ReportScreen : Screen
         }
 
         // Format display
-        txt_info.text += "Session Name:\n" + s.session_name;
-        txt_info.text += "\n\nSession ID:\n" + SessionMgr.Instance.passedInSessionID;
+        txt_info.text += "Session Name: " + s.session_name;
+        txt_info.text += "\n\nSession ID: " + SessionMgr.Instance.passedInSessionID;
         txt_info.text += "\n\nTotal No. of Unique Players: " + uniquePlayers.Count;
+        txt_info.text += "\n\nTotal Questions Answered: " + totalAnsCount;
+        txt_info2.text += "Top 3 Wrong Questions: ";
+        txt_correct.text +="Correct Answers: "+totalRightCount;
+        txt_wrong.text +="Wrong Answers: "+totalWrongCount;
 
-        txt_info.text += "\n\nTotal No. of Answered Questions:\n" + totalAnsCount + " (" + totalRightCount + " correct, " + totalWrongCount + " wrong)";
-        txt_info2.text += "Top 10 Wronged Questions:";
-
-        foreach (KeyValuePair<string, int> item in wrongAnswers.OrderByDescending(key => key.Value).Take(10))
+        foreach (KeyValuePair<string, int> item in wrongAnswers.OrderByDescending(key => key.Value).Take(3))
         {
             txt_info2.text += "\n" + item.Key + " (Count: " + item.Value + ")";
         }
+        ob.MakeGraph(totalAnsCount, totalWrongCount);
     }
 
     /// <summary>
