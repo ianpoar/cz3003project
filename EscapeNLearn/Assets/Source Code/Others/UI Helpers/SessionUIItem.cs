@@ -15,6 +15,7 @@ public class SessionUIItem : MonoBehaviour
     SessionLobbyUI _ref2;
     Session _session;
     string _id;
+    
 
     public void Init(string id, Session session, SessionUI sessionUI, SessionLobbyUI sessionLobbyUI)
     {

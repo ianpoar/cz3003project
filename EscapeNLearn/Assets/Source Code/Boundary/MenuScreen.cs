@@ -27,6 +27,9 @@ public class MenuScreen : Screen
     [SerializeField]
     private GameObject panel_friends;
 
+    [SerializeField]
+    private GameObject panel_challenges;
+
     /// <summary>
     /// Start of the Menu screen.
     /// </summary>
@@ -155,5 +158,14 @@ public class MenuScreen : Screen
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         panel_friends.SetActive(show);
+    }
+
+    /// <summary>
+    /// A handler for when challenge mode button is pressed, enables/disables the challenges panel.
+    /// </summary>
+    public void Btn_ShowChallenges(bool show)
+    {
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+        panel_challenges.SetActive(show);
     }
 }

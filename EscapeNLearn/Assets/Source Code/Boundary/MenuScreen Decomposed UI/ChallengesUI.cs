@@ -8,14 +8,14 @@ using Facebook.MiniJSON;
 /// <summary>
 /// A UI class encapsulated in MenuScreen in the Unity scene, handles UI functionality of the friends panel.
 /// </summary>
-public class FriendsUI : MonoBehaviour
+public class ChallengesUI : MonoBehaviour
 {
     public GameObject PanelChild;
     public GameObject ListItem;
     public InputField input_FriendName;
 
 
-    ArrayList friends_list;
+    ArrayList challenges_list;
     List<GameObject> spawnedObjList = new List<GameObject>();
 
     /// <summary>
@@ -23,8 +23,8 @@ public class FriendsUI : MonoBehaviour
     /// </summary>
     void OnEnable()
     {
-        NotificationMgr.Instance.NotifyLoad("Fetching profiles");
-        ProfileMgr.Instance.FetchProfiles(
+        NotificationMgr.Instance.NotifyLoad("Fetching challenges");
+        ProfileMgr.Instance.FetchChallenges(
          delegate (string result)
          {
              NotificationMgr.Instance.StopLoad();
@@ -71,63 +71,40 @@ public class FriendsUI : MonoBehaviour
 
     void SpawnProfileObjects(string result)
     {
+        Profile receiver = ProfileMgr.Instance.localProfile;
 
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
 
 
-        friends_list = new ArrayList();
+        challenges_list = new ArrayList();
         foreach (KeyValuePair<string, object> pair in results)
         {
 
             string profiledata = Json.Serialize(pair.Value);
 
-            FriendsListData profile = JsonUtility.FromJson<FriendsListData>(profiledata);
+            ChallengeListData profile = JsonUtility.FromJson<ChallengeListData>(profiledata);
 
 
-            friends_list.Add(profile);
+            challenges_list.Add(profile);
 
         }
 
-        foreach (FriendsListData friend in friends_list)
+        foreach (ChallengeListData friend in challenges_list)
         {
             GameObject newFriend = Instantiate(ListItem) as GameObject;
-            Friends_ListItemController controller = newFriend.GetComponent<Friends_ListItemController>();
-            controller.Name.text = friend.name;
-            newFriend.transform.parent = PanelChild.transform;
-            newFriend.transform.localScale = Vector3.one;
-            controller.Init(this, friend);
-            spawnedObjList.Add(newFriend);
+            Challenges_ListItemController controller = newFriend.GetComponent<Challenges_ListItemController>();
+
+            // controller.Init(this, friend);
+
+            if (friend.receiver_id == receiver.id_player)
+            {
+                controller.Name.text = friend.sender_id;
+                newFriend.transform.parent = PanelChild.transform;
+                newFriend.transform.localScale = Vector3.one;
+                spawnedObjList.Add(newFriend);
+            }
         }
     }
 
-    public void sendChallenge(string session, int level, string senderID, string receiverID)
-    {
-        Challenges c = new Challenges(session, level, senderID, receiverID);
-        createChallenge(c,
-        delegate () // success
-        {
-            NotificationMgr.Instance.StopLoad();
-            NotificationMgr.Instance.Notify("Challenge sent successfully.");
-        },
-        delegate (string failmsg)
-        {
-            NotificationMgr.Instance.StopLoad();
-            NotificationMgr.Instance.Notify(failmsg);
-        });
 
-
-    }
-
-    public void createChallenge(Challenges c, SimpleCallback successCallback, MessageCallback failCallback)
-    {
-        DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_CHALLENGES + "/", c,
-        delegate (string key)
-        {
-            successCallback?.Invoke();
-        },
-        delegate (string failmsg) // failed
-        {
-            failCallback?.Invoke(failmsg);
-        });
-    }
 }

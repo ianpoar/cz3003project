@@ -14,6 +14,7 @@ public static class DBQueryConstants
     public const string QUERY_QUESTIONS = "questions";
     public const string QUERY_QUESTIONLISTS = "questionlists";
     public const string QUERY_REPORTS = "reports";
+    public const string QUERY_CHALLENGES = "challenges";
 }
 
 /// <summary>

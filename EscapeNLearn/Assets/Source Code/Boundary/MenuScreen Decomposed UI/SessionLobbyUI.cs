@@ -70,8 +70,8 @@ public class SessionLobbyUI : MonoBehaviour
          delegate (string result)
          {
              NotificationMgr.Instance.StopLoad();
-             SpawnSessionObjects(result);
-         },
+             SpawnSessionObjects(result);    
+         }, 
          delegate (string failmsg)
          {
              NotificationMgr.Instance.StopLoad();
@@ -82,7 +82,7 @@ public class SessionLobbyUI : MonoBehaviour
     /// <summary>
     /// A method that requests for session data that belongs to a specific instructor from SessionMgr.
     /// </summary>
-    void GenerateSearchSessionObjects(string id)
+    void GenerateSearchSessionObjects(string id) 
     {
         NotificationMgr.Instance.NotifyLoad("Fetching sessions");
         SessionMgr.Instance.FetchSessions(
@@ -101,6 +101,7 @@ public class SessionLobbyUI : MonoBehaviour
     /// <summary>
     /// A method to clear displayed session objects.
     /// </summary>
+
     void ClearSessionObjects()
     {
         foreach (GameObject obj in list)
@@ -148,7 +149,7 @@ public class SessionLobbyUI : MonoBehaviour
     /// A method that spawns session objects to be displayed.
     /// </summary>
     void SpawnSessionObjects(string result)
-    {
+    {   
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
 
         foreach (KeyValuePair<string, object> pair in results)

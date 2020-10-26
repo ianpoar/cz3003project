@@ -40,6 +40,8 @@ public class ReportScreen : Screen
     /// <summary>
     /// A helper function that records wrongly answered questions.
     /// </summary>
+
+    
     void AddWrongAnswer(Dictionary<string, int> dic, string question)
     {
         int output;
