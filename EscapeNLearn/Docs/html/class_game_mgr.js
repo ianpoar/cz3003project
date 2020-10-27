@@ -4,6 +4,7 @@ var class_game_mgr =
     [ "GameClear", "class_game_mgr.html#a42c43ea7d9e67dde5fa0abda5214f645", null ],
     [ "GameFailed", "class_game_mgr.html#ab3c46298cba1fad1762a8165f96c751f", null ],
     [ "PauseGame", "class_game_mgr.html#a2396e42740d339c35e182bceb2ba032c", null ],
+    [ "ProcessWrongAnswer", "class_game_mgr.html#a1727fd29409ee1bc46f8f7b0384b4b7c", null ],
     [ "QuestionsComplete", "class_game_mgr.html#a33aaba360a7e5152d29e97146a0a5d91", null ],
     [ "SendReportToDB", "class_game_mgr.html#a29525391d8a1bfee67ce94a880ebc622", null ],
     [ "ShowQuestions", "class_game_mgr.html#aa92099a1128450bd1f6083998769ea58", null ],

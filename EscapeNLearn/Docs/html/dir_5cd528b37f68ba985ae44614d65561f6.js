@@ -1,5 +1,8 @@
 var dir_5cd528b37f68ba985ae44614d65561f6 =
 [
+    [ "ChallengesUI.cs", "_challenges_u_i_8cs.html", [
+      [ "ChallengesUI", "class_challenges_u_i.html", "class_challenges_u_i" ]
+    ] ],
     [ "FriendsUI.cs", "_friends_u_i_8cs.html", [
       [ "FriendsUI", "class_friends_u_i.html", "class_friends_u_i" ]
     ] ],

@@ -1,5 +1,6 @@
 var class_game1 =
 [
+    [ "ProcessWrongAnswer", "class_game1.html#aa6bf7975f9f84282c215bae05fd9c047", null ],
     [ "QuestionsComplete", "class_game1.html#ae25e66f753f6a140ca9bb8cafa671b79", null ],
     [ "StartGame", "class_game1.html#aec5e2b5a42048ddf92424c710ba8650b", null ],
     [ "Player", "class_game1.html#af5d210be876e8b369f129678e733cca1", null ],

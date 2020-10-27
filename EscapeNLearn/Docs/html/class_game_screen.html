@@ -119,12 +119,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a37aa79645192b69da19ffe1759060305"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_screen.html#a37aa79645192b69da19ffe1759060305">SetTips</a> (string tips)</td></tr>
 <tr class="memdesc:a37aa79645192b69da19ffe1759060305"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method to set the in-game tip displayed.  <a href="class_game_screen.html#a37aa79645192b69da19ffe1759060305">More...</a><br /></td></tr>
 <tr class="separator:a37aa79645192b69da19ffe1759060305"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1d6d3486eda58583ddc9e02da148982"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_screen.html#ad1d6d3486eda58583ddc9e02da148982">ShowResultsScreen</a> (<a class="el" href="class_report.html">Report</a> report)</td></tr>
-<tr class="memdesc:ad1d6d3486eda58583ddc9e02da148982"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method to display feedback on clearing the level to the player.  <a href="class_game_screen.html#ad1d6d3486eda58583ddc9e02da148982">More...</a><br /></td></tr>
-<tr class="separator:ad1d6d3486eda58583ddc9e02da148982"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e06431427ba393a7f8b78066bc5badd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_screen.html#a9e06431427ba393a7f8b78066bc5badd">ShowGameFailed</a> (<a class="el" href="class_report.html">Report</a> report)</td></tr>
-<tr class="memdesc:a9e06431427ba393a7f8b78066bc5badd"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method to display feedback on failing the level to the player.  <a href="class_game_screen.html#a9e06431427ba393a7f8b78066bc5badd">More...</a><br /></td></tr>
-<tr class="separator:a9e06431427ba393a7f8b78066bc5badd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1979f1f9971802d603446cd84a384c3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_screen.html#a1979f1f9971802d603446cd84a384c3a">ShowResultsScreen</a> (<a class="el" href="class_report.html">Report</a> report, bool challenge=false, int reward=0)</td></tr>
+<tr class="memdesc:a1979f1f9971802d603446cd84a384c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method to display feedback on clearing the level to the player.  <a href="class_game_screen.html#a1979f1f9971802d603446cd84a384c3a">More...</a><br /></td></tr>
+<tr class="separator:a1979f1f9971802d603446cd84a384c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24078c9aa67fdfe50ffc233284fd0b47"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_screen.html#a24078c9aa67fdfe50ffc233284fd0b47">ShowGameFailed</a> (<a class="el" href="class_report.html">Report</a> report, bool challenge=false)</td></tr>
+<tr class="memdesc:a24078c9aa67fdfe50ffc233284fd0b47"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method to display feedback on failing the level to the player.  <a href="class_game_screen.html#a24078c9aa67fdfe50ffc233284fd0b47">More...</a><br /></td></tr>
+<tr class="separator:a24078c9aa67fdfe50ffc233284fd0b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79d77cca2c8dec930e98362b04929887"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_screen.html#a79d77cca2c8dec930e98362b04929887">SetHP</a> (int value, int maxhp)</td></tr>
 <tr class="memdesc:a79d77cca2c8dec930e98362b04929887"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method to set the player's current health points display.  <a href="class_game_screen.html#a79d77cca2c8dec930e98362b04929887">More...</a><br /></td></tr>
 <tr class="separator:a79d77cca2c8dec930e98362b04929887"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -364,8 +364,8 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9e06431427ba393a7f8b78066bc5badd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e06431427ba393a7f8b78066bc5badd">&#9670;&nbsp;</a></span>ShowGameFailed()</h2>
+<a id="a24078c9aa67fdfe50ffc233284fd0b47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24078c9aa67fdfe50ffc233284fd0b47">&#9670;&nbsp;</a></span>ShowGameFailed()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -374,8 +374,18 @@ Protected Member Functions</h2></td></tr>
           <td class="memname">void GameScreen.ShowGameFailed </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_report.html">Report</a>&#160;</td>
-          <td class="paramname"><em>report</em></td><td>)</td>
+          <td class="paramname"><em>report</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>challenge</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -414,8 +424,8 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad1d6d3486eda58583ddc9e02da148982"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1d6d3486eda58583ddc9e02da148982">&#9670;&nbsp;</a></span>ShowResultsScreen()</h2>
+<a id="a1979f1f9971802d603446cd84a384c3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1979f1f9971802d603446cd84a384c3a">&#9670;&nbsp;</a></span>ShowResultsScreen()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -424,8 +434,24 @@ Protected Member Functions</h2></td></tr>
           <td class="memname">void GameScreen.ShowResultsScreen </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_report.html">Report</a>&#160;</td>
-          <td class="paramname"><em>report</em></td><td>)</td>
+          <td class="paramname"><em>report</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>challenge</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>reward</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -716,7 +742,7 @@ Protected Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_game_screen.html">GameScreen</a></li>
-    <li class="footer">Generated on Tue Oct 13 2020 20:51:41 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Tue Oct 27 2020 18:46:52 for EscapeNLearn by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

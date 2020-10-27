@@ -16,6 +16,7 @@ var hierarchy =
       [ "FullSerializer.fsPropertyAttribute", "class_full_serializer_1_1fs_property_attribute.html", null ]
     ] ],
     [ "AudioConstants", "class_audio_constants.html", null ],
+    [ "Challenge", "class_challenge.html", null ],
     [ "CombinedGoogleResponse", "class_combined_google_response.html", null ],
     [ "Proyecto26.Common.Common", "class_proyecto26_1_1_common_1_1_common.html", null ],
     [ "Connection", "class_connection.html", null ],
@@ -221,6 +222,8 @@ var hierarchy =
     [ "FullSerializer.fsAotVersionInfo.Member", "struct_full_serializer_1_1fs_aot_version_info_1_1_member.html", null ],
     [ "MonoBehaviour", null, [
       [ "AudioMgr", "class_audio_mgr.html", null ],
+      [ "Challenges_ListItemController", "class_challenges___list_item_controller.html", null ],
+      [ "ChallengesUI", "class_challenges_u_i.html", null ],
       [ "DatabaseMgr", "class_database_mgr.html", null ],
       [ "DigitalRubyShared.FingersDPadScript", "class_digital_ruby_shared_1_1_fingers_d_pad_script.html", null ],
       [ "DigitalRubyShared.FingersDragDropScript", "class_digital_ruby_shared_1_1_fingers_drag_drop_script.html", null ],
@@ -234,8 +237,8 @@ var hierarchy =
       ] ],
       [ "Fading3DText", "class_fading3_d_text.html", null ],
       [ "FloatingUIScript", "class_floating_u_i_script.html", null ],
+      [ "FriendMgr", "class_friend_mgr.html", null ],
       [ "Friends_ListItemController", "class_friends___list_item_controller.html", null ],
-      [ "FriendsListData", "class_friends_list_data.html", null ],
       [ "FriendsUI", "class_friends_u_i.html", null ],
       [ "GameMgr", "class_game_mgr.html", [
         [ "Game1", "class_game1.html", null ],
@@ -247,6 +250,7 @@ var hierarchy =
       [ "JoystickScript", "class_joystick_script.html", null ],
       [ "LevelSelectUI", "class_level_select_u_i.html", null ],
       [ "NotificationMgr", "class_notification_mgr.html", null ],
+      [ "PieGraph", "class_pie_graph.html", null ],
       [ "PlayerController", "class_player_controller.html", null ],
       [ "ProfileMgr", "class_profile_mgr.html", null ],
       [ "ProfileUI", "class_profile_u_i.html", null ],
@@ -297,10 +301,10 @@ var hierarchy =
     [ "Proyecto26.StaticCoroutine", "class_proyecto26_1_1_static_coroutine.html", null ],
     [ "StringSerializationAPI", "class_string_serialization_a_p_i.html", null ],
     [ "RSG.TimeData", "struct_r_s_g_1_1_time_data.html", null ],
-    [ "RSG.Tuple< T1, T2, T3, T4 >", "class_r_s_g_1_1_tuple.html", null ],
     [ "RSG.Tuple< T1, T2, T3 >", "class_r_s_g_1_1_tuple.html", null ],
     [ "RSG.Tuple< T1, T2 >", "class_r_s_g_1_1_tuple.html", null ],
     [ "RSG.Tuple", "class_r_s_g_1_1_tuple.html", null ],
+    [ "RSG.Tuple< T1, T2, T3, T4 >", "class_r_s_g_1_1_tuple.html", null ],
     [ "UnityAppController(GoogleSignInAppController)", "category_unity_app_controller_07_google_sign_in_app_controller_08.html", null ],
     [ "UnityAppController(GoogleSignInController)", "category_unity_app_controller_07_google_sign_in_controller_08.html", null ],
     [ "UnityEvent", null, [

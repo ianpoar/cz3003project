@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['digitalrubyshared_1625',['DigitalRubyShared',['../namespace_digital_ruby_shared.html',1,'']]]
+  ['digitalrubyshared_1661',['DigitalRubyShared',['../namespace_digital_ruby_shared.html',1,'']]]
 ];

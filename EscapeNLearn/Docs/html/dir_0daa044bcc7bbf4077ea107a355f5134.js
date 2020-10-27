@@ -1,5 +1,8 @@
 var dir_0daa044bcc7bbf4077ea107a355f5134 =
 [
+    [ "Challenge.cs", "_challenge_8cs.html", [
+      [ "Challenge", "class_challenge.html", "class_challenge" ]
+    ] ],
     [ "Connection.cs", "_connection_8cs.html", [
       [ "Connection", "class_connection.html", "class_connection" ]
     ] ],

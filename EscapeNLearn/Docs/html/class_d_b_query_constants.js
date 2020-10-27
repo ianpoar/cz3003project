@@ -1,5 +1,6 @@
 var class_d_b_query_constants =
 [
+    [ "QUERY_CHALLENGES", "class_d_b_query_constants.html#a09704c65e808c218110442a1a471dc3d", null ],
     [ "QUERY_CONNECTIONS", "class_d_b_query_constants.html#ab827b1aaba2ff049c21c52764294d75b", null ],
     [ "QUERY_PROFILES", "class_d_b_query_constants.html#aec7f713bcd33cca77110c328a1af34e7", null ],
     [ "QUERY_QUESTIONLISTS", "class_d_b_query_constants.html#a49b4b16e7654d5d82b712c87eef91171", null ],

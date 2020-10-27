@@ -12,6 +12,9 @@ var dir_06da06c9137774d7019d7f4241c15efa =
     [ "FBAPILinker.cs", "_f_b_a_p_i_linker_8cs.html", [
       [ "FBAPILinker", "class_f_b_a_p_i_linker.html", "class_f_b_a_p_i_linker" ]
     ] ],
+    [ "FriendMgr.cs", "_friend_mgr_8cs.html", [
+      [ "FriendMgr", "class_friend_mgr.html", "class_friend_mgr" ]
+    ] ],
     [ "GameMgr.cs", "_game_mgr_8cs.html", [
       [ "GameMgr", "class_game_mgr.html", "class_game_mgr" ]
     ] ],
