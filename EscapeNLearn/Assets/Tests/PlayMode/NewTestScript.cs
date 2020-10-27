@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -9,23 +10,27 @@ namespace Tests
     public class NewTestScript
     {
 
+        static GameObject gameObject = new GameObject();
+        DatabaseMgr db = gameObject.AddComponent<DatabaseMgr>();
+        ProfileMgr pm = gameObject.AddComponent<ProfileMgr>();
+        SessionMgr sm = gameObject.AddComponent<SessionMgr>();
+
+
         /// <summary>
-        /// Unittest for Email Login.
+        /// Unittest for Loading profile after email login.
         /// </summary>
         [UnityTest]
-        public IEnumerator LoginTest()
+        public IEnumerator LoadProfileTest()
         {
             // Use the Assert class to test conditions.
             // Use yield to skip a frame.
-            var gameObject = new GameObject();
-            var db = gameObject.AddComponent<DatabaseMgr>();
-            var pm = gameObject.AddComponent<ProfileMgr>();
-            yield return new WaitForSeconds(1);
+
             db.EmailLogin(
                 "arumugam004@e.ntu.edu.sg",
                 "12345678",
                 delegate ()
                 {
+                    Assert.AreEqual(true, db.IsLoggedIn);
                 },
                 delegate (string msg)
                 {
@@ -49,6 +54,32 @@ namespace Tests
         }
 
         /// <summary>
+        /// Unittest for Email Login.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator LoginTest()
+        {
+            // Use the Assert class to test conditions.
+            // Use yield to skip a frame.
+
+            db.EmailLogin(
+                "arumugam004@e.ntu.edu.sg",
+                "12345678",
+                delegate ()
+                {
+                    Assert.AreEqual(true, db.IsLoggedIn);
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(2);
+
+        }
+
+
+        /// <summary>
         /// Unittest for Email Logout.
         /// </summary>
         [UnityTest]
@@ -56,11 +87,7 @@ namespace Tests
         {
             // Use the Assert class to test conditions.
             // Use yield to skip a frame.
-            var gameObject = new GameObject();
-            var db = gameObject.AddComponent<DatabaseMgr>();
-            var pm = gameObject.AddComponent<ProfileMgr>();
 
-            yield return new WaitForSeconds(1);
             db.EmailLogin(
                 "arumugam004@e.ntu.edu.sg",
                 "12345678",
@@ -85,10 +112,7 @@ namespace Tests
         [UnityTest]
         public IEnumerator JoinSessionTest()
         {
-            var gameObject = new GameObject();
-            var sm = gameObject.AddComponent<SessionMgr>();
-            var db = gameObject.AddComponent<DatabaseMgr>();
-            yield return new WaitForSeconds(1);
+
             db.EmailLogin(
                 "arumugam004@e.ntu.edu.sg",
                 "12345678",
@@ -129,10 +153,7 @@ namespace Tests
         [UnityTest]
         public IEnumerator LeaveSessionTest()
         {
-            var gameObject = new GameObject();
-            var sm = gameObject.AddComponent<SessionMgr>();
-            var db = gameObject.AddComponent<DatabaseMgr>();
-            yield return new WaitForSeconds(1);
+
             db.EmailLogin(
                 "arumugam004@e.ntu.edu.sg",
                 "12345678",
@@ -185,10 +206,7 @@ namespace Tests
         [UnityTest]
         public IEnumerator ReportGenerateTest()
         {
-            var gameObject = new GameObject();
-            var sm = gameObject.AddComponent<SessionMgr>();
-            var db = gameObject.AddComponent<DatabaseMgr>();
-            yield return new WaitForSeconds(1);
+
             db.EmailLogin(
                 "arumugam004@e.ntu.edu.sg",
                 "12345678",
@@ -236,13 +254,302 @@ namespace Tests
 
         }
 
-        /*
         [UnityTest]
-        public IEnumerator ScreenTransitTest()
+        public IEnumerator CreateQuestionTest()
         {
-            yield return new WaitForSeconds(1);
-            UnityEngine.SceneManagement.SceneManager.
+
+            db.EmailLogin(
+                "arumugam004@e.ntu.edu.sg",
+                "12345678",
+                delegate ()
+                {
+
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
+            Question q = new Question();
+            q.id_owner = "aru6";
+            q.question = "answer to life, the universe and everything";
+            q.answer1 = "40";
+            q.answer2 = "41";
+            q.answer3 = "42";
+            q.answer4 = "43";
+            q.correctanswer = 3;
+            pm.CreateNewQuestion(
+                q,
+                delegate (string msg)
+                {
+                    
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
         }
-        */
+
+        [UnityTest]
+        public IEnumerator CreateQuestionListTest()
+        {
+
+            db.EmailLogin(
+                "arumugam004@e.ntu.edu.sg",
+                "12345678",
+                delegate ()
+                {
+
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
+            QuestionList ql = new QuestionList();
+
+            ql.size = 0;
+            ql.id_owner = "aru6";
+            ql.name = "test list";
+            pm.CreateNewQuestionList(
+
+                ql,
+                delegate ()
+                {
+
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
+
+        }
+
+
+        [UnityTest]
+        public IEnumerator UpdateQuestionTest()
+        {
+
+            db.EmailLogin(
+                "arumugam004@e.ntu.edu.sg",
+                "12345678",
+                delegate ()
+                {
+
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
+
+            Question q = new Question();
+            q.id_owner = "aru6";
+            q.question = "What is answer to life, the universe and everything";
+            q.answer1 = "40";
+            q.answer2 = "41";
+            q.answer3 = "42";
+            q.answer4 = "43";
+            q.correctanswer = 3;
+            pm.UpdateMyQuestion(
+                "-MKcQv8-oer2QTKsgn0c", 
+                q, 
+                delegate ()
+                {
+
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
+        }
+
+        [UnityTest]
+        public IEnumerator UpdateQuestionListTest()
+        {
+
+            db.EmailLogin(
+                "arumugam004@e.ntu.edu.sg",
+                "12345678",
+                delegate ()
+                {
+
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
+            QuestionList ql = new QuestionList();
+
+            ql.size = 1;
+            ql.id_owner = "aru6";
+            ql.list = new List<string>();
+            ql.list.Add("-MKcQv8-oer2QTKsgn0c");
+            ql.name = "test list";
+            pm.UpdateMyQuestionList(
+                "-MKcr4ANmRFwa5_ZTbE5",
+                ql,
+                delegate ()
+                {
+
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
+
+        }
+
+
+        [UnityTest]
+        public IEnumerator CreateSessionTest()
+        {
+
+            db.EmailLogin(
+                "arumugam004@e.ntu.edu.sg",
+                "12345678",
+                delegate ()
+                {
+
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
+            Session s = new Session();
+            s.id_owner = "aru6";
+            s.session_name = "test session unit tests";
+            s.id_l1queslist = "-MKcr4ANmRFwa5_ZTbE5";
+            s.id_l2queslist = "-MJVoMZ26JNmFYukTBjK";
+            s.id_l3queslist = "-MJXPvyGhzXnEO_2SY3Y";
+
+            sm.CreateSession(
+                s,
+                delegate ()
+                {
+
+                }, 
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+        }
+
+
+        [UnityTest]
+        public IEnumerator FetchSessionTest()
+        {
+
+            db.EmailLogin(
+                "arumugam004@e.ntu.edu.sg",
+                "12345678",
+                delegate ()
+                {
+
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
+
+            sm.FetchSingleSession("-MKcuUvNbaoW6kDWJtQM",
+                delegate (string result)
+                {
+                    Debug.Log(result);
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+                );
+
+            yield return new WaitForSeconds(3);
+
+        }
+        [UnityTest]
+        public IEnumerator FetchAllSessionsTest()
+        {
+
+            db.EmailLogin(
+                "arumugam004@e.ntu.edu.sg",
+                "12345678",
+                delegate ()
+                {
+
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
+
+            sm.FetchSessions(
+                delegate (string result)
+                {
+                    Debug.Log(result);
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+                );
+
+            yield return new WaitForSeconds(3);
+
+        }
+
+        [UnityTest]
+        public IEnumerator FetchQuestionsForGameTest()
+        {
+
+            db.EmailLogin(
+                "arumugam004@e.ntu.edu.sg",
+                "12345678",
+                delegate ()
+                {
+
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+            );
+            yield return new WaitForSeconds(3);
+
+            sm.FetchQuestionsForGame("-MKcuUvNbaoW6kDWJtQM", 
+                1,
+                delegate ()
+                {
+                    Assert.AreEqual("aru6", sm.passedInQuestionList[0].id_owner);
+                },
+                delegate (string msg)
+                {
+                    Assert.Fail();
+                }
+                );
+
+            yield return new WaitForSeconds(3);
+
+        }
+
     }
 }
