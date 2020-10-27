@@ -22,7 +22,7 @@ public class Friends_ListItemController : MonoBehaviour
     {
 
         if (_ref != null)
-            _ref.sendChallenge(_friend);
+            _ref.SendChallenge(_friend);
 
     }
 

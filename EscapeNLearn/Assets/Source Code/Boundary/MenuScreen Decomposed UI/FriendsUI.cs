@@ -24,7 +24,7 @@ public class FriendsUI : MonoBehaviour
     void OnEnable()
     {
         NotificationMgr.Instance.NotifyLoad("Fetching friends");
-        ProfileMgr.Instance.FetchFriends(
+        FriendMgr.Instance.FetchFriends(
          delegate (string result)
          {
              NotificationMgr.Instance.StopLoad();
@@ -50,29 +50,18 @@ public class FriendsUI : MonoBehaviour
         spawnedObjList.Clear();
     }
 
-    public void Btn_Search()
-    {
-        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        Debug.Log(input_FriendName.text);
-    }
-
+    /// <summary>
+    /// A method that spawns friend objects and displays them.
+    /// </summary>
     void SpawnFriendObjects(string result)
     {
-
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
-
-
         friends_list = new ArrayList();
         foreach (KeyValuePair<string, object> pair in results)
         {
-
             string profiledata = Json.Serialize(pair.Value);
-
             Profile profile = JsonUtility.FromJson<Profile>(profiledata);
-
-
             friends_list.Add(profile);
-
         }
 
         foreach (Profile friend in friends_list)
@@ -87,7 +76,10 @@ public class FriendsUI : MonoBehaviour
         }
     }
 
-    public void sendChallenge(Profile friend)
+    /// <summary>
+    /// A handler for when the send challenge button on a friend UI object is pressed.
+    /// </summary>
+    public void SendChallenge(Profile friend)
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
 
@@ -119,7 +111,7 @@ public class FriendsUI : MonoBehaviour
         c.receiver_id = friend.id_player;
         c.level_cleared = con.level_cleared;
         NotificationMgr.Instance.NotifyLoad("Sending");
-        createChallenge(c,
+        FriendMgr.Instance.CreateChallenge(c,
         delegate () // success
         {
             NotificationMgr.Instance.StopLoad();
@@ -136,19 +128,6 @@ public class FriendsUI : MonoBehaviour
         {
             NotificationMgr.Instance.StopLoad();
             NotificationMgr.Instance.Notify(failmsg);
-        });
-    }
-
-    public void createChallenge(Challenge c, SimpleCallback successCallback, MessageCallback failCallback)
-    {
-        DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_CHALLENGES + "/", c,
-        delegate (string key)
-        {
-            successCallback?.Invoke();
-        },
-        delegate (string failmsg) // failed
-        {
-            failCallback?.Invoke(failmsg);
         });
     }
 }

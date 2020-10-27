@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Collections.Generic;
@@ -14,8 +13,6 @@ public class ChallengesUI : MonoBehaviour
     public GameObject ListItem;
     public InputField input_FriendName;
 
-
-    //ArrayList challenges_list;
     Dictionary<string, Challenge> challenges_list = new Dictionary<string, Challenge>();
     List<GameObject> spawnedObjList = new List<GameObject>();
 
@@ -25,7 +22,7 @@ public class ChallengesUI : MonoBehaviour
     void OnEnable()
     {
         NotificationMgr.Instance.NotifyLoad("Fetching challenges");
-        ProfileMgr.Instance.FetchChallenges(
+        FriendMgr.Instance.FetchChallenges(
          delegate (string result)
          {
              NotificationMgr.Instance.StopLoad();
@@ -53,6 +50,9 @@ public class ChallengesUI : MonoBehaviour
         challenges_list.Clear();
     }
 
+    /// <summary>
+    /// A method that spawns challenge objects and displays them.
+    /// </summary>
     void SpawnChallengeObjects(string result)
     {
         Profile receiver = ProfileMgr.Instance.localProfile;
@@ -81,6 +81,9 @@ public class ChallengesUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A handler for when a challenge UI object is selected.
+    /// </summary>
     public void EnterChallenge(Challenge c, string id)
     {
         int level = c.level_cleared;
