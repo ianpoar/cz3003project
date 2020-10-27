@@ -95,7 +95,7 @@ public class Game1 : GameMgr
         {
             savedPlayerpos = Player.transform.localPosition;
             Player.transform.position = new Vector3(0, 0, 0);
-            ScreenRef.SetTips("Answer 5 questions at the locked door correctly to clear the level. Answering wrongly will deduct your HP!");
+            ScreenRef.SetTips("Answer all questions at the locked door correctly to clear the level. Answering wrongly will deduct your HP!");
             room1.SetActive(false);
             room2.SetActive(true);
             TransitMgr.Instance.Emerge(
