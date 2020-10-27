@@ -95,6 +95,7 @@ public class LevelSelectUI : MonoBehaviour
         {
             NotificationMgr.Instance.NotifyLoad("Loading Game Questions");
             string sessionid = SessionMgr.Instance.currentConnection.id_session;
+            SessionMgr.Instance.currChallenge = null;
 
             // fetch questions
             SessionMgr.Instance.FetchQuestionsForGame(sessionid, level,

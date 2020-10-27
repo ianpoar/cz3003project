@@ -183,9 +183,9 @@ public class ProfileMgr : MonoBehaviour // Singleton class
     }
 
     /// <summary>
-    /// Fetches multiple sessions from the database and return the result in the callback.
+    /// Fetches friends from the database and return the result in the callback.
     /// </summary>
-    public void FetchProfiles(MessageCallback successCallback, MessageCallback failCallback, string searchid = null, int max = 100)
+    public void FetchFriends(MessageCallback successCallback, MessageCallback failCallback, string searchid = null, int max = 100)
     {
         if (searchid == null)
         {

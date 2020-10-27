@@ -104,6 +104,13 @@ public abstract class GameMgr : MonoBehaviour
     }
 
     /// <summary>
+    /// A handler for in-game events when a question is answered wrongly.
+    /// </summary>
+    public virtual void ProcessWrongAnswer()
+    {
+    }
+
+    /// <summary>
     /// A handler for when the player answers a question.
     /// </summary>
     public void AnswerQuestion(int choice)
@@ -178,12 +185,32 @@ public abstract class GameMgr : MonoBehaviour
         // send report to database
         SendReportToDB();
 
+        bool challenge = false;
+        int reward = 0;
+
+        // if this is a challenge, delete challenge and add rewards
+        if (SessionMgr.Instance.currChallenge != null)
+        {
+            reward = 100;
+            challenge = true;
+            string challengeid = SessionMgr.Instance.challengeID;
+            DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_CHALLENGES + "/" + challengeid, null);
+
+            Profile profile = ProfileMgr.Instance.localProfile;
+            DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id, nameof(profile.currency_normal), profile.currency_normal + reward,
+            delegate () // write success
+            {
+                profile.currency_normal += reward;
+            }
+            );
+        }
+
         // update connection game level
         DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_CONNECTIONS + "/" + SessionMgr.Instance.connectionID, nameof(Connection.level_cleared), GameLevel);
         SessionMgr.Instance.currentConnection.level_cleared = GameLevel;
 
         // show results screen
-        ScreenRef.ShowResultsScreen(report);
+        ScreenRef.ShowResultsScreen(report, challenge, reward);
     }
 
     /// <summary>
@@ -197,8 +224,18 @@ public abstract class GameMgr : MonoBehaviour
         // send report to database
         SendReportToDB();
 
+        bool challenge = false;
+
+        // if this is a challenge, delete challenge
+        if (SessionMgr.Instance.currChallenge != null)
+        {
+            string challengeid = SessionMgr.Instance.challengeID;
+            DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_CHALLENGES + "/" + challengeid, null);
+            challenge = true;
+        }
+
         // show results screen
-        ScreenRef.ShowGameFailed(report);
+        ScreenRef.ShowGameFailed(report, challenge);
     }
 
     /// <summary>

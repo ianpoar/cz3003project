@@ -23,7 +23,7 @@ public class Game1 : GameMgr
         AudioMgr.Instance.PlayBGM(AudioConstants.BGM_CLEARDAY);
 
         ScreenRef.SetHP(PlayerHP, PlayerMaxHP);
-        ScreenRef.SetTips("Speak to the gem to recover HP.");
+        ScreenRef.SetTips("Speak to the gem to recover HP. When you are ready, proceed to the next room.");
     }
 
     protected override void QuestionsComplete()
@@ -41,6 +41,7 @@ public class Game1 : GameMgr
             if (PlayerHP >= PlayerMaxHP)
                 PlayerHP = PlayerMaxHP;
             GameObject obj = Instantiate(spawnTextPrefab, Player.transform.position + Vector3.up * 1.5f, Quaternion.identity);
+            obj.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y, spawnTextPrefab.transform.position.z);
             Fading3DText text = obj.GetComponent<Fading3DText>();
             text.script.text = "+ 10";
             text.script.color = AddHPColor;
@@ -48,11 +49,34 @@ public class Game1 : GameMgr
         }
     }
 
+    public override void ProcessWrongAnswer()
+    {
+        if (finalQuesList)
+        {
+            PlayerHP -= 20;
+            if (PlayerHP >= PlayerMaxHP)
+                PlayerHP = PlayerMaxHP;
+            if (PlayerHP <= 0)
+                PlayerHP = 0;
+            GameObject obj = Instantiate(spawnTextPrefab, Player.transform.position + Vector3.up * 1.5f, Quaternion.identity);
+            obj.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y, spawnTextPrefab.transform.position.z);
+            Fading3DText text = obj.GetComponent<Fading3DText>();
+            text.script.text = "- 20";
+            text.script.color = ReduceHpColor;
+            ScreenRef.SetHP(PlayerHP, PlayerMaxHP);
+
+            if (PlayerHP <= 0)
+            {
+                GameFailed();
+            }
+        }
+    }
+
     private void FinalQuiz()
     {
         Debug.Log("final quiz sequence");
         finalQuesList = true;
-        ShowQuestions("Locked Door", 0, 10); // currently only will have 1 qlist
+        ShowQuestions("Locked Door", 0, 5); // currently only will have 1 qlist
     }
 
     private void GemQuiz()
@@ -71,7 +95,7 @@ public class Game1 : GameMgr
         {
             savedPlayerpos = Player.transform.localPosition;
             Player.transform.position = new Vector3(0, 0, 0);
-            ScreenRef.SetTips("You are too weak to defeat this monster! Escape before it kills you.");
+            ScreenRef.SetTips("Answer 5 questions at the locked door correctly to clear the level. Answering wrongly will deduct your HP!");
             room1.SetActive(false);
             room2.SetActive(true);
             TransitMgr.Instance.Emerge(
@@ -90,7 +114,7 @@ public class Game1 : GameMgr
         TransitMgr.Instance.Fade(
         delegate ()
         {
-            ScreenRef.SetTips("Speak to the gem to recover HP.");
+            ScreenRef.SetTips("Speak to the gem to recover HP. When you are ready, proceed to the next room.");
             Player.transform.position = savedPlayerpos + new Vector3(0, -2, 0);
             room1.SetActive(true);
             room2.SetActive(false);

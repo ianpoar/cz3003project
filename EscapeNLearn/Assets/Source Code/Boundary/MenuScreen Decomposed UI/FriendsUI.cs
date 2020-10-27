@@ -23,20 +23,18 @@ public class FriendsUI : MonoBehaviour
     /// </summary>
     void OnEnable()
     {
-        NotificationMgr.Instance.NotifyLoad("Fetching profiles");
-        ProfileMgr.Instance.FetchProfiles(
+        NotificationMgr.Instance.NotifyLoad("Fetching friends");
+        ProfileMgr.Instance.FetchFriends(
          delegate (string result)
          {
              NotificationMgr.Instance.StopLoad();
-             SpawnProfileObjects(result);
+             SpawnFriendObjects(result);
          },
          delegate (string failmsg)
          {
              NotificationMgr.Instance.StopLoad();
              NotificationMgr.Instance.Notify(failmsg);
          });
-        // 1. Get the data to be displayed
-
     }
 
     /// <summary>
@@ -56,20 +54,9 @@ public class FriendsUI : MonoBehaviour
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         Debug.Log(input_FriendName.text);
-
-
-        // ClearSessionObjects();
-        // if (input_FriendName.text != "")
-        // {
-        //     GenerateSearchSessionObjects(input_FriendName.text);
-        // }
-        // else
-        // {
-        //     GenerateAllSessionObjects();
-        // }
     }
 
-    void SpawnProfileObjects(string result)
+    void SpawnFriendObjects(string result)
     {
 
         Dictionary<string, object> results = Json.Deserialize(result) as Dictionary<string, object>;
@@ -81,44 +68,78 @@ public class FriendsUI : MonoBehaviour
 
             string profiledata = Json.Serialize(pair.Value);
 
-            FriendsListData profile = JsonUtility.FromJson<FriendsListData>(profiledata);
+            Profile profile = JsonUtility.FromJson<Profile>(profiledata);
 
 
             friends_list.Add(profile);
 
         }
 
-        foreach (FriendsListData friend in friends_list)
+        foreach (Profile friend in friends_list)
         {
             GameObject newFriend = Instantiate(ListItem) as GameObject;
             Friends_ListItemController controller = newFriend.GetComponent<Friends_ListItemController>();
             controller.Name.text = friend.name;
-            newFriend.transform.parent = PanelChild.transform;
+            newFriend.transform.SetParent(PanelChild.transform);
             newFriend.transform.localScale = Vector3.one;
             controller.Init(this, friend);
             spawnedObjList.Add(newFriend);
         }
     }
 
-    public void sendChallenge(string session, int level, string senderID, string receiverID)
+    public void sendChallenge(Profile friend)
     {
-        Challenges c = new Challenges(session, level, senderID, receiverID);
+        AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
+
+        Connection con = SessionMgr.Instance.currentConnection;
+        Profile p = ProfileMgr.Instance.localProfile;
+
+        if (con == null)
+        {
+            NotificationMgr.Instance.Notify("You need to join a session first to send a challenge!");
+            return;
+        }
+
+        if (con.level_cleared <= 0)
+        {
+            NotificationMgr.Instance.Notify("To send a challenge, you need to clear a level in your current session first.");
+            return;
+        }
+
+        if (con.level_cleared > 3)
+        {
+            NotificationMgr.Instance.Notify("Invalid challenge level (" + con.level_cleared + ").");
+            return;
+        }
+
+        int reward = 10;
+        Challenge c = new Challenge();
+        c.sender_id = con.id_player;
+        c.session_id = con.id_session;
+        c.receiver_id = friend.id_player;
+        c.level_cleared = con.level_cleared;
+        NotificationMgr.Instance.NotifyLoad("Sending");
         createChallenge(c,
         delegate () // success
         {
             NotificationMgr.Instance.StopLoad();
-            NotificationMgr.Instance.Notify("Challenge sent successfully.");
+            Profile profile = ProfileMgr.Instance.localProfile;
+            DatabaseMgr.Instance.DBLightUpdate(DBQueryConstants.QUERY_PROFILES + "/" + DatabaseMgr.Instance.Id, nameof(profile.currency_normal), profile.currency_normal + reward,
+            delegate () // write success
+            {
+                profile.currency_normal += reward;
+            }
+            );
+            NotificationMgr.Instance.Notify("Challenge sent successfully. Rewarded " + reward + " currency.");
         },
         delegate (string failmsg)
         {
             NotificationMgr.Instance.StopLoad();
             NotificationMgr.Instance.Notify(failmsg);
         });
-
-
     }
 
-    public void createChallenge(Challenges c, SimpleCallback successCallback, MessageCallback failCallback)
+    public void createChallenge(Challenge c, SimpleCallback successCallback, MessageCallback failCallback)
     {
         DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_CHALLENGES + "/", c,
         delegate (string key)

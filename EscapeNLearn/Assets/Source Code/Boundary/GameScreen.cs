@@ -23,12 +23,15 @@ public class GameScreen : Screen
     public Text txt_timer;
     public Text txt_tips;
 
+    bool wrongAnswer = false;
+
     /// <summary>
     /// Start of the Game screen.
     /// </summary>
     protected override void Start()
     {
         base.Start();
+        txt_timer.text = "Elapsed: 0s";
         GameManager.StartGame(this);
     }
 
@@ -45,6 +48,7 @@ public class GameScreen : Screen
     /// </summary>
     public void ShowNPCQuestion(string npcname, Question ques)
     {
+        wrongAnswer = false;
         PauseInput(true);
 
         txt_header.text = npcname;
@@ -66,6 +70,7 @@ public class GameScreen : Screen
     /// </summary>
     public void ShowWrongAnswer()
     {
+        wrongAnswer = true;
         txt_question.text = "Wrong answer! Please try again.";
         foreach (GameObject obj in answerButtons)
         {
@@ -84,12 +89,16 @@ public class GameScreen : Screen
     /// <summary>
     /// A method to display feedback on clearing the level to the player.
     /// </summary>
-    public void ShowResultsScreen(Report report)
+    public void ShowResultsScreen(Report report, bool challenge = false, int reward = 0)
     {
         pauseButton.SetActive(false);
         JSInput.PauseInput(true);
-
-        NotificationMgr.Instance.Notify("You have cleared the level!",
+        string notif = "You have cleared the level!";
+        if (challenge)
+        {
+            notif = "You have cleared the challenge! Rewarded " + reward + " currency.";
+        }
+        NotificationMgr.Instance.Notify(notif,
          delegate ()
          {
              SessionMgr.Instance.LoadLevelReport(report);
@@ -100,11 +109,16 @@ public class GameScreen : Screen
     /// <summary>
     /// A method to display feedback on failing the level to the player.
     /// </summary>
-    public void ShowGameFailed(Report report)
+    public void ShowGameFailed(Report report, bool challenge = false)
     {
         pauseButton.SetActive(false);
         JSInput.PauseInput(true);
-        NotificationMgr.Instance.Notify("You have failed the level!",
+        string notif = "You have failed the level!";
+        if (challenge)
+        {
+            notif = "You have failed the challenge! No rewards given.";
+        }
+        NotificationMgr.Instance.Notify(notif,
         delegate ()
         {
             SessionMgr.Instance.LoadLevelReport(report);
@@ -128,7 +142,7 @@ public class GameScreen : Screen
     /// </summary>
     public void SetTimer(int value)
     {
-        txt_timer.text = "" + value;
+        txt_timer.text = "Elapsed: " + value + "s";
     }
 
     /// <summary>
@@ -174,6 +188,9 @@ public class GameScreen : Screen
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
         mask_npcquestions.SetActive(false);
         PauseInput(false);
+
+        if (wrongAnswer)
+            GameManager.ProcessWrongAnswer();
     }
 
 }

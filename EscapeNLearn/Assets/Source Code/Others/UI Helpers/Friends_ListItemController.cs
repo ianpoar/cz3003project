@@ -6,26 +6,23 @@ public class Friends_ListItemController : MonoBehaviour
 {
 
     FriendsUI _ref;
-    FriendsListData _profile;
+    Profile _friend;
     public Text Name = null;
-    public Text Id = null;
 
 
-    public void Init(FriendsUI friendsUI, FriendsListData friendsListData)
+    public void Init(FriendsUI friendsUI, Profile friend)
 
     {
         _ref = friendsUI;
-        _profile = friendsListData;
+        _friend = friend;
+        Name.text = friend.name;
     }
 
     public void OnClick()
     {
-        Profile profile = ProfileMgr.Instance.localProfile;
-        Connection sessionID = SessionMgr.Instance.currentConnection;
-
 
         if (_ref != null)
-            _ref.sendChallenge(sessionID.id_session, sessionID.level_cleared, profile.id_player, _profile.id_player);
+            _ref.sendChallenge(_friend);
 
     }
 

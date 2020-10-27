@@ -38,6 +38,8 @@ public class SessionMgr : MonoBehaviour
 
     public Connection currentConnection = null;
     public string connectionID = null;
+    public Challenge currChallenge = null;
+    public string challengeID = null;
 
     /// <summary>
     /// Joins a session.
