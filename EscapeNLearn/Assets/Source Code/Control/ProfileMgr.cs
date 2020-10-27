@@ -59,7 +59,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
                 foreach (KeyValuePair<string, object> pair in dic)
                 {
                     Connection c = JsonUtility.FromJson<Connection>(Json.Serialize(pair.Value));
-                   
+
                     if (c != null)
                     {
                         Debug.Log("ConnectionID: " + pair.Key + ", SessionID: " + c.id_session + ", PlayerID: " + c.id_player + ", Level: " + c.level_cleared);
@@ -85,7 +85,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
     /// <summary>
     /// Fetches the player (instructor)'s question lists from the database and returns the result in a callback.
     /// </summary>
-    public void FetchMyQuestionLists(MessageCallback successCallback, MessageCallback failCallback, int max=100)
+    public void FetchMyQuestionLists(MessageCallback successCallback, MessageCallback failCallback, int max = 100)
     {
         DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_QUESTIONLISTS,
                 nameof(QuestionList.id_owner),
@@ -114,7 +114,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
            delegate (string failmsg) // failed
             {
                 failCallback?.Invoke(failmsg);
-           });
+            });
     }
 
     /// <summary>
@@ -130,7 +130,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
            delegate (string failmsg) // failed
             {
                 failCallback?.Invoke(failmsg);
-           });
+            });
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public class ProfileMgr : MonoBehaviour // Singleton class
            delegate (string failmsg) // failed
             {
                 failCallback?.Invoke(failmsg);
-           });
+            });
     }
 
     /// <summary>
@@ -180,5 +180,56 @@ public class ProfileMgr : MonoBehaviour // Singleton class
         {
             failCallback?.Invoke(failmsg);
         });
+    }
+
+    /// <summary>
+    /// Fetches multiple sessions from the database and return the result in the callback.
+    /// </summary>
+    public void FetchProfiles(MessageCallback successCallback, MessageCallback failCallback, string searchid = null, int max = 100)
+    {
+        if (searchid == null)
+        {
+            DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_PROFILES,
+            null, null,
+            max,
+              delegate (string result)
+              {
+                  successCallback?.Invoke(result);
+              },
+              delegate (string failmsg)
+              {
+                  failCallback?.Invoke(failmsg);
+              });
+        }
+        else
+        {
+            DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_PROFILES,
+            nameof(Session.id_owner), searchid,
+            max,
+            delegate (string result)
+            {
+                successCallback?.Invoke(result);
+            },
+            delegate (string failmsg)
+            {
+                failCallback?.Invoke(failmsg);
+            });
+        }
+    }
+    public void FetchChallenges(MessageCallback successCallback, MessageCallback failCallback, int max = 100)
+    {
+
+        DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_CHALLENGES,
+        null, null,
+        max,
+          delegate (string result)
+          {
+              successCallback?.Invoke(result);
+          },
+          delegate (string failmsg)
+          {
+              failCallback?.Invoke(failmsg);
+          });
+
     }
 }

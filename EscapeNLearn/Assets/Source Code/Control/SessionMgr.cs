@@ -44,17 +44,17 @@ public class SessionMgr : MonoBehaviour
     /// </summary>
     public void JoinSession(Connection c, SimpleCallback successCallback, MessageCallback failCallback)
     {
-       DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_CONNECTIONS, c,
-       delegate (string key)
-       {
-           currentConnection = c;
-           connectionID = key;
-           successCallback?.Invoke();
-       },
-       delegate (string failmsg)
-       {
-           failCallback?.Invoke(failmsg);
-       });
+        DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_CONNECTIONS, c,
+        delegate (string key)
+        {
+            currentConnection = c;
+            connectionID = key;
+            successCallback?.Invoke();
+        },
+        delegate (string failmsg)
+        {
+            failCallback?.Invoke(failmsg);
+        });
     }
 
     /// <summary>
@@ -63,7 +63,8 @@ public class SessionMgr : MonoBehaviour
     public void LeaveSession(SimpleCallback successCallback, MessageCallback failCallback)
     {
         DatabaseMgr.Instance.DBUpdate(DBQueryConstants.QUERY_CONNECTIONS + "/" + connectionID, null,
-          delegate () {
+          delegate ()
+          {
               currentConnection = null;
               successCallback?.Invoke();
           },
@@ -78,15 +79,15 @@ public class SessionMgr : MonoBehaviour
     /// </summary>
     public void CreateSession(Session s, SimpleCallback successCallback, MessageCallback failCallback)
     {
-       DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_SESSIONS + "/", s,
-       delegate (string key)
-       {
-           successCallback?.Invoke();
-       },
-       delegate (string failmsg) // failed
+        DatabaseMgr.Instance.DBPush(DBQueryConstants.QUERY_SESSIONS + "/", s,
+        delegate (string key)
         {
-            failCallback?.Invoke(failmsg);
-       });
+            successCallback?.Invoke();
+        },
+        delegate (string failmsg) // failed
+        {
+             failCallback?.Invoke(failmsg);
+         });
     }
 
     /// <summary>
@@ -108,7 +109,7 @@ public class SessionMgr : MonoBehaviour
     /// <summary>
     /// Fetches multiple sessions from the database and return the result in the callback.
     /// </summary>
-    public void FetchSessions(MessageCallback successCallback, MessageCallback failCallback, string searchid=null, int max=100)
+    public void FetchSessions(MessageCallback successCallback, MessageCallback failCallback, string searchid = null, int max = 100)
     {
         if (searchid == null)
         {
@@ -126,17 +127,17 @@ public class SessionMgr : MonoBehaviour
         }
         else
         {
-           DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_SESSIONS,
-           nameof(Session.id_owner), searchid,
-           max,
-           delegate (string result)
-           {
-               successCallback?.Invoke(result);
-           },
-           delegate (string failmsg)
-           {
-               failCallback?.Invoke(failmsg);
-           });
+            DatabaseMgr.Instance.DBFetchMulti(DBQueryConstants.QUERY_SESSIONS,
+            nameof(Session.id_owner), searchid,
+            max,
+            delegate (string result)
+            {
+                successCallback?.Invoke(result);
+            },
+            delegate (string failmsg)
+            {
+                failCallback?.Invoke(failmsg);
+            });
         }
     }
 
@@ -221,10 +222,10 @@ public class SessionMgr : MonoBehaviour
 
                  if (r != null)
                  {
-                    if (r.id_player == currentConnection.id_player) // only add student's session reports
-                    {
-                        SessionReports.Add(r);
-                    }
+                     if (r.id_player == currentConnection.id_player) // only add student's session reports
+                     {
+                         SessionReports.Add(r);
+                     }
                  }
              }
 
