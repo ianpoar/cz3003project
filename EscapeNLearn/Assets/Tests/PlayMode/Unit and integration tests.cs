@@ -7,7 +7,7 @@ using UnityEngine.TestTools;
 
 namespace Tests
 {
-    public class NewTestScript
+    public class Unit_And_Integration_Tests
     {
 
         static GameObject gameObject = new GameObject();
@@ -254,6 +254,9 @@ namespace Tests
 
         }
 
+        /// <summary>
+        /// Unittest for Question Creation.
+        /// </summary>
         [UnityTest]
         public IEnumerator CreateQuestionTest()
         {
@@ -293,6 +296,9 @@ namespace Tests
             yield return new WaitForSeconds(3);
         }
 
+        /// <summary>
+        /// Unittest for Question List Creation.
+        /// </summary>
         [UnityTest]
         public IEnumerator CreateQuestionListTest()
         {
@@ -331,7 +337,9 @@ namespace Tests
 
         }
 
-
+        /// <summary>
+        /// Unittest for Updating a question.
+        /// </summary>
         [UnityTest]
         public IEnumerator UpdateQuestionTest()
         {
@@ -373,6 +381,9 @@ namespace Tests
             yield return new WaitForSeconds(3);
         }
 
+        /// <summary>
+        /// Unittest for updating a question list.
+        /// </summary>
         [UnityTest]
         public IEnumerator UpdateQuestionListTest()
         {
@@ -413,7 +424,9 @@ namespace Tests
 
         }
 
-
+        /// <summary>
+        /// Unittest for session creation.
+        /// </summary>
         [UnityTest]
         public IEnumerator CreateSessionTest()
         {
@@ -451,7 +464,9 @@ namespace Tests
             );
         }
 
-
+        /// <summary>
+        /// Unittest for Fetching a session.
+        /// </summary>
         [UnityTest]
         public IEnumerator FetchSessionTest()
         {
@@ -484,6 +499,11 @@ namespace Tests
             yield return new WaitForSeconds(3);
 
         }
+
+
+        /// <summary>
+        /// Unittest for Fetching all sessions.
+        /// </summary>
         [UnityTest]
         public IEnumerator FetchAllSessionsTest()
         {
@@ -517,6 +537,9 @@ namespace Tests
 
         }
 
+        /// <summary>
+        /// Unittest for Fetching questions for a game.
+        /// </summary>
         [UnityTest]
         public IEnumerator FetchQuestionsForGameTest()
         {
