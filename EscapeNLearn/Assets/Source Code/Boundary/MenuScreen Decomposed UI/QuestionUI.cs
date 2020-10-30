@@ -399,7 +399,7 @@ public class QuestionUI : MonoBehaviour
     /// </summary>
     private void SetupQuestionListView()
     {
-        title.text = "Your Question List";
+        title.text = "Question List";
         this.ql = null;
         this.ql_key = null;
         ClearQuestionObjects();

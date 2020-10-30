@@ -124,7 +124,7 @@ public class ProfileUI : MonoBehaviour
                        {
                            DatabaseMgr.Instance.Logout();
                            NotificationMgr.Instance.StopLoad();
-                           NotificationMgr.Instance.Notify("Link successful. Please relogin.",
+                           NotificationMgr.Instance.Notify("Link successful. Please login again.",
                            delegate ()
                            {
                                TransitMgr.Instance.FadeToScene("Login");
@@ -160,7 +160,7 @@ public class ProfileUI : MonoBehaviour
     public void Btn_FBLink()
     {
         AudioMgr.Instance.PlaySFX(AudioConstants.SFX_CLICK);
-        NotificationMgr.Instance.NotifyLoad("Linking Fb");
+        NotificationMgr.Instance.NotifyLoad("Linking Facebook");
         DatabaseMgr.Instance.SNSRequestCredential(
         LoginTypeConstants.FACEBOOK,
         delegate (Firebase.Auth.Credential cred) // success
@@ -177,7 +177,7 @@ public class ProfileUI : MonoBehaviour
                        {
                            DatabaseMgr.Instance.Logout();
                            NotificationMgr.Instance.StopLoad();
-                           NotificationMgr.Instance.Notify("Link successful. Please relogin.",
+                           NotificationMgr.Instance.Notify("Link successful. Please login again.",
                            delegate ()
                            {
                                TransitMgr.Instance.FadeToScene("Login");
@@ -254,14 +254,24 @@ public class ProfileUI : MonoBehaviour
             FBLinkButton.SetActive(true);
             GoogleLinkButton.SetActive(true);
 
+            // txt_profileinfo.text +=
+            //     "Firebase UID: " + DatabaseMgr.Instance.Id +
+            //     "\nEmail: " + DatabaseMgr.Instance.Email;
+
+            Profile profile = ProfileMgr.Instance.localProfile;
             txt_profileinfo.text +=
-                "Firebase UID: " + DatabaseMgr.Instance.Id +
+                "\nName: " + profile.name +
+                "\nPlayer UID: " + profile.id_player;
+
+
+            txt_profileinfo.text +=
                 "\nEmail: " + DatabaseMgr.Instance.Email;
+
             if (DatabaseMgr.Instance.IsEmailVerified)
                 txt_profileinfo.text += " (Verified)";
 
             txt_profileinfo.text +=
-                "\nLogin Types: ";
+                "\nLogin Type(s): ";
 
             List<string> loginTypes = DatabaseMgr.Instance.LoginTypes;
             int count = loginTypes.Count;
@@ -283,12 +293,12 @@ public class ProfileUI : MonoBehaviour
                 }
             }
 
-            Profile profile = ProfileMgr.Instance.localProfile;
+            //Profile profile = ProfileMgr.Instance.localProfile;
             txt_profileinfo.text +=
-                "\nName: " + profile.name +
-                "\nPlayer UID: " + profile.id_player +
+                // "\nName: " + profile.name +
+                // "\nPlayer UID: " + profile.id_player +
                 "\nAccount Type: " + profile.accountType +
-                "\nAccount EXP: " + profile.accountExp +
+                "\nAccount Level: " + profile.accountExp +
                 "\nNormal Currency: " + profile.currency_normal +
                 "\nPremium Currency: " + profile.currency_premium +
                 "\nFacebook ID: " + profile.id_facebook +
