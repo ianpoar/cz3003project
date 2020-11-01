@@ -1155,8 +1155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Direction: 1
   m_ScrollFunctions: 0
-  m_MaxSpeed: 8
-  m_Acceleration: 25
+  m_MaxSpeed: 100
+  m_Acceleration: 300
 --- !u!1 &1890334922
 GameObject:
   m_ObjectHideFlags: 0
